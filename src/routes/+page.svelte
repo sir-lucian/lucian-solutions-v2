@@ -101,7 +101,7 @@
 					and art <i class="fa-solid fa-palette" aria-hidden="true"></i> community.
 				</p>
 				<p>
-					I'm working full time as a lead frontend developer in an undisclosed state-owned
+					I'm working full time as a lead frontend developer at an undisclosed state-owned
 					enterprise.
 				</p>
 				<p>
