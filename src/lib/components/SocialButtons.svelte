@@ -2,7 +2,7 @@
     const socials = [
         {
             title: 'Twitter',
-            path: 'https://x.com/sir_lucian',
+            path: 'https://x.com/sir_lucian_',
             icon: 'fa-brands fa-x-twitter'
         },
         {
