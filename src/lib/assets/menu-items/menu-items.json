@@ -1,0 +1,24 @@
+{
+	"menus": [
+		{
+			"title": "Home",
+			"path": "/",
+			"icon": "fa-solid fa-house"
+		},
+		{
+			"title": "About",
+			"path": "#about",
+			"icon": "fa-solid fa-user"
+		},
+		{
+			"title": "Posts",
+			"path": "/posts",
+			"icon": "fa-regular fa-message"
+		},
+		{
+			"title": "Fanarts",
+			"path": "/fanarts",
+			"icon": "fa-solid fa-images"
+		}
+	]
+}

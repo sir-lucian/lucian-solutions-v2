@@ -1,2 +1,37 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+@plugin "daisyui" {
+    themes: luxury --default;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+i.icon-fix {
+    transform: translateY(-0.08rem);
+}
+
+a, button {
+	transition: 0.3s ease;
+}
+
+span.neon-glow, i.neon-glow, strong.neon-glow, p.neon-glow, h1.neon-glow, h2.neon-glow, h3.neon-glow, h4.neon-glow, h5.neon-glow, h6.neon-glow {
+    text-shadow: 0 0 0.75rem var(--color-base-content);
+}
+
+image.neon-glow {
+    filter: drop-shadow(0 0 0.75rem var(--color-base-content));
+}
+
+.divider-base-content:before, .divider-base-content:after {
+    background-color: var(--color-base-content);
+}
+
+.font-cursive {
+    font-family: 'Meow Script', cursive, sans-serif;
+}
+
+.font-roboto {
+    font-family: 'Roboto', sans-serif;
+}
