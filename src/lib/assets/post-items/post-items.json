@@ -34,7 +34,7 @@
 					{
 						"type": "image",
 						"src": "/posts/2025/202509-ls.png",
-						"alt": "Happy New Year Illustration",
+						"alt": "Happy New Year 2026",
 						"lazy": true
 					}
 				]
@@ -184,14 +184,16 @@
 				"type": "button-row",
 				"buttons": [
 					{
-						"text": "YouTube",
+						"htmlContent": "YouTube",
 						"faIcon": "fa-brands fa-youtube",
-						"url": "https://www.youtube.com/@satsukiyukimi"
+						"url": "https://www.youtube.com/@satsukiyukimi",
+						"openNewTab": true
 					},
 					{
-						"text": "Twitter",
-						"faIcon": "fa-brands fa-x",
-						"url": "https://x.com/satsukiyukimi"
+						"htmlContent": "Twitter",
+						"faIcon": "fa-brands fa-x-twitter",
+						"url": "https://x.com/satsukiyukimi",
+						"openNewTab": true
 					}
 				]
 			}
@@ -199,7 +201,7 @@
 	},
 	{
 		"id": "2025-06-29-01",
-		"title": "Doodle: Lucia",
+		"title": "Doodle: Lucia ❤️",
 		"date": "2025-06-29",
 		"slug": "doodle-lucia-2025-06-29",
 		"htmlItems": [
@@ -286,6 +288,112 @@
 						"src": "/posts/2025/202502-lucia-valentines.png",
 						"alt": "Lucia's Valentine's Day 2025 💞",
 						"lazy": true
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2025-01-01-01",
+		"title": "Happy New Year 2025! 🎉",
+		"date": "2025-01-01",
+		"slug": "happy-new-year-2025-01-01",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/2025NY_Front.png",
+						"alt": "Happy New Year 2025 - Lucian",
+						"lazy": true
+					},
+					{
+						"type": "image",
+						"src": "/posts/2024/2025NY_Back.png",
+						"alt": "Happy New Year 2025 - Lucia",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Happy New Year 2025! Wishing everyone yet another fantastic year! 🎉"
+			}
+		]
+	},
+	{
+		"id": "2024-12-24-01",
+		"title": "Merry Christmas 2024! 🎄",
+		"date": "2024-12-24",
+		"slug": "merry-christmas-2024-12-24",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202412-BuddiesWithBoys.png",
+						"alt": "Merry Christmas 2024 - Lucia & Hare (feat. Lucian & zaruno.)",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202412-Buddies.png",
+						"alt": "Merry Christmas 2024 - Lucia & Hare",
+						"lazy": true
+					},
+					{
+						"type": "image",
+						"src": "/posts/2024/202412-BuddiesDrinks.png",
+						"alt": "Merry Christmas 2024 - Drinks",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Merry Christmas 2024! Wishing everyone a joyful holiday season! 🎄"
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Thanks zaruno. for letting Hare-chan join the fun this year! 🐰"
+			}
+		]
+	},
+	{
+		"id": "2024-12-05-01",
+		"title": "Can We Talk 🎹🍸",
+		"date": "2024-12-05",
+		"slug": "can-we-talk-2024-12-05",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202412-CanWeTalk.png",
+						"alt": "Can We Talk 🎹🍸",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Forte Escape - Can We Talk"
+			},
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "youtube",
+						"embededUrl": "https://www.youtube.com/embed/qU76t9gTdkY?si=ANOI0gdVT7gEkvC6",
+						"alt": "Forte Escape - Can We Talk"
 					}
 				]
 			}
