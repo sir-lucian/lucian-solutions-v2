@@ -13,7 +13,7 @@
 	let {
 		title,
 		description = "Lucian Solutions",
-		image = "/favicon.svg", // Default image if not provided
+		image = "/assets/ls-seo.png", // Default image if not provided
 		url,
 		type = "website",
 		siteName = "Lucian Solutions",
