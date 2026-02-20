@@ -4,7 +4,7 @@
 		"title": "Lucia's Valentine's Day 2026 💞",
 		"date": "2026-02-14",
 		"slug": "lucias-valentines-day-2026",
-        "htmlItems": [
+		"htmlItems": [
 			{
 				"type": "media",
 				"medias": [
@@ -27,7 +27,7 @@
 		"title": "Happy New Year 2026! 🎉",
 		"date": "2026-01-01",
 		"slug": "happy-new-year-2026",
-        "htmlItems": [
+		"htmlItems": [
 			{
 				"type": "media",
 				"medias": [
@@ -50,7 +50,7 @@
 		"title": "Just A Trip 🏙️",
 		"date": "2025-12-29",
 		"slug": "just-a-trip-2025-12-29",
-        "htmlItems": [
+		"htmlItems": [
 			{
 				"type": "media",
 				"medias": [
@@ -69,7 +69,7 @@
 		"title": "Skyriser 🌠🔭",
 		"date": "2025-12-16",
 		"slug": "skyriser-2025-12-16",
-        "htmlItems": [
+		"htmlItems": [
 			{
 				"type": "media",
 				"medias": [
@@ -102,7 +102,7 @@
 		"title": "Hikari 💞⚠️",
 		"date": "2025-12-10",
 		"slug": "hikari-2025-12-10",
-        "htmlItems": [
+		"htmlItems": [
 			{
 				"type": "media",
 				"medias": [
@@ -151,7 +151,7 @@
 				"type": "paragraph",
 				"htmlContent": "Daiwa Scarlet (ダイワスカーレット) from Uma Musume Pretty Derby (ウマ娘 プリティーダービー)"
 			}
-		 ]
+		]
 	},
 	{
 		"id": "2025-07-11-01",
@@ -167,7 +167,8 @@
 						"src": "/posts/2025/202507-yukimi.png",
 						"alt": "Satsuki Yukimi",
 						"lazy": true
-					},{
+					},
+					{
 						"type": "image",
 						"src": "/posts/2025/202507-yukimifull.png",
 						"alt": "Satsuki Yukimi (Full Background)",
@@ -180,33 +181,28 @@
 				"htmlContent": "Satsuki Yukimi (皐月ゆきみ)"
 			},
 			{
-				"type": "media",
-				"medias": [
+				"type": "button-row",
+				"buttons": [
 					{
-						"type": "button-row",
-						"buttons": [
-							{
-								"text": "YouTube",
-								"faIcon": "fa-brands fa-youtube",
-								"url": "https://www.youtube.com/@satsukiyukimi"
-							},
-							{
-								"text": "Twitter",
-								"faIcon": "fa-brands fa-x",
-								"url": "https://x.com/satsukiyukimi"
-							}
-						]
+						"text": "YouTube",
+						"faIcon": "fa-brands fa-youtube",
+						"url": "https://www.youtube.com/@satsukiyukimi"
+					},
+					{
+						"text": "Twitter",
+						"faIcon": "fa-brands fa-x",
+						"url": "https://x.com/satsukiyukimi"
 					}
 				]
 			}
-		 ]
+		]
 	},
 	{
 		"id": "2025-06-29-01",
 		"title": "Doodle: Lucia",
 		"date": "2025-06-29",
 		"slug": "doodle-lucia-2025-06-29",
-        "htmlItems": [
+		"htmlItems": [
 			{
 				"type": "media",
 				"medias": [
@@ -225,7 +221,7 @@
 		"title": "Hello Pinky 💖",
 		"date": "2025-05-05",
 		"slug": "hello-pinky-2025-05-05",
-        "htmlItems": [
+		"htmlItems": [
 			{
 				"type": "media",
 				"medias": [
@@ -258,7 +254,7 @@
 		"title": "Sabrina 🍕",
 		"date": "2025-03-09",
 		"slug": "sabrina-2025-03-09",
-        "htmlItems": [
+		"htmlItems": [
 			{
 				"type": "media",
 				"medias": [
@@ -281,7 +277,7 @@
 		"title": "Lucia's Valentine's Day 2025 💞",
 		"date": "2025-02-10",
 		"slug": "lucia-valentines-2025-02-10",
-        "htmlItems": [
+		"htmlItems": [
 			{
 				"type": "media",
 				"medias": [
