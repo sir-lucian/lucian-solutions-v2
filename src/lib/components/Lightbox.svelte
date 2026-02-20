@@ -111,7 +111,7 @@
 
     <!-- Image Counter -->
     {#if images.length > 1}
-        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 -translate-y-3 rounded-full bg-black/50 px-4 py-2 text-sm text-white font-roboto font-black backdrop-blur-md">
+        <div class="absolute bottom-4 left-1/2 -translate-x-1/2 -translate-y-3 rounded-full bg-black/50 px-4 py-2 text-sm text-white font-black backdrop-blur-md">
             {index + 1} / {images.length}
         </div>
     {/if}

@@ -103,7 +103,7 @@
 <section class="content-section">
 	<Container>
 		<div class="mb-8 flex flex-col gap-2">
-			<h2 class="text-3xl font-bold text-primary">
+			<h2 class="text-3xl font-bold text-primary uppercase">
 				<i class="fa-solid fa-message"></i> Posts
 			</h2>
 			<p>Lucian's blog posts</p>
@@ -115,21 +115,21 @@
 				{#each groupedPosts as group}
 					<div id={`year-${group.year}`} class="flex flex-col gap-8 scroll-mt-24">
 						<div class="flex items-center gap-4">
-							<h3 class="text-4xl font-bold font-roboto">{group.year}</h3>
+							<h3 class="text-4xl font-bold">{group.year}</h3>
 							<div class="h-px flex-1 bg-base-content/70"></div>
 						</div>
 
 						{#each group.months as monthGroup}
 							<div
 								id={`month-${group.year}-${monthGroup.monthName}`}
-								class="flex flex-col gap-8 scroll-mt-24 pl-0 lg:pl-4"
+								class="flex flex-col gap-8 scroll-mt-24"
 							>
 								<div class="flex items-center gap-2">
 									<h4 class="text-xl font-bold text-primary uppercase">{monthGroup.monthName}</h4>
 									<span class="badge badge-ghost text-xs">{monthGroup.posts.length}</span>
 								</div>
 
-								<div class="flex flex-col gap-12 border-l-2 border-base-200 pl-4 lg:pl-8">
+								<div class="flex flex-col gap-8">
 									{#each monthGroup.posts as post}
 										<article
 											id={`post-${post.id}`}
@@ -208,8 +208,8 @@
 			<!-- Sidebar Legend (Visible only on large screens) -->
 			<div class="hidden flex-none lg:block lg:w-64">
 				<div class="sticky top-24">
-					<ul class="menu w-full bg-base-100 rounded-box shadow-lg border border-base-200 opacity-90">
-						<li><h2 class="menu-title text-primary uppercase">Archive</h2></li>
+					<ul class="menu w-full rounded-box shadow-lg bg-neutral-900 border border-neutral-700 opacity-90">
+						<li><h2 class="menu-title text-primary uppercase"><i class="fa-solid fa-archive"></i> Archive</h2></li>
 						{#each groupedPosts as group}
 							<li>
 								<a href={`#year-${group.year}`} class="font-bold">{group.year}</a>

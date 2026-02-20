@@ -1,5 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { fade } from 'svelte/transition';
+	import { cubicOut } from 'svelte/easing';
 	import MenuItems from '$lib/assets/menu-items/menu-items.json';
 	import PortfolioItems from '$lib/assets/portfolio-items/portfolio-items.json';
 	import Footer from '$lib/components/Footer.svelte';
@@ -39,6 +41,8 @@
 			fontsLoaded = true;
 		}
 	});
+
+	const email = 'karnk' + '@' + 'lucian.solutions';
 </script>
 
 <SEO title="" description="Plan the work, work the plan" />
@@ -74,14 +78,15 @@
 			id="home-title-container"
 		>
 			<h1
-				class="font-roboto text-center text-6xl leading-[0.7] font-black tracking-tighter text-nowrap text-white uppercase opacity-100 select-none md:text-8xl"
+				class="text-center text-6xl leading-[0.7] font-black tracking-tighter text-nowrap text-white uppercase opacity-100 select-none md:text-8xl"
+				id="home-title"
 			>
 				Lucian
 			</h1>
 			<div
 				class="absolute top-0 left-0 flex h-full w-full -translate-x-1 -rotate-1 flex-col items-center justify-center select-none"
 			>
-				<p class="font-cursive text-shadow-xl text-5xl text-nowrap md:text-7xl">Lucian Solutions</p>
+				<p id="home-title-cursive" class="font-cursive text-shadow-xl text-5xl text-nowrap md:text-7xl">Lucian Solutions</p>
 			</div>
 		</div>
 		<h2 class="subtitle">Karn Lucian Kamolnavin</h2>
@@ -96,7 +101,7 @@
 		<p class="flex flex-wrap justify-center gap-4">
 			{#each menuItems.filter((item) => item.title !== 'Home') as item}
 				<a href={`${item.href.startsWith('#') ? './' : ''}${item.path}`}>
-					<button class="btn-lucian-translucent btn btn-lg gap-1"
+					<button class="btn-lucian-translucent btn btn-lg gap-2 uppercase"
 						><i class={`${item.icon} icon-fix`}></i>{item.title}</button
 					>
 				</a>
@@ -118,7 +123,7 @@
 				loading="lazy"
 			/>
 			<div class="mx-6 flex grow flex-col justify-center gap-4">
-				<h2 class="text-3xl font-bold text-primary">
+				<h2 class="text-3xl font-bold text-primary uppercase">
 					<i class="fa-solid fa-user" aria-hidden="true"></i> About Me
 				</h2>
 				<p class="text-lg leading-relaxed">
@@ -135,33 +140,24 @@
 					In my free time, I enjoy contributing to open source projects, designing patterns for
 					rhythm games, making illustrations, and exploring new technologies in web development.
 				</p>
-				<div class="divider-base-content divider">◆◆◆</div>
-				<h2 class="text-3xl font-bold text-primary">
-					<i class="fa-solid fa-tools" aria-hidden="true"></i> Skills & Expertise
-				</h2>
-				<ul
-					class="line-height-loose marker: flex list-outside list-none flex-col gap-2 marker:translate-y-0.5 marker:text-primary marker:content-['▹']"
-				>
-					<li class={listFormat}>
-						<i class="fa-solid fa-code translate-y-0.5" aria-hidden="true"></i><strong
-							class="text-primary">Frontend Web Development</strong
-						> - Svelte, SvelteKit, TypeScript, JavaScript, NodeJS, Docker, etc.
-					</li>
-					<li class={listFormat}>
-						<i class="fa-solid fa-paintbrush translate-y-0.5" aria-hidden="true"></i>
-						<strong class="text-primary">UI/UX design</strong> - ensuring user-friendly and visually
-						appealing interfaces.
-					</li>
-					<li class={listFormat}>
-						<i class="fa-solid fa-gamepad translate-y-0.5" aria-hidden="true"></i>
-						<strong class="text-primary">Game Design</strong> - particularly in creating fun and engaging
-						patterns for vertical scrolling rhythm games.
-					</li>
-					<li class={listFormat}>
-						<i class="fa-solid fa-palette translate-y-0.5" aria-hidden="true"></i>
-						<strong class="text-primary">Art & Illustration</strong> - digital art, and character design.
-					</li>
-				</ul>
+				<div class="flex w-full items-center gap-2">
+					<button
+						class="btn-accent btn gap-1 w-50 h-8"
+						on:click={() => (showEmail = !showEmail)}
+					>
+						<i class="fa-solid fa-envelope"></i> {showEmail ? 'Hide' : 'Show'} Email
+					</button>
+					{#if showEmail}
+						<div
+							id="me"
+							aria-label="Email Address"
+							transition:fade={{ duration: 300, easing: cubicOut }}
+							class="rounded-md flex grow items-center justify-center h-8 border border-neutral-700 bg-neutral-900 text-sm"
+						>
+							{email}
+						</div>
+					{/if}
+				</div>
 			</div>
 		</div>
 	</Container>
@@ -169,7 +165,7 @@
 
 <section class="content-section">
 	<Container>
-		<h2 class="text-3xl font-bold text-primary">
+		<h2 class="text-3xl font-bold text-primary uppercase">
 			<i class="fa-solid fa-briefcase"></i> Public Portfolio
 		</h2>
 
@@ -247,5 +243,35 @@
 		font-size: 1.5rem;
 		font-weight: var(--font-weight-light);
 		color: var(--color-primary);
+	}
+
+	#home-title-cursive {
+		clip-path: inset(0 100% 0 0);
+		animation: typing 5s linear infinite;
+	}
+
+	@keyframes typing {
+		0% {
+			clip-path: inset(0 100% 0 0);
+			animation-timing-function: ease-in-out;
+		}
+		10% {
+			clip-path: inset(0 0 0 0);
+			animation-timing-function: linear;
+		}
+		50% {
+			clip-path: inset(0 0 0 0);
+			animation-timing-function: ease-in-out;
+		}
+		60% {
+			clip-path: inset(0 0 0 100%);
+			animation-timing-function: linear;
+		}
+		70% {
+			clip-path: inset(0 0 0 100%);
+		}
+		100% {
+			clip-path: inset(0 0 0 100%);
+		}
 	}
 </style>
