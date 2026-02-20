@@ -86,7 +86,7 @@
 			<div
 				class="absolute top-0 left-0 flex h-full w-full -translate-x-1 -rotate-1 flex-col items-center justify-center select-none"
 			>
-				<p id="home-title-cursive" class="font-cursive text-shadow-xl text-5xl text-nowrap md:text-7xl">Lucian Solutions</p>
+				<p id="home-title-cursive" class="font-cursive text-5xl text-nowrap md:text-7xl">Lucian Solutions</p>
 			</div>
 		</div>
 		<h2 class="subtitle">Karn Lucian Kamolnavin</h2>
@@ -247,6 +247,7 @@
 
 	#home-title-cursive {
 		clip-path: inset(0 100% 0 0);
+		text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.8);
 		animation: typing 5s linear infinite;
 	}
 
