@@ -2,10 +2,17 @@
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import MenuBar from '$lib/components/MenuBar.svelte';
+	import { page } from '$app/state';
 
 	let { children } = $props();
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
-<MenuBar />
-{@render children()}
+
+{#if !page.error}
+	<MenuBar />
+{/if}
+
+<div class={page.url.pathname !== '/' && !page.error ? 'pt-16' : ''}>
+	{@render children()}
+</div>

@@ -29,7 +29,7 @@
 </script>
 
 <svelte:head>
-	<title>{title ? (`${title}${siteName ? '| ' + siteName : ''}`) : (siteName ?? "Lucian Solutions")}</title>
+	<title>{title ? (`${title}${siteName ? ' ◆ ' + siteName : ''}`) : (siteName ?? "Lucian Solutions")}</title>
 	<meta name="description" content={description} />
     <meta name="theme-color" content={siteColor} />
 

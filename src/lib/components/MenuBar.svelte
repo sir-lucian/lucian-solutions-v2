@@ -2,11 +2,12 @@
 	import { slide } from 'svelte/transition';
 	import SiteLogo from './SiteLogo.svelte';
 	import menuItemsData from '$lib/assets/menu-items/menu-items.json';
+	import { page } from '$app/stores';
 
 	let scrollY = $state(0);
 	let innerHeight = $state(0);
 
-	let showMenu = $derived(scrollY > innerHeight * 0.85);
+	let showMenu = $derived($page.url.pathname !== '/' || scrollY > innerHeight * 0.85);
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />
@@ -17,7 +18,7 @@
 		class="navbar fixed top-0 right-0 left-0 z-50 m-0 glass bg-base-100/90 p-0 shadow-md backdrop-blur-md"
 	>
 		<div class="flex h-full grow">
-			<SiteLogo width="w-full justify-start" keepNeonGlow={false} />
+			<SiteLogo width="w-full justify-start"/>
 		</div>
 		<div class="hidden flex-none sm:block">
 			<div class="flex h-full items-center justify-end gap-4 mx-6">

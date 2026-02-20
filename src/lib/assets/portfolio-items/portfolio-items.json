@@ -1,0 +1,75 @@
+{
+	"items": [
+		{
+            "id": "djmax-respect-v",
+			"title": "DJMax Respect V",
+			"htmlParagraphs": [
+				{
+					"type": "paragraph",
+					"htmlContent": "Guest pattern designer for DJMax Respect V, a vertical scrolling rhythm game developed by NEOWIZ."
+				},
+				{
+					"type": "paragraph",
+					"htmlContent": "Contributed as:"
+				},
+				{
+					"type": "list",
+					"htmlContents": [
+						"<i class=\"fa-solid fa-trophy\" aria-hidden=\"true\"></i>DPC (DJMax Pattern-Design Contest) - 2022 (6th), 2023 (1st)",
+						"<i class=\"fa-solid fa-user\" aria-hidden=\"true\"></i>Guest pattern designer"
+					]
+				},
+                {
+                    "type": "button-row",
+                    "buttons": [
+                        {
+                            "htmlContent": "Steam",
+                            "faIcon": "fa-brands fa-steam",
+                            "url": "https://store.steampowered.com/app/960170/DJMax_Respect_V/",
+                            "openNewTab": true
+                        }
+                    ]
+                }
+			],
+			"media": [
+				{
+					"type": "youtube",
+					"embededUrl": "https://www.youtube.com/embed/2VpbmLSBFvQ?si=UVeJ_PwzYIWO4Fws"
+				}
+			]
+		},
+		{
+            "id": "vtuber-layouts",
+			"title": "VTuber Layouts",
+			"htmlParagraphs": [
+				{
+					"type": "paragraph",
+					"htmlContent": "Contributed VTuber overlay layouts for KurosawaSP"
+				},
+                {
+                    "type": "button-row",
+                    "buttons": [
+                        {
+                            "htmlContent": "YouTube",
+                            "faIcon": "fa-brands fa-youtube",
+                            "url": "https://www.youtube.com/@KurosawaSP",
+                            "openNewTab": true
+                        },
+                        {
+                            "htmlContent": "Twitch",
+                            "faIcon": "fa-brands fa-twitch",
+                            "url": "https://www.twitch.tv/kurosawasp",
+                            "openNewTab": true
+                        }
+                    ]
+                }
+			],
+			"media": [
+				{
+					"type": "youtube",
+					"embededUrl": "https://www.youtube.com/embed/PLwBY5Zr_1o?si=6wYtsrhkFFdMmMbz"
+				}
+			]
+		}
+	]
+}

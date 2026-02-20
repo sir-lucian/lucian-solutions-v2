@@ -19,8 +19,3 @@
         </div>
     </div>
 </div>
-<style scoped>
-    #ls-logo-error {
-        filter: drop-shadow(0 0 0.75rem var(--color-base-content));
-    }
-</style>

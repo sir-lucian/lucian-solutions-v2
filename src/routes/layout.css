@@ -12,16 +12,8 @@ i.icon-fix {
     transform: translateY(-0.08rem);
 }
 
-a, button {
+a, button, ul, li {
 	transition: 0.3s ease;
-}
-
-span.neon-glow, i.neon-glow, strong.neon-glow, p.neon-glow, h1.neon-glow, h2.neon-glow, h3.neon-glow, h4.neon-glow, h5.neon-glow, h6.neon-glow {
-    text-shadow: 0 0 0.75rem var(--color-base-content);
-}
-
-image.neon-glow {
-    filter: drop-shadow(0 0 0.75rem var(--color-base-content));
 }
 
 .divider-base-content:before, .divider-base-content:after {
@@ -34,4 +26,22 @@ image.neon-glow {
 
 .font-roboto {
     font-family: 'Roboto', sans-serif;
+    text-transform: uppercase;
+}
+
+.btn-lucian-translucent {
+    border-radius: 0;
+    border-bottom: 2px solid var(--color-base-content);
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+}
+
+.btn-lucian-translucent:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+    color: var(--color-white);
+}
+
+.btn-lucian-translucent:focus {
+    background-color: rgba(0, 0, 0, 0.7);
+    border-color: rgba(0, 0, 0, 0.8);
 }
