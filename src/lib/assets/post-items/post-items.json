@@ -398,5 +398,209 @@
 				]
 			}
 		]
+	},
+	{
+		"id": "2024-11-17-01",
+		"title": "Character Sheet V4 - Lucian Solutions 🎩👒",
+		"date": "2024-11-17",
+		"slug": "character-sheet-v4-lucian-solutions-2024-11-17",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/charasheetv4.png",
+						"alt": "Character Sheet V4 - Lucian Solutions 🎩👒",
+						"lazy": true
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2024-07-31-01",
+		"title": "I'm moving to Clip Studio Paint! 🎨",
+		"date": "2024-07-31",
+		"slug": "im-moving-to-clip-studio-paint-2024-07-31",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/test.png",
+						"alt": "I'm moving to Clip Studio Paint! 🎨",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "After years of using Adobe Photoshop, I've decided to switch to Clip Studio Paint for my digital art needs! 🎨 It's a shame that Adobe won't support my workflow anymore as they plunge into AI trends, and collecting data without my consent."
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "I'm excited to explore the new features and capabilities that Clip Studio Paint offers. Looking forward to creating even better artwork with this powerful tool! 🚀"
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "This doodle was made to test out the brush settings and workflow in Clip Studio Paint. I must say, I'm loving it so far! 😍"
+			}
+		]
+	},
+	{
+		"id": "2024-06-09-01",
+		"title": "Lucia @ Silom 🌃",
+		"date": "2024-06-09",
+		"slug": "lucia-at-silom-2024-06-09",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202405-LuciaSilom.png",
+						"alt": "Lucia @ Silom 🌃",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Lucia enjoying the night walk at Chong Nonsi Skywalk near Silom, Bangkok 🌃"
+			}
+		]
+	},
+	{
+		"id": "2024-04-27-01",
+		"title": "Seeker 🎪",
+		"date": "2024-04-27",
+		"slug": "seeker-2024-04-27",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202404-Seeker.png",
+						"alt": "Seeker 🎪",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "M2U - Seeker"
+			},
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "youtube",
+						"embededUrl": "https://www.youtube.com/embed/I_DocC3srzY?si=KySu6rozmpVJ4ZrP",
+						"alt": "M2U - Seeker"
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2024-03-09-01",
+		"title": "Hanae 🏥💊",
+		"date": "2024-03-09",
+		"slug": "hanae-2024-03-09",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202403-Hanae.png",
+						"alt": "Hanae 🏥💊",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Hanae Asagao (朝顔ハナエ) from Blue Archive (ブルーアーカイブ)"
+			}
+		]
+	},
+	{
+		"id": "2024-02-18-01",
+		"title": "Lucia's Valentine's Day 2024 💞",
+		"date": "2024-02-18",
+		"slug": "lucia-valentines-2024-02-18",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202402-ValentineMaid.png",
+						"alt": "Lucia's Valentine's Day 2024 💞",
+						"lazy": true
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2023-12-02-01",
+		"title": "Rendezvous Coast 🌴🌊",
+		"date": "2023-12-02",
+		"slug": "rendezvous-coast-2023-12-02",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2023/202312-rendezvouscoast.png",
+						"alt": "Rendezvous Coast 🌴🌊",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "wigen - Rendezvous Coast"
+			},
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "youtube",
+						"embededUrl": "https://www.youtube.com/embed/cgJE8_o9r9A?si=J9EuhE6NG0fIUpd1",
+						"alt": "wigen - Rendezvous Coast"
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2023-03-18-01",
+		"title": "クルミ隊 💛❤️💙",
+		"date": "2023-03-18",
+		"slug": "kurumi-tai-2023-03-18",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2023/202303-Kurumi.png",
+						"alt": "クルミ隊 💛❤️💙",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Thank you Pako & SkyLightEX for the request! CRYs + Lucia + Mint = クルミ隊 💛❤️💙"
+			}
+		]
 	}
 ]
