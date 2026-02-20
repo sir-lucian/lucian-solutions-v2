@@ -141,7 +141,7 @@
 				"medias": [
 					{
 						"type": "image",
-						"src": "/posts/2025/202508-daiwa-scarlet.png",
+						"src": "/posts/2025/202508-daiwascarlet.png",
 						"alt": "Daiwa Scarlet",
 						"lazy": true
 					}
@@ -222,9 +222,9 @@
 	},
 	{
 		"id": "2025-05-05-01",
-		"title": "Hikari 💞⚠️",
+		"title": "Hello Pinky 💖",
 		"date": "2025-05-05",
-		"slug": "hikari-2025-05-05",
+		"slug": "hello-pinky-2025-05-05",
         "htmlItems": [
 			{
 				"type": "media",
@@ -232,7 +232,7 @@
 					{
 						"type": "image",
 						"src": "/posts/2025/202505-pinky.png",
-						"alt": "Pinky",
+						"alt": "Hello Pinky",
 						"lazy": true
 					}
 				]
@@ -248,6 +248,48 @@
 						"type": "youtube",
 						"embededUrl": "https://www.youtube.com/embed/ECU7EHF_4iM?si=otr3zutiL_KEDumF",
 						"alt": "NieN - Hello Pinky"
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2025-03-09-01",
+		"title": "Sabrina 🍕",
+		"date": "2025-03-09",
+		"slug": "sabrina-2025-03-09",
+        "htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2025/202502-sabrina.png",
+						"alt": "Sabrina",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Sabrina (SPAS-12) from Girls' Frontline (少女前线)"
+			}
+		]
+	},
+	{
+		"id": "2025-02-10-01",
+		"title": "Lucia's Valentine's Day 2025 💞",
+		"date": "2025-02-10",
+		"slug": "lucia-valentines-2025-02-10",
+        "htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2025/202502-lucia-valentines.png",
+						"alt": "Lucia's Valentine's Day 2025 💞",
+						"lazy": true
 					}
 				]
 			}
