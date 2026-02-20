@@ -23,6 +23,29 @@
 		]
 	},
 	{
+		"id": "2026-01-01-01",
+		"title": "Happy New Year 2026! 🎉",
+		"date": "2026-01-01",
+		"slug": "happy-new-year-2026",
+        "htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2025/202509-ls.png",
+						"alt": "Happy New Year Illustration",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Happy New Year 2026! Hope everyone has a wonderful year ahead! 🎉"
+			}
+		]
+	},
+	{
 		"id": "2025-12-29-01",
 		"title": "Just A Trip 🏙️",
 		"date": "2025-12-29",
@@ -102,6 +125,129 @@
 						"type": "youtube",
 						"embededUrl": "https://www.youtube.com/embed/B7kM1yWBumU?si=a1Y56jODSGcEtenH",
 						"alt": "Riran (feat. 音琴兎愛) - Hikari"
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2025-08-31-01",
+		"title": "Daiwa Scarlet 🌹",
+		"date": "2025-08-31",
+		"slug": "daiwa-scarlet-2025-08-31",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2025/202508-daiwa-scarlet.png",
+						"alt": "Daiwa Scarlet",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Daiwa Scarlet (ダイワスカーレット) from Uma Musume Pretty Derby (ウマ娘 プリティーダービー)"
+			}
+		 ]
+	},
+	{
+		"id": "2025-07-11-01",
+		"title": "Satsuki Yukimi ❄️🐾",
+		"date": "2025-07-11",
+		"slug": "satsuki-yukimi-2025-07-11",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2025/202507-yukimi.png",
+						"alt": "Satsuki Yukimi",
+						"lazy": true
+					},{
+						"type": "image",
+						"src": "/posts/2025/202507-yukimifull.png",
+						"alt": "Satsuki Yukimi (Full Background)",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Satsuki Yukimi (皐月ゆきみ)"
+			},
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "button-row",
+						"buttons": [
+							{
+								"text": "YouTube",
+								"faIcon": "fa-brands fa-youtube",
+								"url": "https://www.youtube.com/@satsukiyukimi"
+							},
+							{
+								"text": "Twitter",
+								"faIcon": "fa-brands fa-x",
+								"url": "https://x.com/satsukiyukimi"
+							}
+						]
+					}
+				]
+			}
+		 ]
+	},
+	{
+		"id": "2025-06-29-01",
+		"title": "Doodle: Lucia",
+		"date": "2025-06-29",
+		"slug": "doodle-lucia-2025-06-29",
+        "htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2025/202506-lucia-etc.png",
+						"alt": "Doodle: Lucia",
+						"lazy": true
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2025-05-05-01",
+		"title": "Hikari 💞⚠️",
+		"date": "2025-05-05",
+		"slug": "hikari-2025-05-05",
+        "htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2025/202505-pinky.png",
+						"alt": "Pinky",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "NieN - Hello Pinky"
+			},
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "youtube",
+						"embededUrl": "https://www.youtube.com/embed/ECU7EHF_4iM?si=otr3zutiL_KEDumF",
+						"alt": "NieN - Hello Pinky"
 					}
 				]
 			}
