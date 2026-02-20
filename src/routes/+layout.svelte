@@ -1,6 +1,6 @@
 <script lang="ts">
 	import './layout.css';
-	import favicon from '/assets/favicon.ico';
+	import favicon from '/assets/ls-logo.jpg';
 	import MenuBar from '$lib/components/MenuBar.svelte';
 	import { page } from '$app/state';
 
