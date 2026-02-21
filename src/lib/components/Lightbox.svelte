@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import type { Media } from '$lib/index';
+	import { MASTER_URL_PREFIX, type Media } from '$lib/index';
 	import { onMount } from 'svelte';
 
 	export let images: Media[];
@@ -88,7 +88,7 @@
 	>
 		{#key index}
 			<img
-				src={currentImage.imgSrc}
+				src={MASTER_URL_PREFIX + currentImage.imgSrc}
 				alt={currentImage.altText || 'Lightbox Image'}
 				class="absolute max-h-[calc(100%-2rem)] max-w-[calc(100%-2rem)] object-contain shadow-2xl rounded-lg"
 				transition:fade={{ duration: 300 }}
