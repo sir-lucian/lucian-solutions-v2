@@ -155,7 +155,7 @@
 	},
 	{
 		"id": "2025-07-11-01",
-		"title": "Satsuki Yukimi ❄️🐾",
+		"title": "Satsuki Yukimi (2025) ❄️🐾",
 		"date": "2025-07-11",
 		"slug": "satsuki-yukimi-2025-07-11",
 		"htmlItems": [
@@ -179,23 +179,6 @@
 			{
 				"type": "paragraph",
 				"htmlContent": "Satsuki Yukimi (皐月ゆきみ)"
-			},
-			{
-				"type": "button-row",
-				"buttons": [
-					{
-						"htmlContent": "YouTube",
-						"faIcon": "fa-brands fa-youtube",
-						"url": "https://www.youtube.com/@satsukiyukimi",
-						"openNewTab": true
-					},
-					{
-						"htmlContent": "Twitter",
-						"faIcon": "fa-brands fa-x-twitter",
-						"url": "https://x.com/satsukiyukimi",
-						"openNewTab": true
-					}
-				]
 			}
 		]
 	},
@@ -400,6 +383,59 @@
 		]
 	},
 	{
+		"id": "2024-12-01-01",
+		"title": "2024 Doodles ✏️",
+		"date": "2024-12-01",
+		"slug": "2024-doodles-2024-12-01",
+		"htmlItems": [
+			{
+				"type": "paragraph",
+				"htmlContent": "Here are some of the doodles I made throughout 2024! ✏️"
+			},
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202302-LuciaTwintailsDay.png",
+						"alt": "2024 Doodles - Lucia Twintails Day",
+						"lazy": true
+					},
+					{
+						"type": "image",
+						"src": "/posts/2024/202402-ChaiMuakKeaw.png",
+						"alt": "2024 Doodles - BKI_book & Ota_PP48",
+						"lazy": true
+					},
+					{
+						"type": "image",
+						"src": "/posts/2024/202402-ChineseLucia.png",
+						"alt": "2024 Doodles - Lucia on Chinese New Year",
+						"lazy": true
+					},
+					{
+						"type": "image",
+						"src": "/posts/2024/202402-Loli.png",
+						"alt": "2024 Doodles - Lucia (粛聖!! ロリ神レクイエム☆)",
+						"lazy": true
+					},
+					{
+						"type": "image",
+						"src": "/posts/2024/202405-zaru-sheismywife.png",
+						"alt": "2024 Doodles - Zaru (She is my wife)",
+						"lazy": true
+					},
+					{
+						"type": "image",
+						"src": "/posts/2024/Pokemon.png",
+						"alt": "2024 Doodles - Lucian's Pokémon Violet Team",
+						"lazy": true
+					}
+				]
+			}
+		]
+	},
+	{
 		"id": "2024-11-17-01",
 		"title": "Character Sheet V4 - Lucian Solutions 🎩👒",
 		"date": "2024-11-17",
@@ -415,6 +451,29 @@
 						"lazy": true
 					}
 				]
+			}
+		]
+	},
+	{
+		"id": "2024-03-09-01",
+		"title": "Sakurako (Idol) 🎤🎀",
+		"date": "2024-10-29",
+		"slug": "sakurako-idol-2024-10-29",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202410-sakurako.png",
+						"alt": "Sakurako (Idol) 🎤🎀",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Sakurako Utazumi (歌住サクラコ) (Idol) from Blue Archive (ブルーアーカイブ)"
 			}
 		]
 	},
@@ -451,6 +510,25 @@
 	},
 	{
 		"id": "2024-06-09-01",
+		"title": "yyoruu 🦊🎮",
+		"date": "2024-06-29",
+		"slug": "yyoruu-2024-06-29",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202406-yyoruu.png",
+						"alt": "yyoruu 🦊🎮",
+						"lazy": true
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2024-06-09-01",
 		"title": "Lucia @ Silom 🌃",
 		"date": "2024-06-09",
 		"slug": "lucia-at-silom-2024-06-09",
@@ -469,6 +547,29 @@
 			{
 				"type": "paragraph",
 				"htmlContent": "Lucia enjoying the night walk at Chong Nonsi Skywalk near Silom, Bangkok 🌃"
+			}
+		]
+	},
+	{
+		"id": "2024-05-11-01",
+		"title": "Satsuki Yukimi (2024) ❄️🐾",
+		"date": "2024-05-11",
+		"slug": "satsuki-yukimi-2024-05-11",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202405-Yukimi.png",
+						"alt": "Satsuki Yukimi",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Satsuki Yukimi (皐月ゆきみ)"
 			}
 		]
 	},
@@ -506,6 +607,52 @@
 		]
 	},
 	{
+		"id": "2024-04-21-01",
+		"title": "Art Request - FateAura",
+		"date": "2024-04-21",
+		"slug": "art-request-fateaura-2024-04-21",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202404-FateAura.png",
+						"alt": "Art Request - FateAura",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Thank you for request, FateAura!"
+			}
+		]
+	},
+	{
+		"id": "2024-03-23-01",
+		"title": "Art Request - Yoru",
+		"date": "2024-03-23",
+		"slug": "art-request-yoru-2024-03-23",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202403-Yoru.png",
+						"alt": "Art Request - Yoru",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Thank you for request, Yoru!"
+			}
+		]
+	},
+	{
 		"id": "2024-03-09-01",
 		"title": "Hanae 🏥💊",
 		"date": "2024-03-09",
@@ -529,6 +676,29 @@
 		]
 	},
 	{
+		"id": "2024-02-24-01",
+		"title": "Mutsuki (Dress) 🎀",
+		"date": "2024-02-24",
+		"slug": "mutsuki-dress-2024-02-24",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202402-MutsukiDress.png",
+						"alt": "Mutsuki (Dress) 🎀",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Mutsuki Asagi (浅黄ムツキ) from Blue Archive (ブルーアーカイブ)"
+			}
+		]
+	},
+	{
 		"id": "2024-02-18-01",
 		"title": "Lucia's Valentine's Day 2024 💞",
 		"date": "2024-02-18",
@@ -544,6 +714,52 @@
 						"lazy": true
 					}
 				]
+			}
+		]
+	},
+	{
+		"id": "2024-02-04-01",
+		"title": "Pyra (ホムラ) 🔥",
+		"date": "2024-02-04",
+		"slug": "pyra-2024-02-04",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202401-Pyra.png",
+						"alt": "Pyra (ホムラ) 🔥",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Pyra (ホムラ) from Xenoblade Chronicles 2"
+			}
+		]
+	},
+	{
+		"id": "2024-01-28-01",
+		"title": "Ako (Dress) 🎀",
+		"date": "2024-01-28",
+		"slug": "ako-dress-2024-01-28",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2024/202401-AkoDress.png",
+						"alt": "Ako (Dress) 🎀",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Ako Amau (天雨アコ) from Blue Archive (ブルーアーカイブ)"
 			}
 		]
 	},
@@ -581,6 +797,48 @@
 		]
 	},
 	{
+		"id": "2023-10-15-01",
+		"title": "Thank you for DPC 2023! 🙏",
+		"date": "2023-10-15",
+		"slug": "thank-you-for-dpc-2023-2023-10-15",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2023/202310-Lena.png",
+						"alt": "Thank you for DPC 2023! 🙏",
+						"lazy": true
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2023-08-27-01",
+		"title": "Satsuki Yukimi (2023) ❄️🐾",
+		"date": "2023-08-27",
+		"slug": "satsuki-yukimi-2023-08-27",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2023/202308-Yukimi.png",
+						"alt": "Satsuki Yukimi",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Satsuki Yukimi (皐月ゆきみ)"
+			}
+		]
+	},
+	{
 		"id": "2023-03-18-01",
 		"title": "クルミ隊 💛❤️💙",
 		"date": "2023-03-18",
@@ -600,6 +858,140 @@
 			{
 				"type": "paragraph",
 				"htmlContent": "Thank you Pako & SkyLightEX for the request! CRYs + Lucia + Mint = クルミ隊 💛❤️💙"
+			}
+		]
+	},
+	{
+		"id": "2023-01-13-01",
+		"title": "Art Trade - Papang_uvu",
+		"date": "2023-01-13",
+		"slug": "art-trade-papang-uvu-2023-01-13",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2023/202301-papang.png",
+						"alt": "Art Trade - Papang_uvu",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Thank you for the art trade, Papang_uvu!"
+			}
+		]
+	},
+	{
+		"id": "2022-12-29-01",
+		"title": "Art Request - Lemon",
+		"date": "2022-12-29",
+		"slug": "art-request-lemon-2022-12-29",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/202212-Lemon.png",
+						"alt": "Art Request - Lemon",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Thank you for request, SkyLightEX!"
+			}
+		]
+	},
+	{
+		"id": "2022-12-24-01",
+		"title": "Satsuki Yukimi (2022) ❄️🐾",
+		"date": "2022-12-24",
+		"slug": "satsuki-yukimi-2022-12-24",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/202212-yukimi.png",
+						"alt": "Satsuki Yukimi",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Satsuki Yukimi (皐月ゆきみ)"
+			}
+		]
+	},
+	{
+		"id": "2022-10-23-01",
+		"title": "Lucian Solutions Halloween 2022 🎃",
+		"date": "2022-10-23",
+		"slug": "lucian-solutions-halloween-2022-10-23",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/202210-Halloween.png",
+						"alt": "Lucian Solutions Halloween 2022 🎃",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Happy Halloween 2022! 🎃 Wishing everyone a spooky and fun Halloween! 👻"
+			}
+		]
+	},
+	{
+		"id": "2024-09-26-01",
+		"title": "Lucia & Hare 👒🌱",
+		"date": "2024-09-26",
+		"slug": "lucia-and-hare-2024-09-26",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/202209-harelucia.png",
+						"alt": "Lucia & Hare 👒🌱 (feat. Lucian & zaruno.)",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Thanks zaruno. for letting Hare-chan join the fun this year! 🐰"
+			}
+		]
+	},
+	{
+		"id": "2022-08-23-01",
+		"title": "Thank you for DPC 2022! 🙏",
+		"date": "2022-08-23",
+		"slug": "thank-you-for-dpc-2022-2022-08-23",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/202208-dpc2022.png",
+						"alt": "Thank you for DPC 2022! 🙏",
+						"lazy": true
+					}
+				]
 			}
 		]
 	}
