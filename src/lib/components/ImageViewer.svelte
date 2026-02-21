@@ -1,18 +1,19 @@
 <script lang="ts">
 	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
-	import type { Media } from '$lib/index';
+	import { MASTER_URL_PREFIX, type Media } from '$lib/index';
 	import Lightbox from './Lightbox.svelte';
 
 	export let media: Media[] = [];
+	export let allPostMedia: Media[] = [];
 
 	let isLightboxOpen = false;
 	let lightboxIndex = 0;
 
-	// Filter only image media for the lightbox
-	$: lightboxImages = media.filter((m) => m.type === 'image');
+	// Filter only image media for the lightbox from the complete set if available
+	$: lightboxImages = (allPostMedia.length > 0 ? allPostMedia : media).filter((m) => m.type === 'image');
 
 	function openLightbox(item: Media) {
-		const index = lightboxImages.findIndex((img) => img === item);
+		const index = lightboxImages.findIndex((img) => img.imgSrc === item.imgSrc);
 		if (index !== -1) {
 			lightboxIndex = index;
 			isLightboxOpen = true;
@@ -52,7 +53,7 @@
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<img
-				src={media[0].imgSrc}
+				src={`${MASTER_URL_PREFIX}${media[0].imgSrc}`}
 				alt={media[0].altText || 'Image'}
 				loading={media[0].imgLazyLoad ? 'lazy' : 'eager'}
 				class="h-auto max-w-full cursor-zoom-in rounded-lg shadow-lg hover:brightness-90 transition w-full"
@@ -83,7 +84,7 @@
 					<!-- svelte-ignore a11y-click-events-have-key-events -->
 					<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 					<img
-						src={item.imgSrc}
+						src={`${MASTER_URL_PREFIX}${item.imgSrc}`}
 						alt={item.altText || 'Image'}
 						loading={item.imgLazyLoad ? 'lazy' : 'eager'}
 						class="h-full w-full cursor-zoom-in object-cover hover:brightness-90 transition"

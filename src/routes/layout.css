@@ -24,11 +24,24 @@ a, button, ul, li {
     font-family: 'Meow Script', cursive, sans-serif;
 }
 
+.btn-lucian {
+    border: 1px solid var(--color-base-content);
+    background-color: var(--color-base-content);
+    color: var(--color-base-100);
+    transition: all 0.2s ease-in-out;
+}
+
 .btn-lucian-translucent {
     border: 1px solid var(--color-base-content);
     background-color: rgba(0, 0, 0, 0.6);
     backdrop-filter: blur(12px);
     transition: all 0.2s ease-in-out;
+}
+
+.btn-lucian:hover {
+    border: 1px solid var(--color-white);
+    background-color: var(--color-white);
+    color: var(--color-base-100);
 }
 
 .btn-lucian-translucent:hover {
@@ -38,7 +51,7 @@ a, button, ul, li {
 }
 
 .btn-lucian-translucent:focus {
-    border: 1px solid var(--color-neutral-300);
-    background-color: rgba(0, 0, 0, 0.8);
-    color: var(--color-white);
+    border: 1px solid var(--color-base-content);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: var(--color-base-content);
 }

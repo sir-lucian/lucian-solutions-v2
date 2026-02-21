@@ -2,12 +2,12 @@
 	import { slide } from 'svelte/transition';
 	import SiteLogo from './SiteLogo.svelte';
 	import menuItemsData from '$lib/assets/menu-items/menu-items.json';
-	import { page } from '$app/stores';
+	import { page } from '$app/state';
 
 	let scrollY = $state(0);
 	let innerHeight = $state(0);
 
-	let showMenu = $derived($page.url.pathname !== '/' || scrollY > innerHeight * 0.85);
+	let showMenu = $derived(page.url.pathname !== '/' || scrollY > innerHeight * 0.85);
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />
