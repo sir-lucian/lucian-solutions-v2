@@ -33,3 +33,6 @@ export enum MediaType {
     YouTube = 'youtube',
     Image = 'image',
 }
+
+// Constants
+export const MASTER_URL_PREFIX: string = ""; //"https://luciansolutions-dev.koyeb.app";
