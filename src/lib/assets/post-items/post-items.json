@@ -509,7 +509,7 @@
 		]
 	},
 	{
-		"id": "2024-06-09-01",
+		"id": "2024-06-29-01",
 		"title": "yyoruu 🦊🎮",
 		"date": "2024-06-29",
 		"slug": "yyoruu-2024-06-29",
@@ -519,7 +519,7 @@
 				"medias": [
 					{
 						"type": "image",
-						"src": "/posts/2024/202406-yyoruu.png",
+						"src": "/posts/2024/202406-yyoruu.jpg",
 						"alt": "yyoruu 🦊🎮",
 						"lazy": true
 					}

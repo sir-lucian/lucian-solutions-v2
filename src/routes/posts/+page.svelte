@@ -268,7 +268,7 @@
 
 {#snippet sidebarLegend(isSticky = false)}
 	<ContainerGlassBlack
-		class={`menu w-full opacity-90 p-2 ${isSticky ? 'h-full flex flex-col overflow-hidden' : ''}`}
+		class={`menu w-full opacity-90 p-2 ${isSticky ? 'flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-100  max-h-[calc(100vh-8rem)]' : ''}`}
 	>
 		<div class="menu-title flex-none flex flex-row justify-between items-center px-2 py-2 border-b border-white/10 mb-2">
 			<span class="text-primary uppercase"><i class="fa-solid fa-archive"></i> Archive</span>
@@ -276,7 +276,7 @@
 				<ButtonGlass class="text-xs px-3 py-1 h-6 min-h-0" onclick={clearFilters}>Show All</ButtonGlass>
 			{/if}
 		</div>
-		<div class={`${isSticky ? 'flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-100 pr-1' : ''}`}>
+		<div class={`${isSticky ? 'flex-1  pr-1' : ''}`}>
 			<ul class="w-full">
 				{#each allGroupedPosts as group}
 					<li>
@@ -517,7 +517,7 @@
 		<!-- Sidebar Legend (Visible only on large screens) -->
 			<div class="hidden flex-none lg:block lg:w-64">
 				<div
-					class="sticky top-24 h-[calc(100vh-8rem)]"
+					class="sticky top-24"
 				>
 					{@render sidebarLegend(true)}
 				</div>
@@ -533,7 +533,7 @@
 	</Container>
 </section>
 
-<section id="footer">
+<section id="footer" class="bg-black/60 shadow-md backdrop-blur-md">
 	<Footer />
 </section>
 
