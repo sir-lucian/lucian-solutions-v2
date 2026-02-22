@@ -12,13 +12,22 @@
 	// Helper function to map JSON media item to Media interface
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function mapMediaItems(jsonMedias: any[]): any[] {
-		return jsonMedias.map((m) => ({
-			type: m.type,
-			imgSrc: m.src,
-			altText: m.alt,
-			embededUrl: m.embededUrl,
-			imgLazyLoad: m.lazy || true
-		}));
+		return jsonMedias.map((m) => {
+			let type = m.type;
+			if (m.src) {
+				const extension = m.src.split('.').pop()?.toLowerCase();
+				if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'].includes(extension)) {
+					type = 'image';
+				}
+			}
+			return {
+				type: type,
+				imgSrc: m.src,
+				altText: m.alt,
+				embededUrl: m.embededUrl,
+				imgLazyLoad: m.lazy || true
+			};
+		});
 	}
 
 	function getAllPostImages(post: Post): any[] {
@@ -80,6 +89,15 @@
 		}
 
 		monthGroup.posts.push(post);
+	});
+	
+	// Ensure groups are sorted correctly for display stability
+	allGroupedPosts.sort((a, b) => b.year - a.year);
+	allGroupedPosts.forEach(yearGroup => {
+		yearGroup.months.sort((a, b) => b.monthIndex - a.monthIndex);
+		yearGroup.months.forEach(monthGroup => {
+			monthGroup.posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+		});
 	});
 
 	let searchQuery = $state('');
@@ -151,6 +169,17 @@
 
 			monthGroup.posts.push(post);
 		});
+		
+		// Sort groups and months explicitly
+		groups.sort((a, b) => b.year - a.year);
+		groups.forEach(group => {
+			group.months.sort((a, b) => b.monthIndex - a.monthIndex);
+			// Posts are added in order from filteredPosts which is sorted, but explicit sort is safer
+			group.months.forEach(m => {
+				m.posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+			});
+		});
+
 		return groups;
 	});
 

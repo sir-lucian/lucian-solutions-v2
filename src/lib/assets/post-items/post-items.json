@@ -872,7 +872,7 @@
 				"medias": [
 					{
 						"type": "image",
-						"src": "/posts/2023/202301-papang.png",
+						"src": "/posts/2023/202301-papang.jpg",
 						"alt": "Art Trade - Papang_uvu",
 						"lazy": true
 					}
@@ -954,10 +954,10 @@
 		]
 	},
 	{
-		"id": "2024-09-26-01",
+		"id": "2022-09-26-01",
 		"title": "Lucia & Hare 👒🌱",
-		"date": "2024-09-26",
-		"slug": "lucia-and-hare-2024-09-26",
+		"date": "2022-09-26",
+		"slug": "lucia-and-hare-2022-09-26",
 		"htmlItems": [
 			{
 				"type": "media",
@@ -987,8 +987,174 @@
 				"medias": [
 					{
 						"type": "image",
-						"src": "/posts/2022/202208-dpc2022.png",
+						"src": "/posts/2022/202208-dpc2022.jpg",
 						"alt": "Thank you for DPC 2022! 🙏",
+						"lazy": true
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2022-07-30-01",
+		"title": "Art Request - Sweet On You",
+		"date": "2022-07-30",
+		"slug": "art-request-sweet-on-you-2022-07-30",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/202207-SweetOnYou-signed.jpg",
+						"alt": "Art Request - Sweet On You",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Thank you for request, ThePopUp!"
+			},
+			{
+				"type": "youtube",
+				"medias": [
+					{
+						"type": "youtube",
+						"embededUrl": "https://www.youtube.com/embed/2DIz_n_y9e4?si=tAULG-BKm5qrHKCP",
+						"alt": "jam-jam - Sweet On You"
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2022-06-30-01",
+		"title": "2022 Doodles ✏️",
+		"date": "2022-06-30",
+		"slug": "2022-doodles-2022-06-30",
+		"htmlItems": [
+			{
+				"type": "paragraph",
+				"htmlContent": "Here are some of the doodles I made throughout 2022! ✏️"
+			},
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/2022-mami.png",
+						"alt": "2022 Doodles - Asagimami",
+						"lazy": true
+					},
+					{
+						"type": "image",
+						"src": "/posts/2022/2022-lucia-side.png",
+						"alt": "2022 Doodles - Lucia",
+						"lazy": true
+					},
+					{
+						"type": "image",
+						"src": "/posts/2022/2022-ichigo.png",
+						"alt": "2022 Doodles - Ichigo",
+						"lazy": true
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2022-07-19-01",
+		"title": "Art Request - Kawachiboy14",
+		"date": "2022-07-19",
+		"slug": "art-request-kawachiboy14-2022-07-19",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/202207-kawachiboy-signed.jpg",
+						"alt": "Art Request - Kawachiboy14",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "Thank you for request, Kawachiboy14!"
+			}
+		]
+	},
+	{
+		"id": "2022-03-19-01",
+		"title": "Lucia @ Koh Lipe 🏝️🏖️",
+		"date": "2022-03-19",
+		"slug": "lucia-at-koh-lipe-2022-03-19",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/2022-luciabeach.png",
+						"alt": "Lucia @ Koh Lipe 🏝️🏖️",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "I visited Koh Lipe, Thailand, and decided to draw some art inspired by the beautiful scenery! 🏝️🏖️"
+			}
+		]
+	},
+	{
+		"id": "2022-02-08-01",
+		"title": "FALLING IN LOVE",
+		"date": "2022-02-08",
+		"slug": "falling-in-love-2022-02-08",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/2022-fallinginlove.png",
+						"alt": "NieN - FALLING IN LOVE",
+						"lazy": true
+					}
+				]
+			},
+			{
+				"type": "paragraph",
+				"htmlContent": "NieN - FALLING IN LOVE"
+			},
+			{
+				"type": "youtube",
+				"medias": [
+					{
+						"type": "youtube",
+						"embededUrl": "https://www.youtube.com/embed/I3M_CNtzATY?si=HdRoyy9nYLc50Pm6",
+						"alt": "NieN - FALLING IN LOVE"
+					}
+				]
+			}
+		]
+	},
+	{
+		"id": "2022-02-02-01",
+		"title": "Lucia's Valentine's Day 2022 💞",
+		"date": "2022-02-02",
+		"slug": "lucia-valentines-day-2022-02-02",
+		"htmlItems": [
+			{
+				"type": "media",
+				"medias": [
+					{
+						"type": "image",
+						"src": "/posts/2022/2022-lucia-valentine.png",
+						"alt": "Lucia's Valentine's Day 2022 💞",
 						"lazy": true
 					}
 				]

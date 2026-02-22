@@ -25,6 +25,13 @@
 	}
 
 	$: hasYoutube = media.some((m) => m.type === 'youtube');
+	
+	// Determine if we need the special layout for odd number of items > 1
+	// If odd > 1, the last 3 items will share a row (3 columns), others will be in pairs (2 columns)
+	// To achieve this with a single grid, we use a 6-column grid:
+	// - Normal items span 3 columns (2 per row)
+	// - Last 3 items span 2 columns (3 per row)
+	$: isOddLayout = media.length > 1 && media.length % 2 !== 0;
 </script>
 
 {#if isLightboxOpen}
@@ -62,10 +69,17 @@
 		{/if}
 	</div>
 {:else if media.length > 1}
-	<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
-		{#each media as item}
+	<div 
+		class={`grid grid-cols-1 gap-4 ${isOddLayout ? 'md:grid-cols-6' : 'md:grid-cols-2'}`}
+	>
+		{#each media as item, index}
+			{@const isLastThree = isOddLayout && index >= media.length - 3}
 			<div
-				class={`w-full overflow-hidden rounded-lg shadow-lg ${hasYoutube ? 'aspect-video' : 'aspect-square'}`}
+				class={`w-full overflow-hidden rounded-lg shadow-lg ${hasYoutube ? 'aspect-video' : 'aspect-square'}
+				${isOddLayout 
+					? (isLastThree ? 'md:col-span-2' : 'md:col-span-3') 
+					: ''}
+				`}
 			>
 				{#if item.type === 'youtube'}
 					<YouTubeEmbed width="w-full h-full">
