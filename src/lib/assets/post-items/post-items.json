@@ -1017,7 +1017,7 @@
 				"htmlContent": "Thank you for request, ThePopUp!"
 			},
 			{
-				"type": "youtube",
+				"type": "media",
 				"medias": [
 					{
 						"type": "youtube",
@@ -1131,7 +1131,7 @@
 				"htmlContent": "NieN - FALLING IN LOVE"
 			},
 			{
-				"type": "youtube",
+				"type": "media",
 				"medias": [
 					{
 						"type": "youtube",
