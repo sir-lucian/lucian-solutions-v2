@@ -5,10 +5,11 @@
 	let x = $state(0);
 	let y = $state(0);
 	let isHovering = $state(false);
+	let rect = $state<DOMRect | undefined>();
 
 	function handleMouseMove(e: MouseEvent) {
 		if (!badgeRef) return;
-		const rect = badgeRef.getBoundingClientRect();
+		rect = badgeRef.getBoundingClientRect();
 		x = e.clientX - rect.left;
 		y = e.clientY - rect.top;
 		isHovering = true;
@@ -17,6 +18,30 @@
 	function handleMouseLeave() {
 		isHovering = false;
 	}
+
+	let boxStyle = $derived.by(() => {
+		if (!isHovering || !rect) return '';
+		const centerX = rect.width / 2;
+		const centerY = rect.height / 2;
+
+		const deltaX = (x - centerX) / centerX;
+		const deltaY = (y - centerY) / centerY;
+
+		const maxOffset = 1;
+
+		const rX = deltaX * maxOffset;
+		const rY = deltaY * maxOffset;
+
+		const bX = -deltaX * maxOffset;
+		const bY = -deltaY * maxOffset;
+
+		return `box-shadow: 
+			${rX}px ${rY}px 4px rgba(255, 0, 0, 0.4), 
+			${bX}px ${bY}px 4px rgba(0, 255, 255, 0.4),
+			0 2px 4px -1px rgba(0, 0, 0, 0.1),
+			0 1px 2px -1px rgba(0, 0, 0, 0.06),
+			inset 0 1px 0 0 rgba(255, 255, 255, 0.1);`;
+	});
 
 	const commonClasses = `glass-badge-black relative inline-flex items-center justify-center overflow-hidden rounded-full border border-white/10 bg-black/40 px-3 py-1 text-xs font-medium text-white shadow-md backdrop-blur-md transition-all duration-300 hover:scale-105 hover:bg-black/60 hover:shadow-lg`;
 </script>
@@ -27,16 +52,15 @@
 	onmousemove={handleMouseMove}
 	onmouseleave={handleMouseLeave}
     role="status"
+	style={boxStyle}
 	{...rest}
 >
-	<!-- Shine effect container (subtler for black glass) -->
 	<div
 		class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300"
 		class:opacity-100={isHovering}
 		style="background: radial-gradient(300px circle at {x}px {y}px, rgba(255,255,255,0.15), transparent 40%);"
 	></div>
 
-	<!-- Content wrapper -->
 	<span class="relative z-10 flex items-center gap-1">
 		{@render children?.()}
 	</span>

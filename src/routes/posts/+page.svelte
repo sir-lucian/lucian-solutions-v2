@@ -7,14 +7,15 @@
 	import Container from '$lib/components/Container.svelte';
 	import ImageViewer from '$lib/components/ImageViewer.svelte';
 	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
+	import ButtonGlassBlack from '$lib/components/buttons/ButtonGlassBlack.svelte';
 	import BadgeGlass from '$lib/components/badges/BadgeGlass.svelte';
 	import BadgeGlassBlack from '$lib/components/badges/BadgeGlassBlack.svelte';
 	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
 	import Bokeh from '$lib/components/background/Bokeh.svelte';
 	import postsData from '$lib/assets/post-items/post-items.json';
 	import { MASTER_URL_PREFIX } from '$lib';
+	import { twemojiParse } from '$lib/utils/twemoji';
 
-	// Helper function to map JSON media item to Media interface
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function mapMediaItems(jsonMedias: any[]): any[] {
 		return jsonMedias.map((m) => {
@@ -68,12 +69,10 @@
 		months: MonthGroup[];
 	}
 
-	// Sort posts by date descending first
 	const sortedPosts = [...postsData].sort(
 		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
 	) as Post[];
 
-	// Initial grouping for sidebar (always shows all available posts structure)
 	const allGroupedPosts: YearGroup[] = [];
 	sortedPosts.forEach((post) => {
 		const date = new Date(post.date);
@@ -96,7 +95,6 @@
 		monthGroup.posts.push(post);
 	});
 	
-	// Ensure groups are sorted correctly for display stability
 	allGroupedPosts.sort((a, b) => b.year - a.year);
 	allGroupedPosts.forEach(yearGroup => {
 		yearGroup.months.sort((a, b) => b.monthIndex - a.monthIndex);
@@ -118,7 +116,6 @@
 		const s = page.url.searchParams.get('s');
 		singlePostId = s || null;
 		
-		// If accessing directly via URL or navigation, ensure state is consistent
 		if (singlePostId) {
 			searchQuery = '';
 			activeSearchQuery = '';
@@ -175,11 +172,9 @@
 			monthGroup.posts.push(post);
 		});
 		
-		// Sort groups and months explicitly
 		groups.sort((a, b) => b.year - a.year);
 		groups.forEach(group => {
 			group.months.sort((a, b) => b.monthIndex - a.monthIndex);
-			// Posts are added in order from filteredPosts which is sorted, but explicit sort is safer
 			group.months.forEach(m => {
 				m.posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 			});
@@ -203,8 +198,6 @@
 		selectedMonthIndex = monthIndex;
 		searchQuery = '';
 		activeSearchQuery = '';
-		// If we were in single post mode, clear it but don't navigation away yet (or maybe we should?)
-		// UI interaction implies leaving single post mode
 		if (singlePostId) {
 			singlePostId = null;
 			goto('/posts', { replaceState: true });
@@ -280,16 +273,14 @@
 			<ul class="w-full">
 				{#each allGroupedPosts as group}
 					<li>
-						<!-- Year Selection -->
 						<button
 							class={`btn btn-ghost w-full justify-between h-auto min-h-0 py-2 mb-1 hover:bg-white/5 hover:border-white/10 hover:border ${selectedYear === group.year && selectedMonthIndex === null ? 'btn-active bg-white/10 border-white/10 border' : ''}`}
 							onclick={() => selectFilter(group.year)}
 						>
 							<span class="font-bold">{group.year}</span>
-							<BadgeGlass>{group.months.reduce((acc, m) => acc + m.posts.length, 0)}</BadgeGlass>
+							<BadgeGlass class="pointer-events-none">{group.months.reduce((acc, m) => acc + m.posts.length, 0)}</BadgeGlass>
 						</button>
 						
-						<!-- Months List (Always visible if year is selected or no filters active) -->
 						{#if selectedYear === group.year}
 							<ul class="ml-4 border-l border-white/10 pl-2">
 								{#each group.months as monthGroup}
@@ -303,7 +294,7 @@
 											}}
 										>
 											<span>{monthGroup.monthName}</span>
-											<BadgeGlassBlack class="text-[0.6rem] px-2 py-0.5">{monthGroup.posts.length}</BadgeGlassBlack>
+											<BadgeGlassBlack class="pointer-events-none text-[0.6rem] px-2 py-0.5">{monthGroup.posts.length}</BadgeGlassBlack>
 										</button>
 									</li>
 								{/each}
@@ -336,27 +327,25 @@
 				<p>Lucian's blog posts</p>
 			</div>
 
-			<!-- Search Bar -->
 			<div class="form-control w-full">
 				<div class="join w-full">
 					<input
 						type="text"
 						placeholder="Search posts..."
-						class="input input-bordered join-item w-full bg-black/40 border-white/10 backdrop-blur-md"
+						class="input input-bordered join-item w-full bg-black/40 border-white/10 backdrop-blur-md text-white focus:bg-black/60 focus:border-white/20 transition-all duration-300"
 						bind:value={searchQuery}
 						onkeydown={handleSearchKeydown}
 					/>
-					<button 
-						class="btn btn-square join-item border-white/10 bg-black/40 backdrop-blur-md"
+					<ButtonGlassBlack 
+						class="join-item px-4 border-l-0 rounded-l-none"
 						onclick={performSearch}
 						aria-label="Search"
 					>
 						<i class="fa-solid fa-magnifying-glass"></i>
-					</button>
+					</ButtonGlassBlack>
 				</div>
 			</div>
 
-			<!-- Active Filters / Reset -->
 			{#if singlePostId || activeSearchQuery || selectedYear !== null}
 				<div class="flex items-center gap-2">
 					<span class="text-sm opacity-70">
@@ -378,13 +367,11 @@
 			{/if}
 		</div>
 
-		<!-- Mobile Sidebar Legend -->
 		<div class="lg:hidden w-full">
 			{@render sidebarLegend()}
 		</div>
 
 		<div class="flex flex-col gap-8 lg:flex-row">
-			<!-- Main Content -->
 			<div class="flex flex-1 flex-col gap-12">
 				{#if !isInitialized}
 					<div class="flex justify-center items-center py-20">
@@ -392,12 +379,18 @@
 					</div>
 				{:else}
 					{#if groupedDisplayedPosts.length === 0}
-						<ContainerGlassBlack class="alert text-center flex justify-between">
-							<div>
+						<ContainerGlassBlack class="alert flex w-full flex-row items-center justify-center">
+						<div class="flex items-center gap-2 justify-between">
+							<div class="flex items-center gap-2 text-start">
 								<i class="fa-solid fa-circle-exclamation"></i>
 								<span>No posts found.</span>
 							</div>
-							<ButtonGlass onclick={clearFilters}><i class="fa-solid fa-arrow-left"></i>See all posts</ButtonGlass>
+							<ButtonGlass class="gap-2 h-8 px-3 text-xs" onclick={clearFilters}>
+								<i class="fa-solid fa-arrow-left"></i>
+								See All Posts
+							</ButtonGlass>
+						</div>
+							
 						</ContainerGlassBlack>
 					{/if}
 
@@ -427,7 +420,7 @@
 										>
 											<header class="mb-4">
 												<div class="flex items-start justify-between gap-4">
-													<h3 class="text-2xl font-bold text-primary">{post.title}</h3>
+													<h3 class="text-2xl font-bold text-primary"><!-- eslint-disable-next-line svelte/no-at-html-tags -->{@html twemojiParse(post.title)}</h3>
 													<ButtonGlass
 														class="gap-2 shrink-0 h-8 px-3 text-xs"
 														onclick={() => copyPostLink(post.id)}
@@ -457,7 +450,7 @@
 													{#if post.tags}
 														<div class="flex gap-2">
 															{#each post.tags as tag}
-																<BadgeGlass>{tag}</BadgeGlass>
+																<BadgeGlass><!-- eslint-disable-next-line svelte/no-at-html-tags -->{@html twemojiParse(tag)}</BadgeGlass>
 															{/each}
 														</div>
 													{/if}
@@ -473,7 +466,7 @@
 															<ImageViewer media={mapMediaItems(item.medias)} allPostMedia={allPostMedia} />
 														{:else if item.type === 'paragraph'}
 															<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-															<p class="leading-relaxed">{@html item.htmlContent}</p>
+															<p class="leading-relaxed">{@html twemojiParse(item.htmlContent)}</p>
 														{:else if item.type === 'list'}
 															<ul
 																class="line-height-loose marker: flex list-outside list-none flex-col rounded-lg overflow-hidden"
@@ -481,7 +474,7 @@
 																{#if item.htmlContents}
 																	{#each item.htmlContents as listItem, index}
 																		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-																		<li class="px-4 py-3 bg-secondary/75 text-secondary-content hover:bg-secondary overflow-auto">{@html listItem}</li>
+																		<li class="px-4 py-3 bg-secondary/75 text-secondary-content hover:bg-secondary overflow-auto">{@html twemojiParse(listItem)}</li>
 																	{/each}
 																{/if}
 															</ul>
@@ -496,7 +489,8 @@
 																		{#if button.faIcon}
 																			<i class={button.faIcon} aria-hidden="true"></i>
 																		{/if}
-																		{button.htmlContent}
+																		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+																		{@html twemojiParse(button.htmlContent)}
 																	</ButtonGlass>
 																{/each}
 															</div>
@@ -514,7 +508,6 @@
 			{/if}
 			</div>
 
-		<!-- Sidebar Legend (Visible only on large screens) -->
 			<div class="hidden flex-none lg:block lg:w-64">
 				<div
 					class="sticky top-24"
@@ -523,7 +516,7 @@
 				</div>
 			</div>
 		</div>
-		{#if singlePostId}
+		{#if singlePostId && groupedDisplayedPosts.length !== 0}
 			<div class="flex justify-start w-full lg:w-[calc(100%-18rem)]">
 				<ButtonGlass class="w-full gap-2 text-lg" onclick={clearFilters}>
 					<i class="fa-solid fa-arrow-left"></i> See All Posts

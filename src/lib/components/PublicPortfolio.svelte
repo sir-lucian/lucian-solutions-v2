@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { HtmlParagraph, Media } from '$lib';
+	import { twemojiParse } from '$lib/utils/twemoji';
 	import YouTubeEmbed from './YouTubeEmbed.svelte';
 	import ButtonGlass from './buttons/ButtonGlass.svelte';
 
@@ -14,7 +15,6 @@
 <div
 	class={`flex w-full flex-col gap-8 lg:gap-0 ${reverse ? 'lg:flex-row-reverse' : 'lg:flex-row'}`}
 >
-	<!-- Media Section -->
 	<div class="w-full lg:w-1/2">
 		{#each media as item}
 			{#if item.type === 'youtube'}
@@ -33,17 +33,17 @@
 		{/each}
 	</div>
 
-	<!-- Content Section -->
 	<div
-		class={`flex w-full flex-col justify-center gap-2 lg:w-1/2 ${reverse ? 'items-end text-end' : 'items-start text-start'}`}
+		class={`flex w-full flex-col justify-center gap-2 lg:w-1/2 ${reverse ? 'items-start text-start lg:items-end lg:text-end' : 'items-start text-start'}`}
 	>
 		<div class="mx-4 flex flex-col gap-2">
-			<h3 class="text-xl font-bold text-primary">{title}</h3>
+			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+			<h3 class="text-xl font-bold text-primary">{@html twemojiParse(title)}</h3>
 
 			{#each htmlParagraphs as paragraph}
 				{#if paragraph.type === 'paragraph'}
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-					<p>{@html paragraph.htmlContent}</p>
+					<p>{@html twemojiParse(paragraph.htmlContent as string)}</p>
 				{:else if paragraph.type === 'list'}
 					<ul
 						class="line-height-loose marker: flex list-outside list-none flex-col gap-2 marker:translate-y-0.5 marker:text-primary marker:content-['▹']"
@@ -51,12 +51,12 @@
 						{#if paragraph.htmlContents}
 							{#each paragraph.htmlContents as item}
 								<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-								<li class={`${listFormat} ${reverse ? 'flex-row-reverse' : ''}`}>{@html item}</li>
+								<li class={`${listFormat} ${reverse ? 'lg:flex-row-reverse' : ''}`}>{@html twemojiParse(item)}</li>
 							{/each}
 						{/if}
 					</ul>
 				{:else if paragraph.type === 'button-row'}
-					<div class={`flex flex-wrap gap-2 ${reverse ? 'justify-end' : 'justify-start'}`}>
+					<div class={`flex flex-wrap gap-2 ${reverse ? 'justify-start lg:justify-end' : 'justify-start'}`}>
 						{#if paragraph.buttons}
 							{#each paragraph.buttons as button}
 								<ButtonGlass
@@ -64,7 +64,9 @@
 									openNewWindow={button.openNewTab}
 									class={listFormat}
 								>
-									<i class={`${button.faIcon}`} aria-hidden="true"></i>{button.htmlContent}
+									<i class={`${button.faIcon}`} aria-hidden="true"></i>
+									<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+									{@html twemojiParse(button.htmlContent as string)}
 								</ButtonGlass>
 							{/each}
 						{/if}

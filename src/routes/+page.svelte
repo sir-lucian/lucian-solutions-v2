@@ -77,10 +77,10 @@
 			<Container>
 				<ContainerGlassBlack>
 					<div
-						class="relative flex flex-col items-center justify-center gap-6 p-12 text-center transition-opacity duration-1000"
+						class="relative flex flex-col items-center justify-center gap-6 p-12 text-center transition-opacity duration-1000 my-8"
 					>
 						<div
-							class={`relative w-full ${fontsLoaded ? 'opacity-100' : 'opacity-0'}`}
+							class={`relative w-full my-4 ${fontsLoaded ? 'opacity-100' : 'opacity-0'}`}
 							id="home-title-container"
 						>
 							<h1
