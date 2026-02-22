@@ -14,7 +14,7 @@
             <div class="text-xl uppercase tracking-widest">Coming Soon</div>
             <div class="flex flex-row gap-4 items-center justify-start mt-6">
                 <ButtonGlass class="gap-2" onclick={() => history.back()}><i class="fa-solid fa-undo"></i>Back</ButtonGlass>
-                <button class="btn btn-secondary gap-2" on:click={() => window.location.href = '/'}><i class="fa-solid fa-home"></i>Home</button>
+                <ButtonGlass class="gap-2" href="/"><i class="fa-solid fa-home"></i>Home</ButtonGlass>
             </div>
         </div>
     </div>
