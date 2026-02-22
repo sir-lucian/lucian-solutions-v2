@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { HtmlParagraph, Media } from '$lib';
 	import YouTubeEmbed from './YouTubeEmbed.svelte';
+	import ButtonGlass from './buttons/ButtonGlass.svelte';
 
 	export let title: string;
 	export let htmlParagraphs: HtmlParagraph[] = [];
@@ -58,13 +59,13 @@
 					<div class={`flex flex-wrap gap-2 ${reverse ? 'justify-end' : 'justify-start'}`}>
 						{#if paragraph.buttons}
 							{#each paragraph.buttons as button}
-								<a
+								<ButtonGlass
 									href={button.url}
-									target={button.openNewTab ? '_blank' : '_self'}
-									class={`btn btn-accent ${listFormat}`}
+									openNewWindow={button.openNewTab}
+									class={listFormat}
 								>
 									<i class={`${button.faIcon}`} aria-hidden="true"></i>{button.htmlContent}
-								</a>
+								</ButtonGlass>
 							{/each}
 						{/if}
 					</div>
