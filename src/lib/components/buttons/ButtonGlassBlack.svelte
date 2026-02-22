@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-
 	let { 
 		children, 
 		class: className = '',
@@ -48,10 +46,10 @@
 			${bX}px ${bY}px 4px rgba(0, 255, 255, 0.4),
 			0 4px 6px -1px rgba(0, 0, 0, 0.1),
 			0 2px 4px -1px rgba(0, 0, 0, 0.06),
-			inset 0 1px 0 0 rgba(255, 255, 255, 0.1);`;
+			inset 0 1px 0 0 rgba(255, 255, 255, 0.05);`;
 	});
 
-	const commonClasses = `glass-btn relative inline-flex items-center justify-center overflow-hidden rounded-xl border border-white/20 bg-white/10 px-6 py-3 text-sm font-medium text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-white/10 hover:shadow-xl hover:cursor-pointer`;
+	const commonClasses = `glass-btn-black relative inline-flex items-center justify-center overflow-hidden rounded-xl border border-white/10 bg-black/40 px-6 py-3 text-sm font-medium text-white shadow-lg backdrop-blur-md transition-all duration-300 hover:bg-black/60 hover:shadow-xl hover:cursor-pointer`;
 </script>
 
 {#if href}
@@ -69,7 +67,7 @@
 		<div
 			class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300"
 			class:opacity-100={isHovering}
-			style="background: radial-gradient(600px circle at {x}px {y}px, rgba(255,255,255,0.2), transparent 40%);"
+			style="background: radial-gradient(600px circle at {x}px {y}px, rgba(255,255,255,0.1), transparent 40%);"
 		></div>
 		
 		<span class="relative z-10 flex items-center gap-2">
@@ -88,7 +86,7 @@
 		<div
 			class="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300"
 			class:opacity-100={isHovering}
-			style="background: radial-gradient(600px circle at {x}px {y}px, rgba(255,255,255,0.2), transparent 40%);"
+			style="background: radial-gradient(600px circle at {x}px {y}px, rgba(255,255,255,0.1), transparent 40%);"
 		></div>
 		
 		<span class="relative z-10 flex items-center gap-2">
@@ -98,10 +96,10 @@
 {/if}
 
 <style>
-	.glass-btn {
+	.glass-btn-black {
 		box-shadow: 
-			0 4px 6px -1px rgba(0, 0, 0, 0.1),
-			0 2px 4px -1px rgba(0, 0, 0, 0.06),
-			inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+			0 4px 6px -1px rgba(0, 0, 0, 0.3),
+			0 2px 4px -1px rgba(0, 0, 0, 0.2),
+			inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
 	}
 </style>

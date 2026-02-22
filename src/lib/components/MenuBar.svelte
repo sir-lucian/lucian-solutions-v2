@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 	import SiteLogo from './SiteLogo.svelte';
+	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
 	import menuItemsData from '$lib/assets/menu-items/menu-items.json';
 	import { page } from '$app/state';
 
@@ -49,35 +50,31 @@
 				<div tabindex="-1" class="btn-ghost btn text-xl hover:text-white">
 					<i class="fa-solid fa-bars" aria-hidden="true"></i>
 				</div>
-				<ul
+				<div
 					tabindex="-1"
-					class="dropdown-content menu rounded-box w-52 bg-black/60 backdrop-blur-md p-2 shadow mt-6 mr-3"
+					class="dropdown-content rounded-box w-64 bg-black/60 backdrop-blur-md p-2 shadow-md mt-6 mr-3 flex flex-col gap-2 border border-white/10"
 				>
 					{#each menuItemsData.menus as item}
 						{#if item.path === '/'}
-							<li>
-								<a href="/" class="hover:text-white">
-									<div class="h-full text-lg uppercase tracking-tight font-bold">
-										<i class={item.icon} aria-hidden="true"></i>
-										<span class="ml-1">{item.title}</span>
-									</div>
-								</a>
-							</li>
+							<ButtonGlass href="/" class="hover:text-white w-full h-auto justify-start font-bold">
+								<div class="h-full text-lg uppercase tracking-tight font-bold flex items-center">
+									<i class={`${item.icon} w-6 text-center`} aria-hidden="true"></i>
+									<span class="ml-1">{item.title}</span>
+								</div>
+							</ButtonGlass>
 						{:else}
-							<li>
-								<a
-									href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
-									class="hover:text-white"
-								>
-									<div class="h-full text-lg uppercase tracking-tight font-bold">
-										<i class={item.icon} aria-hidden="true"></i>
-										<span class="ml-1">{item.title}</span>
-									</div>
-								</a>
-							</li>
+							<ButtonGlass
+								href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
+								class="hover:text-white w-full h-auto justify-start font-bold"
+							>
+								<div class="h-full text-lg uppercase tracking-tight font-bold flex items-center">
+									<i class={`${item.icon} w-6 text-center`} aria-hidden="true"></i>
+									<span class="ml-1">{item.title}</span>
+								</div>
+							</ButtonGlass>
 						{/if}
 					{/each}
-				</ul>
+				</div>
 			</div>
 		</div>
 	</header>

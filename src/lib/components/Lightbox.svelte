@@ -10,6 +10,7 @@
 
 	let index = startIndex;
 	let isLoading = true;
+	let hasSwiped = false;
 
 	// Swipe handling variables
 	let touchStartX = 0;
@@ -31,7 +32,10 @@
 	}
 
 	function handleKeydown(e: KeyboardEvent) {
-		if (e.key === 'Escape') onClose();
+		if (e.key === 'Escape') {
+			hasSwiped = false;
+			onClose();
+		}
 
 		if (images.length > 1) {
 			if (e.key === 'ArrowRight') nextImage(e);
@@ -54,6 +58,7 @@
 		const swipeDistance = touchEndX - touchStartX;
 		// If swipe distance is significant enough
 		if (Math.abs(swipeDistance) > minSwipeDistance) {
+			hasSwiped = true;
 			if (swipeDistance > 0) {
 				// Swiped Right -> Previous Image (dragged content to right reveals left item)
 				prevImage();
@@ -103,7 +108,10 @@
 	use:portal
 	class="fixed inset-0 z-9999 flex items-center justify-center bg-black/80 backdrop-blur-md"
 	transition:fade={{ duration: 200 }}
-	on:click={onClose}
+	on:click={() => {
+		hasSwiped = false;
+		onClose();
+	}}
 	on:touchstart={handleTouchStart}
 	on:touchend={handleTouchEnd}
 >
@@ -113,6 +121,7 @@
         aria-label="Close Lightbox"
 		on:click={(e) => {
 			e.stopPropagation();
+			hasSwiped = false;
 			onClose();
 		}}
 	>
@@ -154,6 +163,16 @@
 			{/if}
 		{/key}
 	</div>
+
+	<!-- Mobile Swipe Indicator -->
+	{#if images.length > 2 && !hasSwiped}
+		<div class="absolute bottom-20 left-1/2 -translate-x-1/2 flex items-center gap-2 rounded-full bg-black/50 px-4 py-2 text-sm text-white backdrop-blur-md md:hidden animate-pulse pointer-events-none"
+			transition:fade={{ duration: 300 }}>
+			<i class="fa-solid fa-arrow-left"></i>
+			<i class="fa-solid fa-hand-pointer"></i>
+			<i class="fa-solid fa-arrow-right"></i>
+		</div>
+	{/if}
 
 	<!-- Navigation Next -->
 	{#if images.length > 1}
