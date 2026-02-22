@@ -11,16 +11,21 @@
 	let index = startIndex;
 	let isLoading = true;
 
+	// Swipe handling variables
+	let touchStartX = 0;
+	let touchEndX = 0;
+	const minSwipeDistance = 50;
+
 	$: currentImage = images[index];
 
-	function nextImage(e: Event) {
-		e.stopPropagation();
+	function nextImage(e?: Event) {
+		if (e) e.stopPropagation();
 		index = (index + 1) % images.length;
 		isLoading = true;
 	}
 
-	function prevImage(e: Event) {
-		e.stopPropagation();
+	function prevImage(e?: Event) {
+		if (e) e.stopPropagation();
 		index = (index - 1 + images.length) % images.length;
 		isLoading = true;
 	}
@@ -32,6 +37,42 @@
 			if (e.key === 'ArrowRight') nextImage(e);
 			if (e.key === 'ArrowLeft') prevImage(e);
 		}
+	}
+
+	function handleTouchStart(e: TouchEvent) {
+		touchStartX = e.changedTouches[0].screenX;
+	}
+
+	function handleTouchEnd(e: TouchEvent) {
+		touchEndX = e.changedTouches[0].screenX;
+		handleSwipe();
+	}
+
+	function handleSwipe() {
+		if (images.length <= 1) return;
+
+		const swipeDistance = touchEndX - touchStartX;
+		// If swipe distance is significant enough
+		if (Math.abs(swipeDistance) > minSwipeDistance) {
+			if (swipeDistance > 0) {
+				// Swiped Right -> Previous Image (dragged content to right reveals left item)
+				prevImage();
+			} else {
+				// Swiped Left -> Next Image (dragged content to left reveals right item)
+				nextImage();
+			}
+		}
+	}
+
+	function portal(node: HTMLElement) {
+		document.body.appendChild(node);
+		return {
+			destroy() {
+				if (node.parentNode) {
+					node.parentNode.removeChild(node);
+				}
+			}
+		};
 	}
 
 	onMount(() => {
@@ -59,9 +100,12 @@
 <!-- svelte-ignore a11y-click-events-have-key-events -->
 <!-- svelte-ignore a11y-no-static-element-interactions -->
 <div
-	class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm"
+	use:portal
+	class="fixed inset-0 z-9999 flex items-center justify-center bg-black/80 backdrop-blur-md"
 	transition:fade={{ duration: 200 }}
 	on:click={onClose}
+	on:touchstart={handleTouchStart}
+	on:touchend={handleTouchEnd}
 >
 	<!-- Close Button -->
 	<button

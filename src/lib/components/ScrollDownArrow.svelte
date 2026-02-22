@@ -8,7 +8,7 @@
 </script>
 
 <div 
-	class="absolute bottom-0 left-0 flex h-40 w-full flex-col items-center justify-end bg-linear-to-b from-transparent to-black pb-8 text-base-content transition-opacity duration-500 ease-in-out cursor-default select-none pointer-events-none"
+	class="absolute bottom-0 left-0 flex h-40 w-full flex-col items-center justify-end pb-8 text-base-content transition-opacity duration-500 ease-in-out cursor-default select-none pointer-events-none"
 	class:opacity-100={visible}
 	class:opacity-0={!visible}
     id="scroll-down-arrow"
