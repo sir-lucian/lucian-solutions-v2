@@ -27,8 +27,11 @@
 
 	function handleKeydown(e: KeyboardEvent) {
 		if (e.key === 'Escape') onClose();
-		if (e.key === 'ArrowRight') nextImage(e);
-		if (e.key === 'ArrowLeft') prevImage(e);
+
+		if (images.length > 1) {
+			if (e.key === 'ArrowRight') nextImage(e);
+			if (e.key === 'ArrowLeft') prevImage(e);
+		}
 	}
 
 	onMount(() => {
@@ -89,23 +92,22 @@
 	<div
 		class="relative flex h-full w-full items-center justify-center p-4"
 	>
-		{#if isLoading}
-			<div class="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
-				<span class="loading loading-spinner loading-lg text-primary"></span>
-			</div>
-		{/if}
 		{#key index}
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<img
 				src={MASTER_URL_PREFIX + currentImage.imgSrc}
 				alt={currentImage.altText || 'Lightbox Image'}
-				class={`absolute max-h-[calc(100%-2rem)] max-w-[calc(100%-2rem)] object-contain shadow-2xl rounded-lg transition-opacity duration-300 ${isLoading ? 'opacity-0' : 'opacity-100'}`}
-				transition:fade={{ duration: 300 }}
+				class={`absolute max-h-[calc(100%-2rem)] max-w-[calc(100%-2rem)] object-contain shadow-2xl rounded-lg transition-opacity duration-500 ease-in-out ${isLoading ? 'opacity-0' : 'opacity-100'}`}
 				draggable="false"
 				on:click={(e) => e.stopPropagation()}
 				on:load={() => isLoading = false}
 			/>
+			{#if isLoading}
+				<div class="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
+					<span class="loading loading-spinner loading-lg text-primary"></span>
+				</div>
+			{/if}
 		{/key}
 	</div>
 
