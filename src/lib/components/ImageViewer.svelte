@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
 	import { MASTER_URL_PREFIX, type Media } from '$lib/index';
 	import Lightbox from './Lightbox.svelte';
@@ -8,6 +9,13 @@
 
 	let isLightboxOpen = false;
 	let lightboxIndex = 0;
+	
+	// Map to track loaded state of images
+	let loadedImages: Record<string, boolean> = {};
+
+	function handleImageLoad(src: string) {
+		loadedImages[src] = true;
+	}
 
 	// Filter only image media for the lightbox from the complete set if available
 	$: lightboxImages = (allPostMedia.length > 0 ? allPostMedia : media).filter((m) => m.type === 'image');
@@ -57,15 +65,24 @@
 				></iframe>
 			</YouTubeEmbed>
 		{:else if media[0].type === 'image'}
-			<!-- svelte-ignore a11y-click-events-have-key-events -->
-			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-			<img
-				src={`${MASTER_URL_PREFIX}${media[0].imgSrc}`}
-				alt={media[0].altText || 'Image'}
-				loading={media[0].imgLazyLoad ? 'lazy' : 'eager'}
-				class="h-auto max-w-full cursor-zoom-in rounded-lg shadow-lg hover:brightness-90 transition w-full"
-				on:click={() => openLightbox(media[0])}
-			/>
+			{@const src = `${MASTER_URL_PREFIX}${media[0].imgSrc}`}
+			<div class="relative w-full overflow-hidden rounded-lg shadow-lg">
+				{#if !loadedImages[src]}
+					<div class="absolute inset-0 flex items-center justify-center bg-neutral-800">
+						<span class="loading loading-spinner loading-lg text-primary"></span>
+					</div>
+				{/if}
+				<!-- svelte-ignore a11y-click-events-have-key-events -->
+				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+				<img
+					{src}
+					alt={media[0].altText || 'Image'}
+					loading="eager"
+					class={`h-auto max-w-full cursor-zoom-in hover:brightness-90 transition duration-300 w-full ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
+					on:click={() => openLightbox(media[0])}
+					on:load={() => handleImageLoad(src)}
+				/>
+			</div>
 		{/if}
 	</div>
 {:else if media.length > 1}
@@ -95,15 +112,24 @@
 						></iframe>
 					</YouTubeEmbed>
 				{:else if item.type === 'image'}
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-					<img
-						src={`${MASTER_URL_PREFIX}${item.imgSrc}`}
-						alt={item.altText || 'Image'}
-						loading={item.imgLazyLoad ? 'lazy' : 'eager'}
-						class="h-full w-full cursor-zoom-in object-cover hover:brightness-90 transition"
-						on:click={() => openLightbox(item)}
-					/>
+					{@const src = `${MASTER_URL_PREFIX}${item.imgSrc}`}
+					<div class="relative w-full h-full bg-neutral-800">
+						{#if !loadedImages[src]}
+							<div class="absolute inset-0 flex items-center justify-center">
+								<span class="loading loading-spinner loading-md text-primary"></span>
+							</div>
+						{/if}
+						<!-- svelte-ignore a11y-click-events-have-key-events -->
+						<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+						<img
+							{src}
+							alt={item.altText || 'Image'}
+							loading="eager"
+							class={`h-full w-full object-cover cursor-zoom-in hover:brightness-90 transition duration-300 ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
+							on:click={() => openLightbox(item)}
+							on:load={() => handleImageLoad(src)}
+						/>
+					</div>
 				{/if}
 			</div>
 		{/each}
