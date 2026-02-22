@@ -2,12 +2,14 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
 	import MenuItems from '$lib/assets/menu-items/menu-items.json';
 	import PortfolioItems from '$lib/assets/portfolio-items/portfolio-items.json';
 	import Footer from '$lib/components/Footer.svelte';
 	import SocialButtons from '$lib/components/SocialButtons.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import ScrollDownArrow from '$lib/components/ScrollDownArrow.svelte';
+	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import PublicPortfolio from '$lib/components/PublicPortfolio.svelte';
 	import type { PortfolioItem } from '$lib/assets/portfolio-items/Portfolio';
@@ -69,7 +71,7 @@
 				class=" h-8 w-8 -translate-y-0.5"
 				loading="lazy"
 			/>
-			<h1 class=" font-bold tracking-widest uppercase">Lucian Solutions</h1>
+			<h1 class="font-bold tracking-widest uppercase">Lucian Solutions</h1>
 		</div>
 	</section>
 	<section id="middle">
@@ -90,21 +92,15 @@
 			</div>
 		</div>
 		<h2 class="subtitle">Karn Lucian Kamolnavin</h2>
-		<p>
-			Developer ⨉ Guest pattern designer of <a
-				class="hover:text-primary"
-				href="https://store.steampowered.com/app/960170/DJMAX_RESPECT_V/"
-				>DJMax Respect V <i class="fa-solid fa-link"></i></a
-			>
+		<p class="text-center uppercase">
+			Developer ⨉ Illustrator
 		</p>
 		<SocialButtons />
 		<p class="flex flex-wrap justify-center gap-4">
 			{#each menuItems.filter((item) => item.title !== 'Home') as item}
-				<a href={`${item.href.startsWith('#') ? './' : ''}${item.path}`}>
-					<button class="btn-lucian-translucent btn btn-lg gap-2 uppercase"
-						><i class={`${item.icon} icon-fix`}></i>{item.title}</button
-					>
-				</a>
+				<ButtonGlass class="gap-2 uppercase text-lg px-8 py-4 font-bold text-white shadow-2xl" href={item.path}>
+					<i class={`${item.icon} icon-fix`}></i>{item.title}
+				</ButtonGlass>
 			{/each}
 		</p>
 	</section>
@@ -141,21 +137,21 @@
 					rhythm games, making illustrations, and exploring new technologies in web development.
 				</p>
 				<div class="flex w-full items-center gap-2">
-					<button
-						class="btn-accent btn gap-1 w-50 h-8"
-						on:click={() => (showEmail = !showEmail)}
+					<ButtonGlass
+						class="gap-1 w-50 h-8"
+						onclick={() => (showEmail = !showEmail)}
 					>
 						<i class="fa-solid fa-envelope"></i> {showEmail ? 'Hide' : 'Show'} Email
-					</button>
+					</ButtonGlass>
 					{#if showEmail}
-						<div
+						<ContainerGlassBlack
 							id="me"
 							aria-label="Email Address"
 							transition:fade={{ duration: 300, easing: cubicOut }}
-							class="rounded-md flex grow items-center justify-center h-8 border border-neutral-700 bg-neutral-900 text-sm"
+							class="rounded-md flex grow items-center justify-center h-8 text-sm"
 						>
 							{email}
-						</div>
+						</ContainerGlassBlack>
 					{/if}
 				</div>
 			</div>
