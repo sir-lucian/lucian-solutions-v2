@@ -6,6 +6,11 @@
 	import SEO from '$lib/components/SEO.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import ImageViewer from '$lib/components/ImageViewer.svelte';
+	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
+	import BadgeGlass from '$lib/components/badges/BadgeGlass.svelte';
+	import BadgeGlassBlack from '$lib/components/badges/BadgeGlassBlack.svelte';
+	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
+	import Bokeh from '$lib/components/background/Bokeh.svelte';
 	import postsData from '$lib/assets/post-items/post-items.json';
 	import { MASTER_URL_PREFIX } from '$lib';
 
@@ -259,14 +264,16 @@
 
 <SEO {...seoProps} />
 
+<Bokeh />
+
 {#snippet sidebarLegend(isSticky = false)}
-	<div
-		class={`menu w-full rounded-box shadow-lg bg-neutral-900 border border-neutral-700 opacity-90 p-2 ${isSticky ? 'h-full flex flex-col overflow-hidden' : ''}`}
+	<ContainerGlassBlack
+		class={`menu w-full opacity-90 p-2 ${isSticky ? 'h-full flex flex-col overflow-hidden' : ''}`}
 	>
-		<div class="menu-title flex-none flex flex-row justify-between items-center px-2 py-2 border-b border-neutral-700 mb-2">
+		<div class="menu-title flex-none flex flex-row justify-between items-center px-2 py-2 border-b border-white/10 mb-2">
 			<span class="text-primary uppercase"><i class="fa-solid fa-archive"></i> Archive</span>
 			{#if selectedYear !== null || activeSearchQuery || singlePostId}
-				<button class="btn btn-ghost btn-xs text-xs" onclick={clearFilters}>Show All</button>
+				<ButtonGlass class="text-xs px-3 py-1 h-6 min-h-0" onclick={clearFilters}>Show All</ButtonGlass>
 			{/if}
 		</div>
 		<div class={`${isSticky ? 'flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-100 pr-1' : ''}`}>
@@ -275,28 +282,28 @@
 					<li>
 						<!-- Year Selection -->
 						<button
-							class={`btn btn-ghost btn-sm w-full justify-between mb-1 ${selectedYear === group.year && selectedMonthIndex === null ? 'btn-active' : ''}`}
+							class={`btn btn-ghost w-full justify-between h-auto min-h-0 py-2 mb-1 hover:bg-white/5 hover:border-white/10 hover:border ${selectedYear === group.year && selectedMonthIndex === null ? 'btn-active bg-white/10 border-white/10 border' : ''}`}
 							onclick={() => selectFilter(group.year)}
 						>
 							<span class="font-bold">{group.year}</span>
-							<span class="badge badge-sm badge-accent">{group.months.reduce((acc, m) => acc + m.posts.length, 0)}</span>
+							<BadgeGlass>{group.months.reduce((acc, m) => acc + m.posts.length, 0)}</BadgeGlass>
 						</button>
 						
 						<!-- Months List (Always visible if year is selected or no filters active) -->
 						{#if selectedYear === group.year}
-							<ul class="ml-4 border-l border-neutral-700 pl-2">
+							<ul class="ml-4 border-l border-white/10 pl-2">
 								{#each group.months as monthGroup}
 									<li>
 										<button
-											class={`btn btn-ghost btn-xs w-full justify-between mb-1 ${selectedYear === group.year &&
-												selectedMonthIndex === monthGroup.monthIndex ? 'btn-active text-primary' : ''}`}
+											class={`btn btn-ghost btn-xs w-full justify-between h-auto min-h-0 py-1 mb-1 hover:bg-white/5 hover:border-white/10 hover:border ${selectedYear === group.year &&
+												selectedMonthIndex === monthGroup.monthIndex ? 'btn-active bg-white/10 border-white/10 border text-primary' : ''}`}
 											onclick={(e) => {
 												e.stopPropagation();
 												selectFilter(group.year, monthGroup.monthIndex);
 											}}
 										>
 											<span>{monthGroup.monthName}</span>
-											<span class="badge badge-xs badge-secondary">{monthGroup.posts.length}</span>
+											<BadgeGlassBlack class="text-[0.6rem] px-2 py-0.5">{monthGroup.posts.length}</BadgeGlassBlack>
 										</button>
 									</li>
 								{/each}
@@ -308,15 +315,15 @@
 		</div>
 		{#if isSticky}
 			<div class="flex-none pt-2 border-t border-neutral-700 mt-2">
-				<button 
-					class="btn btn-sm btn-lucian w-full gap-2"
+				<ButtonGlass 
+					class="w-full gap-2"
 					onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
 				>
 					<i class="fa-solid fa-arrow-up"></i> Go To Top
-				</button>
+				</ButtonGlass>
 			</div>
 		{/if}
-	</div>
+	</ContainerGlassBlack>
 {/snippet}
 
 <section class="content-section">
@@ -335,12 +342,12 @@
 					<input
 						type="text"
 						placeholder="Search posts..."
-						class="input input-bordered join-item w-full bg-neutral-900 border-neutral-700"
+						class="input input-bordered join-item w-full bg-black/40 border-white/10 backdrop-blur-md"
 						bind:value={searchQuery}
 						onkeydown={handleSearchKeydown}
 					/>
 					<button 
-						class="btn btn-square join-item border-neutral-700 bg-neutral-800"
+						class="btn btn-square join-item border-white/10 bg-black/40 backdrop-blur-md"
 						onclick={performSearch}
 						aria-label="Search"
 					>
@@ -364,9 +371,9 @@
 							{/if}
 						{/if}
 					</span>
-					<button class="btn btn-ghost btn-xs" onclick={clearFilters}>
-						<i class="fa-solid fa-times"></i> Clear filters
-					</button>
+					<ButtonGlass class="text-xs px-3 py-1 h-6 min-h-0 gap-2" onclick={clearFilters}>
+						<i class="fa-solid fa-times"></i> Clear
+					</ButtonGlass>
 				</div>
 			{/if}
 		</div>
@@ -385,13 +392,13 @@
 					</div>
 				{:else}
 					{#if groupedDisplayedPosts.length === 0}
-						<div class="alert shadow-lg border border-neutral-700 bg-neutral-900 text-center flex justify-between">
+						<ContainerGlassBlack class="alert text-center flex justify-between">
 							<div>
 								<i class="fa-solid fa-circle-exclamation"></i>
 								<span>No posts found.</span>
 							</div>
-							<button class="btn btn-lucian" onclick={clearFilters}><i class="fa-solid fa-arrow-left"></i>See all posts</button>
-						</div>
+							<ButtonGlass onclick={clearFilters}><i class="fa-solid fa-arrow-left"></i>See all posts</ButtonGlass>
+						</ContainerGlassBlack>
 					{/if}
 
 					{#each groupedDisplayedPosts as group}
@@ -413,27 +420,28 @@
 
 								<div class="flex flex-col gap-8">
 									{#each monthGroup.posts as post}
-										<article
+										<ContainerGlassBlack
 											id={`post-${post.id}`}
-											class="scroll-mt-24 rounded-lg p-6 shadow-md bg-neutral-900 border border-neutral-700"
+											role="article"
+											class="scroll-mt-24 p-6"
 										>
 											<header class="mb-4">
 												<div class="flex items-start justify-between gap-4">
 													<h3 class="text-2xl font-bold text-primary">{post.title}</h3>
-													<button
-														class="btn btn-ghost gap-2 shrink-0"
+													<ButtonGlass
+														class="gap-2 shrink-0 h-8 px-3 text-xs"
 														onclick={() => copyPostLink(post.id)}
 														aria-label="Copy link to post"
 														title="Copy link to post"
 													>
 														{#if copiedPostId === post.id}
-															<i class="fa-solid fa-check text-success"></i>
-															<span class="text-success">Copied</span>
+															<i class="fa-solid fa-check"></i>
+															<span>Copied Link to Post</span>
 														{:else}
 															<i class="fa-solid fa-share-nodes"></i>
 															Share
 														{/if}
-													</button>
+													</ButtonGlass>
 												</div>
 												<div
 													class="mt-2 flex flex-wrap items-center gap-4 text-sm font-bold"
@@ -449,7 +457,7 @@
 													{#if post.tags}
 														<div class="flex gap-2">
 															{#each post.tags as tag}
-																<span class="badge badge-outline badge-sm">{tag}</span>
+																<BadgeGlass>{tag}</BadgeGlass>
 															{/each}
 														</div>
 													{/if}
@@ -480,23 +488,23 @@
 														{:else if item.type === 'button-row' && item.buttons}
 															<div class="flex flex-wrap gap-2">
 																{#each item.buttons as button}
-																	<a
+																	<ButtonGlass
 																		href={button.url}
-																		target={button.openNewTab ? '_blank' : '_self'}
-																		class="btn btn-accent btn-sm gap-2"
+																		openNewWindow={button.openNewTab}
+																		class="gap-2 h-8 px-3 text-xs"
 																	>
 																		{#if button.faIcon}
 																			<i class={button.faIcon} aria-hidden="true"></i>
 																		{/if}
 																		{button.htmlContent}
-																	</a>
+																	</ButtonGlass>
 																{/each}
 															</div>
 														{/if}
 													{/each}
 												{/if}
 											</div>
-										</article>
+										</ContainerGlassBlack>
 									{/each}
 								</div>
 							</div>
@@ -517,9 +525,9 @@
 		</div>
 		{#if singlePostId}
 			<div class="flex justify-start w-full lg:w-[calc(100%-18rem)]">
-				<button class="btn btn-lucian btn-lg w-full" onclick={clearFilters}>
+				<ButtonGlass class="w-full gap-2 text-lg" onclick={clearFilters}>
 					<i class="fa-solid fa-arrow-left"></i> See All Posts
-				</button>
+				</ButtonGlass>
 			</div>
 		{/if}
 	</Container>

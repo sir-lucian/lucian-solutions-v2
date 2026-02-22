@@ -2,14 +2,17 @@
 	import { onMount } from 'svelte';
 	import { fade } from 'svelte/transition';
 	import { cubicOut } from 'svelte/easing';
+	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
 	import MenuItems from '$lib/assets/menu-items/menu-items.json';
 	import PortfolioItems from '$lib/assets/portfolio-items/portfolio-items.json';
 	import Footer from '$lib/components/Footer.svelte';
 	import SocialButtons from '$lib/components/SocialButtons.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import ScrollDownArrow from '$lib/components/ScrollDownArrow.svelte';
+	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import PublicPortfolio from '$lib/components/PublicPortfolio.svelte';
+	import Bokeh from '$lib/components/background/Bokeh.svelte';
 	import type { PortfolioItem } from '$lib/assets/portfolio-items/Portfolio';
 
 	const menuItems: { title: string; path: string; icon: string; href: string }[] =
@@ -51,6 +54,7 @@
 	<video autoplay muted loop playsinline class="h-full w-full object-cover">
 		<source src="/assets/ls-video-bg.mp4" type="video/mp4" />
 	</video>
+	<div class="absolute top-0 left-0 h-full w-full bg-black/50"></div>
 </section>
 
 <section
@@ -69,97 +73,104 @@
 				class=" h-8 w-8 -translate-y-0.5"
 				loading="lazy"
 			/>
-			<h1 class=" font-bold tracking-widest uppercase">Lucian Solutions</h1>
+			<h1 class="font-bold tracking-widest uppercase">Lucian Solutions</h1>
 		</div>
 	</section>
 	<section id="middle">
-		<div
-			class={`relative transition-opacity duration-1000 ${fontsLoaded ? 'opacity-100' : 'opacity-0'}`}
-			id="home-title-container"
-		>
-			<h1
-				class="text-center text-6xl leading-[0.7] font-black tracking-tighter text-nowrap text-white uppercase opacity-100 select-none md:text-8xl"
-				id="home-title"
-			>
-				Lucian
-			</h1>
-			<div
-				class="absolute top-0 left-0 flex h-full w-full -translate-x-1 -rotate-1 flex-col items-center justify-center select-none"
-			>
-				<p id="home-title-cursive" class="font-cursive text-5xl text-nowrap md:text-7xl">Lucian Solutions</p>
-			</div>
-		</div>
-		<h2 class="subtitle">Karn Lucian Kamolnavin</h2>
-		<p>
-			Developer ⨉ Guest pattern designer of <a
-				class="hover:text-primary"
-				href="https://store.steampowered.com/app/960170/DJMAX_RESPECT_V/"
-				>DJMax Respect V <i class="fa-solid fa-link"></i></a
-			>
-		</p>
-		<SocialButtons />
-		<p class="flex flex-wrap justify-center gap-4">
-			{#each menuItems.filter((item) => item.title !== 'Home') as item}
-				<a href={`${item.href.startsWith('#') ? './' : ''}${item.path}`}>
-					<button class="btn-lucian-translucent btn btn-lg gap-2 uppercase"
-						><i class={`${item.icon} icon-fix`}></i>{item.title}</button
+		<Container>
+			<ContainerGlassBlack>
+				<div class="relative flex flex-col items-center justify-center gap-6 p-12 transition-opacity duration-1000 text-center">
+				<div
+					class={`relative w-full ${fontsLoaded ? 'opacity-100' : 'opacity-0'}`}
+					id="home-title-container"
+				>
+					<h1
+						class="text-center text-6xl leading-[0.7] font-black tracking-tighter text-nowrap text-white uppercase opacity-100 select-none md:text-8xl"
+						id="home-title"
 					>
-				</a>
-			{/each}
-		</p>
+						Lucian
+					</h1>
+					<div
+						class="absolute top-0 left-0 flex h-full w-full -translate-x-1 -rotate-1 flex-col items-center justify-center select-none"
+					>
+						<p id="home-title-cursive" class="font-cursive text-5xl text-nowrap md:text-7xl">Lucian Solutions</p>
+					</div>
+				</div>
+				<div class="flex flex-col gap-2">
+					<h2 class="subtitle text-center">Karn Lucian Kamolnavin</h2>
+					<p class="text-center uppercase font-bold">
+						Developer ⨉ Illustrator
+					</p>
+				</div>
+				
+				<div class="flex justify-center w-full">
+					<SocialButtons />
+				</div>
+
+				<div class="flex flex-wrap justify-center gap-4 w-full">
+					{#each menuItems.filter((item) => item.title !== 'Home') as item}
+						<ButtonGlass class="gap-2 uppercase text-lg px-8 py-4 font-bold text-white shadow-2xl" href={item.path}>
+							<i class={`${item.icon} icon-fix`}></i>{item.title}
+						</ButtonGlass>
+					{/each}
+				</div>
+				</div>
+			</ContainerGlassBlack>
+		</Container>
 	</section>
 	<section id="bottom">
 		<ScrollDownArrow visible={isHovering} />
 	</section>
 </section>
 
-<section id="about" class="content-section">
-	<Container id="about-me-section">
-		<div class="flex w-full flex-row flex-wrap items-center justify-center gap-6 lg:flex-nowrap">
-			<img
-				src="/assets/ls-avatar.jpg"
-				alt="Karn Lucian Kamolnavin"
-				class="my-4 h-64 w-64 rounded-full shadow-lg md:h-80 md:w-80"
-				loading="lazy"
-			/>
-			<div class="mx-6 flex grow flex-col justify-center gap-4">
-				<h2 class="text-3xl font-bold text-primary uppercase">
-					<i class="fa-solid fa-user" aria-hidden="true"></i> About Me
-				</h2>
-				<p class="text-lg leading-relaxed">
-					Greetings! I'm <strong class="text-primary">Karn Lucian Kamolnavin</strong>, also known
-					as <strong class="text-primary">Lucian</strong> in the developer
-					<i class="fa-solid fa-code" aria-hidden="true"></i>
-					and art <i class="fa-solid fa-palette" aria-hidden="true"></i> community.
-				</p>
-				<p>
-					I'm working full time as a lead frontend developer at an undisclosed state-owned
-					enterprise.
-				</p>
-				<p>
-					In my free time, I enjoy contributing to open source projects, designing patterns for
-					rhythm games, making illustrations, and exploring new technologies in web development.
-				</p>
-				<div class="flex w-full items-center gap-2">
-					<button
-						class="btn-accent btn gap-1 w-50 h-8"
-						on:click={() => (showEmail = !showEmail)}
-					>
-						<i class="fa-solid fa-envelope"></i> {showEmail ? 'Hide' : 'Show'} Email
-					</button>
-					{#if showEmail}
-						<div
-							id="me"
-							aria-label="Email Address"
-							transition:fade={{ duration: 300, easing: cubicOut }}
-							class="rounded-md flex grow items-center justify-center h-8 border border-neutral-700 bg-neutral-900 text-sm"
-						>
-							{email}
-						</div>
-					{/if}
+<div class="relative">
+	<Bokeh />
+	<section id="about" class="content-section">
+		<Container id="about-me-section">
+			<ContainerGlassBlack class="p-8">
+			<div class="flex w-full flex-row flex-wrap items-center justify-center gap-6 lg:flex-nowrap">
+				<img
+					src="/assets/ls-avatar.jpg"
+					alt="Karn Lucian Kamolnavin"
+					class="my-4 h-64 w-64 rounded-full shadow-lg md:h-80 md:w-80"
+					loading="lazy"
+				/>
+				<div class="mx-6 flex grow flex-col justify-center gap-4">
+					<h2 class="text-3xl font-bold text-primary uppercase">
+						<i class="fa-solid fa-user" aria-hidden="true"></i> About Me
+					</h2>
+					<p class="text-lg leading-relaxed">
+						Greetings! I'm <strong class="text-primary">Karn Lucian Kamolnavin</strong>, also known
+						as <strong class="text-primary">Lucian</strong> in the developer
+						<i class="fa-solid fa-code" aria-hidden="true"></i>
+						and art <i class="fa-solid fa-palette" aria-hidden="true"></i> community.
+					</p>
+					<p>
+						I'm working full time as a lead frontend developer at an undisclosed state-owned
+						enterprise.
+					</p>
+					<p>
+						In my free time, I enjoy contributing to open source projects, designing patterns for
+						rhythm games, making illustrations, and exploring new technologies in web development.
+					</p>
+					<div class="flex w-full items-center gap-2">
+						<ButtonGlass class="gap-1 w-50 h-8" onclick={() => (showEmail = !showEmail)}>
+							<i class="fa-solid fa-envelope"></i>
+							{showEmail ? 'Hide' : 'Show'} Email
+						</ButtonGlass>
+						{#if showEmail}
+							<ContainerGlassBlack
+								id="me"
+								aria-label="Email Address"
+								class="rounded-md flex grow items-center justify-center h-8 text-sm"
+							>
+								{email}
+							</ContainerGlassBlack>
+						{/if}
+					</div>
 				</div>
 			</div>
-		</div>
+		</ContainerGlassBlack>
 	</Container>
 </section>
 
@@ -171,12 +182,15 @@
 
 		<div class="flex flex-col gap-16">
 			{#each pagePortfolioItems as item, index}
-				<PublicPortfolio
-					title={item.title}
-					htmlParagraphs={item.htmlParagraphs}
-					media={item.media}
-					reverse={index % 2 !== 0}
-				/>
+				<ContainerGlassBlack class="p-8">
+					<PublicPortfolio
+						title={item.title}
+						htmlParagraphs={item.htmlParagraphs}
+						media={item.media}
+						reverse={index % 2 !== 0}
+					/>
+				</ContainerGlassBlack>
+
 				{#if index < pagePortfolioItems.length - 1}
 					<div class="divider divider-base-content my-0 lg:hidden">◆◆◆</div>
 				{/if}
@@ -185,11 +199,23 @@
 	</Container>
 </section>
 
+</div>
+
 <section id="footer">
 	<Footer />
 </section>
 
 <style scoped>
+	section#video-background {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		overflow: hidden;
+		z-index: 0;
+	}
+
 	section#home {
 		display: flex;
 		position: relative;
@@ -197,7 +223,7 @@
 		justify-content: space-between;
 		align-items: center;
 		height: 100vh;
-		background: rgba(0, 0, 0, 0.75);
+		z-index: 1;
 	}
 
 	section#about {
@@ -208,15 +234,6 @@
 		align-items: center;
 		min-height: 100vh;
 	}
-	section#video-background {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-		z-index: -1;
-	}
 
 	section#top,
 	section#middle,
@@ -226,7 +243,6 @@
 		flex-direction: column;
 		gap: 1rem;
 		justify-content: center;
-		align-items: center;
 		width: 100%;
 		padding: 1rem;
 	}
