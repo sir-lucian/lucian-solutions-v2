@@ -421,7 +421,7 @@
 					},
 					{
 						"type": "image",
-						"src": "/posts/2024/202405-zaru-sheismywife.png",
+						"src": "/posts/2024/202405-zaru-shaismywife.png",
 						"alt": "2024 Doodles - Zaru (She is my wife)",
 						"lazy": true
 					},
@@ -1017,7 +1017,7 @@
 				"htmlContent": "Thank you for request, ThePopUp!"
 			},
 			{
-				"type": "youtube",
+				"type": "media",
 				"medias": [
 					{
 						"type": "youtube",
@@ -1131,7 +1131,7 @@
 				"htmlContent": "NieN - FALLING IN LOVE"
 			},
 			{
-				"type": "youtube",
+				"type": "media",
 				"medias": [
 					{
 						"type": "youtube",
