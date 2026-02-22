@@ -60,7 +60,7 @@
 		style="background: radial-gradient(800px circle at {x}px {y}px, rgba(255,255,255,0.05), transparent 40%);"
 	></div>
 
-	<div class="relative z-10 w-full h-full">
+	<div class="relative z-10 w-full h-full flex flex-col justify-center items-center">
 		{@render children?.()}
 	</div>
 </div>

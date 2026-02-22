@@ -158,18 +158,29 @@
 							rhythm games, making illustrations, and exploring new technologies in web development.
 						</p>
 						<div class="flex w-full items-center gap-2">
-							<ButtonGlass class="h-8 w-50 gap-1" onclick={() => (showEmail = !showEmail)}>
-								<i class="fa-solid fa-envelope"></i>
-								{showEmail ? 'Hide' : 'Show'} Email
+							<ButtonGlass
+								class="gap-2 w-48 h-16 min-w-0 px-0 shrink-0"
+								onclick={() => (showEmail = !showEmail)}
+							>
+								{#if showEmail}
+									<i class="fa-solid fa-eye-slash"></i>Hide
+								{:else}
+									<i class="fa-solid fa-envelope"></i>Show Email
+								{/if}
 							</ButtonGlass>
+
 							{#if showEmail}
-								<ContainerGlassBlack
-									id="me"
-									aria-label="Email Address"
-									class="flex h-8 grow items-center justify-center rounded-md text-sm"
+								<div
+									class="flex grow overflow-hidden"
 								>
-									{email}
-								</ContainerGlassBlack>
+									<ContainerGlassBlack
+										id="me"
+										aria-label="Email Address"
+										class="flex flex-col font-mono font-bold w-full h-16 select-all items-center justify-center rounded-md px-3 text-sm tracking-wider"
+									>
+										<div class="block">{email}</div>
+									</ContainerGlassBlack>
+								</div>
 							{/if}
 						</div>
 					</div>
