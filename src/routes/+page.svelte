@@ -159,7 +159,7 @@
 						</p>
 						<div class="flex w-full items-center gap-2">
 							<ButtonGlass
-								class="gap-2 w-48 h-16 min-w-0 px-0 shrink-0"
+								class="gap-2 w-48 h-12 min-w-0 px-0 shrink-0"
 								onclick={() => (showEmail = !showEmail)}
 							>
 								{#if showEmail}
@@ -176,9 +176,9 @@
 									<ContainerGlassBlack
 										id="me"
 										aria-label="Email Address"
-										class="flex flex-col font-mono font-bold w-full h-16 select-all items-center justify-center rounded-md px-3 text-sm tracking-wider"
+										class="flex flex-col font-mono font-bold w-full h-12 items-center justify-center rounded-md px-3 text-sm tracking-wider"
 									>
-										<div class="block">{email}</div>
+										<div class="flex w-full h-full justify-center items-center select-all">{email}</div>
 									</ContainerGlassBlack>
 								</div>
 							{/if}
