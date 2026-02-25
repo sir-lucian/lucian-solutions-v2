@@ -35,4 +35,4 @@ export enum MediaType {
 }
 
 // Constants
-export const MASTER_URL_PREFIX: string = ""; //"https://luciansolutions-dev.koyeb.app";
+export const MASTER_URL_PREFIX: string = "https://luciansolutions-dev.koyeb.app";

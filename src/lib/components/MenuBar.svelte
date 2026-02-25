@@ -9,6 +9,7 @@
 	let innerHeight = $state(0);
 
 	let showMenu = $derived(page.url.pathname !== '/' || scrollY > innerHeight * 0.85);
+	let dropdownOpen = $state(false);
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />
@@ -47,34 +48,35 @@
 		</div>
 		<div class="block flex-none md:hidden">
 			<div class="dropdown-end dropdown">
-				<div tabindex="-1" class="btn-ghost btn text-xl hover:text-white">
-					<i class="fa-solid fa-bars" aria-hidden="true"></i>
-				</div>
-				<div
-					tabindex="-1"
-					class="dropdown-content rounded-box w-64 bg-black/60 backdrop-blur-md p-2 shadow-md mt-6 mr-3 flex flex-col gap-2 border border-white/10"
-				>
-					{#each menuItemsData.menus as item}
-						{#if item.path === '/'}
-							<ButtonGlass href="/" class="hover:text-white w-full h-auto justify-start font-bold">
-								<div class="h-full text-lg uppercase tracking-tight font-bold flex items-center">
-									<i class={`${item.icon} w-6 text-center`} aria-hidden="true"></i>
-									<span class="ml-1">{item.title}</span>
-								</div>
-							</ButtonGlass>
-						{:else}
-							<ButtonGlass
-								href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
-								class="hover:text-white w-full h-auto justify-start font-bold"
-							>
-								<div class="h-full text-lg uppercase tracking-tight font-bold flex items-center">
-									<i class={`${item.icon} w-6 text-center`} aria-hidden="true"></i>
-									<span class="ml-1">{item.title}</span>
-								</div>
-							</ButtonGlass>
-						{/if}
-					{/each}
-				</div>
+				   <button type="button" class="btn-ghost btn text-xl hover:text-white" aria-label="Open menu" onclick={() => dropdownOpen = !dropdownOpen}>
+					   <i class="fa-solid fa-bars" aria-hidden="true"></i>
+				   </button>
+				   <div
+					   tabindex="-1"
+					   class="dropdown-content rounded-box w-64 bg-black/60 backdrop-blur-md p-2 shadow-md mt-6 mr-3 flex flex-col gap-2 border border-white/10 {dropdownOpen ? '' : 'pointer-events-none'}"
+					   aria-hidden={!dropdownOpen}
+				   >
+					   {#each menuItemsData.menus as item}
+						   {#if item.path === '/'}
+							   <ButtonGlass href="/" class="hover:text-white w-full h-auto justify-start font-bold {dropdownOpen ? '' : 'pointer-events-none'}">
+								   <div class="h-full text-lg uppercase tracking-tight font-bold flex items-center">
+									   <i class={`${item.icon} w-6 text-center`} aria-hidden="true"></i>
+									   <span class="ml-1">{item.title}</span>
+								   </div>
+							   </ButtonGlass>
+						   {:else}
+							   <ButtonGlass
+								   href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
+								   class="hover:text-white w-full h-auto justify-start font-bold {dropdownOpen ? '' : 'pointer-events-none'}"
+							   >
+								   <div class="h-full text-lg uppercase tracking-tight font-bold flex items-center">
+									   <i class={`${item.icon} w-6 text-center`} aria-hidden="true"></i>
+									   <span class="ml-1">{item.title}</span>
+								   </div>
+							   </ButtonGlass>
+						   {/if}
+					   {/each}
+				   </div>
 			</div>
 		</div>
 	</header>
