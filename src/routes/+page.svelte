@@ -77,7 +77,7 @@
 			<Container>
 				<ContainerGlassBlack>
 					<div
-						class="relative flex flex-col items-center justify-center gap-6 p-12 text-center transition-opacity duration-1000 my-8"
+						class="relative flex flex-col items-center justify-center gap-6 py-12 px-3 text-center transition-opacity duration-1000 my-8"
 					>
 						<div
 							class={`relative w-full my-4 ${fontsLoaded ? 'opacity-100' : 'opacity-0'}`}
@@ -126,7 +126,7 @@
 	</section>
 </section>
 
-<div class="relative">
+<div class="relative" id="content">
 	<section id="about" class="content-section">
 		<Container id="about-me-section">
 			<ContainerGlassBlack class="p-8">
@@ -195,7 +195,7 @@
 				<i class="fa-solid fa-briefcase"></i> Public Portfolio
 			</h2>
 
-			<div class="flex flex-col gap-16">
+			<div class="flex flex-col gap-8">
 				{#each pagePortfolioItems as item, index}
 					<ContainerGlassBlack class="p-8">
 						<PublicPortfolio
@@ -236,7 +236,7 @@
 		flex-direction: column;
 		justify-content: space-between;
 		align-items: center;
-		height: 100vh;
+		min-height: 100vh;
 		z-index: 1;
 	}
 
@@ -247,6 +247,7 @@
 		justify-content: center;
 		align-items: center;
 		min-height: 100vh;
+		scroll-margin-top: 80px; /* adjust to match navbar height */
 	}
 
 	section#top,
@@ -304,5 +305,8 @@
 		100% {
 			clip-path: inset(0 0 0 100%);
 		}
+	}
+	#content {
+		padding-top: 1rem; /* match navbar height */
 	}
 </style>
