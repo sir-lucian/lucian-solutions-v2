@@ -6,11 +6,10 @@
 	import Footer from '$lib/components/Footer.svelte';
 	import SocialButtons from '$lib/components/SocialButtons.svelte';
 	import SEO from '$lib/components/SEO.svelte';
-	import ScrollDownArrow from '$lib/components/ScrollDownArrow.svelte';
 	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import PublicPortfolio from '$lib/components/PublicPortfolio.svelte';
-	import type { PortfolioItem } from '$lib/assets/portfolio-items/Portfolio';
+	import type { HtmlParagraph, Media, PortfolioItem } from '$lib/index';
 
 	const menuItems: { title: string; path: string; icon: string; href: string }[] =
 		MenuItems.menus.map((item) => ({
@@ -18,7 +17,7 @@
 			href: item.path === '/' ? '/' : `/${item.path}`
 		}));
 
-	const pagePortfolioItems: PortfolioItem[] = PortfolioItems.items as PortfolioItem[];
+	const pagePortfolioItems: PortfolioItem[] = PortfolioItems.items as unknown as PortfolioItem[];
 
 	let isHovering: boolean = false;
 	let showEmail: boolean = false;
@@ -122,7 +121,9 @@
 		</section>
 	</section>
 	<section id="bottom">
-		<ScrollDownArrow visible={isHovering} />
+		<div class="text-center opacity-0 pointer-events-none select-none">
+			<span class="italic">Plan the work, work the plan</span>
+		</div>
 	</section>
 </section>
 
@@ -200,8 +201,8 @@
 					<ContainerGlassBlack class="p-8">
 						<PublicPortfolio
 							title={item.title}
-							htmlParagraphs={item.htmlParagraphs}
-							media={item.media}
+							htmlParagraphs={item.htmlParagraphs as unknown as HtmlParagraph[]}
+							media={item.media as unknown as Media[] | undefined}
 							reverse={index % 2 !== 0}
 						/>
 					</ContainerGlassBlack>
