@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
-	import { MASTER_URL_PREFIX, type Media } from '$lib/index';
+	import { type Media } from '$lib/index';
 	import Lightbox from './Lightbox.svelte';
+	import { env } from '$env/dynamic/public';
 
 	export let media: Media[] = [];
 	export let allPostMedia: Media[] = [];
@@ -65,7 +65,7 @@
 				></iframe>
 			</YouTubeEmbed>
 		{:else if media[0].type === 'image'}
-			{@const src = `${MASTER_URL_PREFIX}${media[0].imgSrc}`}
+			{@const src = `${env.PUBLIC_FILE_SERVER_URL}${media[0].imgSrc}`}
 			<div class="relative w-full overflow-hidden rounded-lg shadow-lg">
 				{#if !loadedImages[src]}
 					<div class="absolute inset-0 flex items-center justify-center bg-neutral-800">
@@ -112,7 +112,7 @@
 						></iframe>
 					</YouTubeEmbed>
 				{:else if item.type === 'image'}
-					{@const src = `${MASTER_URL_PREFIX}${item.imgSrc}`}
+					{@const src = `${env.PUBLIC_FILE_SERVER_URL}${item.imgSrc}`}
 					<div class="relative w-full h-full bg-neutral-800">
 						{#if !loadedImages[src]}
 							<div class="absolute inset-0 flex items-center justify-center">

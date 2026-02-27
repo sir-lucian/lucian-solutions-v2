@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { type Snippet } from 'svelte';
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import Footer from '$lib/components/Footer.svelte';
@@ -12,9 +11,9 @@
 	import BadgeGlassBlack from '$lib/components/badges/BadgeGlassBlack.svelte';
 	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
 	import Bokeh from '$lib/components/background/Bokeh.svelte';
-	import postsData from '$lib/assets/post-items/post-items.json';
-	import { MASTER_URL_PREFIX } from '$lib';
+	import { fetchPosts } from '$lib/services/PostService';
 	import { twemojiParse } from '$lib/utils/twemoji';
+	import { onMount } from 'svelte';
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function mapMediaItems(jsonMedias: any[]): any[] {
@@ -48,14 +47,19 @@
 		return allMedia;
 	}
 
+	function safeDate(date?: string) {
+		return new Date(date ?? '1970-01-01');
+	}
+
 	interface Post {
 		id: string;
 		title: string;
-		date: string;
 		slug: string;
 		tags: string[];
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		htmlItems: any[];
+		// Optional, fallback if not present
+		date?: string;
 	}
 
 	interface MonthGroup {
@@ -69,13 +73,22 @@
 		months: MonthGroup[];
 	}
 
-	const sortedPosts = [...postsData].sort(
-		(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-	) as Post[];
+
+	let sortedPosts: Post[] = [];
+
+	onMount(async () => {
+		try {
+			const posts = await fetchPosts();
+			// If posts do not have date, fallback to empty string
+			sortedPosts = posts.map(p => ({ ...p, date: p.date ?? '' })).sort((a, b) => new Date(b.date ?? '').getTime() - new Date(a.date ?? '').getTime());
+		} catch (error) {
+			console.error('Failed to fetch posts:', error);
+		}
+	});
 
 	const allGroupedPosts: YearGroup[] = [];
 	sortedPosts.forEach((post) => {
-		const date = new Date(post.date);
+		const date = safeDate(post.date);
 		const year = date.getFullYear();
 		const monthIndex = date.getMonth();
 		const monthName = date.toLocaleString('default', { month: 'long' });
@@ -99,7 +112,7 @@
 	allGroupedPosts.forEach(yearGroup => {
 		yearGroup.months.sort((a, b) => b.monthIndex - a.monthIndex);
 		yearGroup.months.forEach(monthGroup => {
-			monthGroup.posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+			monthGroup.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
 		});
 	});
 
@@ -139,7 +152,7 @@
 			posts = posts.filter((p) => p.title.toLowerCase().includes(q));
 		} else if (selectedYear !== null) {
 			posts = posts.filter((p) => {
-				const d = new Date(p.date);
+				const d = safeDate(p.date);
 				if (d.getFullYear() !== selectedYear) return false;
 				if (selectedMonthIndex !== null && d.getMonth() !== selectedMonthIndex) return false;
 				return true;
@@ -152,7 +165,7 @@
 	let groupedDisplayedPosts = $derived.by(() => {
 		const groups: YearGroup[] = [];
 		filteredPosts.forEach((post) => {
-			const date = new Date(post.date);
+			const date = safeDate(post.date);
 			const year = date.getFullYear();
 			const monthIndex = date.getMonth();
 			const monthName = date.toLocaleString('default', { month: 'long' });
@@ -176,7 +189,7 @@
 		groups.forEach(group => {
 			group.months.sort((a, b) => b.monthIndex - a.monthIndex);
 			group.months.forEach(m => {
-				m.posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+				m.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
 			});
 		});
 
@@ -239,7 +252,7 @@
 			const post = sortedPosts.find((p) => p.id === singlePostId);
 			if (post) {
 				const images = getAllPostImages(post).filter((m) => m.type === 'image');
-				const firstImage = images.length > 0 ? `${MASTER_URL_PREFIX}${images[0].imgSrc}` : undefined;
+				const firstImage = images.length > 0 ? `${images[0].imgSrc}` : undefined;
 				
 				return {
 					title: post.title,
@@ -441,7 +454,7 @@
 												>
 													<span class="flex items-center gap-2">
 														<i class="fa-regular fa-calendar"></i>
-														{new Date(post.date).toLocaleDateString('en-GB', {
+														{safeDate(post.date).toLocaleDateString('en-GB', {
 															day: 'numeric',
 															month: 'long',
 															year: 'numeric'

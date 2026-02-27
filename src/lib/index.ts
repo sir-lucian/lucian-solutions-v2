@@ -29,6 +29,7 @@ export interface HtmlItem {
 }
 
 export interface PostItem {
+	date: string;
     id: string;
     title: string;
     slug: string;
@@ -67,8 +68,3 @@ export enum PortfolioItemType {
     HtmlParagraphs = "htmlParagraphs",
     Media = "media"
 }
-
-
-// Constants
-export const MASTER_URL_PREFIX: string = "https://luciansolutions-dev.koyeb.app";
-export const MEDIA_URL_PREFIX: string = "https://luciansolutions-dev-files.koyeb.app/files";
