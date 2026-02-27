@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { MASTER_URL_PREFIX, type Media } from '$lib/index';
+	import { type Media } from '$lib/index';
 	import { onMount } from 'svelte';
+	import { env } from '$env/dynamic/public';
 
 	export let images: Media[];
 	export let startIndex: number = 0;
@@ -149,7 +150,7 @@
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<img
-				src={MASTER_URL_PREFIX + currentImage.imgSrc}
+				src={env.PUBLIC_FILE_SERVER_URL + (currentImage.imgSrc ?? '')}
 				alt={currentImage.altText || 'Lightbox Image'}
 				class={`absolute max-h-[calc(100%-2rem)] max-w-[calc(100%-2rem)] object-contain shadow-2xl rounded-lg transition-opacity duration-500 ease-in-out ${isLoading ? 'opacity-0' : 'opacity-100'}`}
 				draggable="false"
