@@ -48,6 +48,7 @@
 	},
 	"dependencies": {
 		"@fortawesome/fontawesome-free": "^7.2.0",
-		"@twemoji/api": "^17.0.2"
+		"@twemoji/api": "^17.0.2",
+		"dotenv": "^17.3.1"
 	}
 }
