@@ -87,40 +87,34 @@
 		}
 	});
 
-	let allGroupedPosts: YearGroup[] = $state([]);
+	const allGroupedPosts: YearGroup[] = [];
+	get(sortedPosts).forEach((post: Post) => {
+		const date = safeDate(post.date);
+		const year = date.getFullYear();
+		const monthIndex = date.getMonth();
+		const monthName = date.toLocaleString('default', { month: 'long' });
 
-	$effect(() => {
-		const groups: YearGroup[] = [];
-		$sortedPosts.forEach((post: Post) => {
-			const date = safeDate(post.date);
-			const year = date.getFullYear();
-			const monthIndex = date.getMonth();
-			const monthName = date.toLocaleString('default', { month: 'long' });
+		let yearGroup = allGroupedPosts.find((g) => g.year === year);
+		if (!yearGroup) {
+			yearGroup = { year, months: [] };
+			allGroupedPosts.push(yearGroup);
+		}
 
-			let yearGroup = groups.find((g) => g.year === year);
-			if (!yearGroup) {
-				yearGroup = { year, months: [] };
-				groups.push(yearGroup);
-			}
+		let monthGroup = yearGroup.months.find((m) => m.monthIndex === monthIndex);
+		if (!monthGroup) {
+			monthGroup = { monthName, monthIndex, posts: [] };
+			yearGroup.months.push(monthGroup);
+		}
 
-			let monthGroup = yearGroup.months.find((m) => m.monthIndex === monthIndex);
-			if (!monthGroup) {
-				monthGroup = { monthName, monthIndex, posts: [] };
-				yearGroup.months.push(monthGroup);
-			}
-
-			monthGroup.posts.push(post);
+		monthGroup.posts.push(post);
+	});
+	
+	allGroupedPosts.sort((a, b) => b.year - a.year);
+	allGroupedPosts.forEach(yearGroup => {
+		yearGroup.months.sort((a, b) => b.monthIndex - a.monthIndex);
+		yearGroup.months.forEach(monthGroup => {
+			monthGroup.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
 		});
-
-		groups.sort((a, b) => b.year - a.year);
-		groups.forEach(yearGroup => {
-			yearGroup.months.sort((a, b) => b.monthIndex - a.monthIndex);
-			yearGroup.months.forEach(monthGroup => {
-				monthGroup.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
-			});
-		});
-
-		allGroupedPosts = groups;
 	});
 
 	let searchQuery = $state('');
