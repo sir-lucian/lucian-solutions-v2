@@ -16,6 +16,7 @@
 
 	// Runes states
 	import { writable } from 'svelte/store';
+	import Footer from '$lib/components/Footer.svelte';
 
 	let fanarts = writable<FanartItem[]>([]);
 	let artists = writable<{ name: string; slug?: string | null; items: Art[] }[]>([]); // { name, slug, items }
@@ -227,6 +228,11 @@
 		</div>
 	</Container>
 </section>
+
+<section id="footer" class="bg-black/60 shadow-md backdrop-blur-md">
+	<Footer />
+</section>
+
 
 <style scoped>
 	.content-section {
