@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { DEFAULT_SEO_IMAGE } from "$lib";
+
 	interface Props {
 		title: string;
 		description?: string;
@@ -13,7 +15,7 @@
 	let {
 		title,
 		description = "Lucian Solutions",
-		image = "/assets/ls-seo.png", // Default image if not provided
+		image = DEFAULT_SEO_IMAGE, // Default image if not provided
 		url,
 		type = "website",
 		siteName = "Lucian Solutions",

@@ -70,3 +70,4 @@ export enum MediaType {
 }
 
 // Portfolio items use `HtmlParagraph` and `Media` types directly; removed unused enum
+export const DEFAULT_SEO_IMAGE = "/assets/ls-seo.jpg";
