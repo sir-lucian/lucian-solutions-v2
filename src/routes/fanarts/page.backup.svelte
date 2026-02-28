@@ -52,11 +52,6 @@
 				list.push({ name: f.artist, slug: f.slug ?? null, items: f.art || [] });
 			}
 		});
-
-		// Sort top-level art pieces for each artist from last -> first. Do NOT sort `children` arrays.
-		for (const a of list) {
-			a.items = (a.items || []).slice().reverse();
-		}
 		artists.set(list);
 	}
 
@@ -78,7 +73,7 @@
 	}
 </script>
 
-<SEO title="Fanarts" description="Community's Contribution" />
+<SEO title="Fanarts" description="Fanart gallery" />
 
 <Bokeh />
 
@@ -124,13 +119,12 @@
 				<h2 class="text-3xl font-bold text-primary uppercase">
 					<i class="fa-solid fa-image"></i> Fanarts
 				</h2>
-				<p>Community's Contribution</p>
+				<p>Fan artworks grouped by artist</p>
 			</div>
 
 			<!-- Character sheet -->
 			<div class="w-full">
 				<ContainerGlassBlack class="p-4 mb-4">
-                <h3 class="text-2xl font-bold text-white mb-4"><i class="fa-solid fa-id-card"></i> Character Sheet</h3>
 					<ImageViewer media={characterSheetMedia} allPostMedia={characterSheetMedia} />
 				</ContainerGlassBlack>
 			</div>
@@ -155,7 +149,7 @@
 						{#each $artists.filter(a => a.name === $selectedArtist) as artist}
 							<ContainerGlassBlack class="p-4 mb-4">
 								<header class="mb-4 flex items-center justify-between">
-									<h3 class="text-2xl font-bold text-white"><i class="fa-solid fa-palette"></i> {artistLabel(artist)}</h3>
+									<h3 class="text-2xl font-bold">{artistLabel(artist)}</h3>
 								</header>
 								<div class="flex flex-col gap-4">
 									{#each artist.items as art}

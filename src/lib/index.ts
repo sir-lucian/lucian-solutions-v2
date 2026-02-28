@@ -22,19 +22,31 @@ export interface Media {
 }
 
 export interface HtmlItem {
-    type: PostHtmlItemType;
+    type: HtmlType;
     htmlContent: string;
     htmlContents?: string[];
     medias?: Media[];
 }
 
 export interface PostItem {
-	date: string;
+    date: string;
     id: string;
     title: string;
     slug: string;
     tags: string[];
     htmlItems: HtmlItem[];
+}
+
+export interface FanartItem {
+    artist: string,
+    slug?: string | null,
+    slug_language?: string | null,
+    art: Art[]
+}
+
+export interface Art {
+    filePath: string,
+    children?: Art[]
 }
 
 export interface PortfolioItem {
@@ -46,6 +58,7 @@ export interface PortfolioItem {
 // Enums
 export enum HtmlType {
     Paragraph = 'paragraph',
+    Header = 'header',
     List = 'list',
     Media = 'media',
     ButtonRow = 'button-row',
@@ -54,13 +67,6 @@ export enum HtmlType {
 export enum MediaType {
     YouTube = 'youtube',
     Image = 'image',
-}
-
-export enum PostHtmlItemType {
-    Paragraph = "paragraph",
-    List = "list",
-    ButtonRow = "button-row",
-    Media = "media"
 }
 
 export enum PortfolioItemType {

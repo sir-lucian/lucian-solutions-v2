@@ -14,7 +14,8 @@
 	import { fetchPosts } from '$lib/services/PostService';
 	import { twemojiParse } from '$lib/utils/twemoji';
 	import { onMount } from 'svelte';
-	import { writable, get } from 'svelte/store';
+	import { writable } from 'svelte/store';
+	import { HtmlType } from '$lib';
 
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	function mapMediaItems(jsonMedias: any[]): any[] {
@@ -78,43 +79,52 @@
 	let sortedPosts = writable<Post[]>([]);
 
 	onMount(async () => {
-		try {
-			const posts = await fetchPosts();
-			// If posts do not have date, fallback to empty string
-			sortedPosts.set(posts.map(p => ({ ...p, date: p.date ?? '' })).sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime()));
-		} catch (error) {
-			console.error('Failed to fetch posts:', error);
-		}
+	 		isLoading = true;
+	 		try {
+	 			const posts = await fetchPosts();
+	 			// If posts do not have date, fallback to empty string
+	 			sortedPosts.set(posts.map(p => ({ ...p, date: p.date ?? '' })).sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime()));
+	 		} catch (error) {
+	 			console.error('Failed to fetch posts:', error);
+	 		} finally {
+	 			isLoading = false;
+	 		}
 	});
 
-	const allGroupedPosts: YearGroup[] = [];
-	get(sortedPosts).forEach((post: Post) => {
-		const date = safeDate(post.date);
-		const year = date.getFullYear();
-		const monthIndex = date.getMonth();
-		const monthName = date.toLocaleString('default', { month: 'long' });
+	let allGroupedPosts: YearGroup[] = $state([]);
 
-		let yearGroup = allGroupedPosts.find((g) => g.year === year);
-		if (!yearGroup) {
-			yearGroup = { year, months: [] };
-			allGroupedPosts.push(yearGroup);
-		}
+	$effect(() => {
+		const groups: YearGroup[] = [];
+		$sortedPosts.forEach((post: Post) => {
+			const date = safeDate(post.date);
+			const year = date.getFullYear();
+			const monthIndex = date.getMonth();
+			const monthName = date.toLocaleString('default', { month: 'long' });
 
-		let monthGroup = yearGroup.months.find((m) => m.monthIndex === monthIndex);
-		if (!monthGroup) {
-			monthGroup = { monthName, monthIndex, posts: [] };
-			yearGroup.months.push(monthGroup);
-		}
+			let yearGroup = groups.find((g) => g.year === year);
+			if (!yearGroup) {
+				yearGroup = { year, months: [] };
+				groups.push(yearGroup);
+			}
 
-		monthGroup.posts.push(post);
-	});
-	
-	allGroupedPosts.sort((a, b) => b.year - a.year);
-	allGroupedPosts.forEach(yearGroup => {
-		yearGroup.months.sort((a, b) => b.monthIndex - a.monthIndex);
-		yearGroup.months.forEach(monthGroup => {
-			monthGroup.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
+			let monthGroup = yearGroup.months.find((m) => m.monthIndex === monthIndex);
+			if (!monthGroup) {
+				monthGroup = { monthName, monthIndex, posts: [] };
+				yearGroup.months.push(monthGroup);
+			}
+
+			monthGroup.posts.push(post);
 		});
+
+		groups.sort((a, b) => b.year - a.year);
+		groups.forEach(yearGroup => {
+			yearGroup.months.sort((a, b) => b.monthIndex - a.monthIndex);
+			yearGroup.months.forEach(monthGroup => {
+				monthGroup.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
+			});
+		});
+
+		allGroupedPosts = groups;
 	});
 
 	let searchQuery = $state('');
@@ -125,6 +135,7 @@
 	let copiedPostId: string | null = $state(null);
 	let copyTimeout: NodeJS.Timeout;
 	let isInitialized = $state(false);
+	let isLoading = $state(true);
 
 	$effect(() => {
 		const s = page.url.searchParams.get('s');
@@ -387,7 +398,7 @@
 
 		<div class="flex flex-col gap-8 lg:flex-row">
 			<div class="flex flex-1 flex-col gap-12">
-				{#if !isInitialized}
+				{#if isLoading}
 					<div class="flex justify-center items-center py-20">
 						<span class="loading loading-spinner loading-lg text-primary"></span>
 					</div>
@@ -476,12 +487,15 @@
 												{#if post.htmlItems}
 													{@const allPostMedia = getAllPostImages(post)}
 													{#each post.htmlItems as item}
-														{#if item.type === 'media' && item.medias}
+														{#if item.type === HtmlType.Media && item.medias}
 															<ImageViewer media={mapMediaItems(item.medias)} allPostMedia={allPostMedia} />
-														{:else if item.type === 'paragraph'}
+														{:else if item.type === HtmlType.Paragraph}
 															<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 															<p class="leading-relaxed">{@html twemojiParse(item.htmlContent)}</p>
-														{:else if item.type === 'list'}
+														{:else if item.type === HtmlType.Header}
+															<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+															<h4 class="text-lg font-bold mt-4 mb-2 text-primary">{@html twemojiParse(item.htmlContent)}</h4>
+														{:else if item.type === HtmlType.List}
 															<ul
 																class="line-height-loose marker: flex list-outside list-none flex-col rounded-lg overflow-hidden"
 															>
@@ -492,7 +506,7 @@
 																	{/each}
 																{/if}
 															</ul>
-														{:else if item.type === 'button-row' && item.buttons}
+														{:else if item.type === HtmlType.ButtonRow && item.buttons}
 															<div class="flex flex-wrap gap-2">
 																{#each item.buttons as button}
 																	<ButtonGlass

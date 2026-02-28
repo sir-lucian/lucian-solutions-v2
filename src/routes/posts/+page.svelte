@@ -1,278 +1,308 @@
 <script lang="ts">
-	import { page } from '$app/state';
-	import { goto } from '$app/navigation';
-	import Footer from '$lib/components/Footer.svelte';
-	import SEO from '$lib/components/SEO.svelte';
-	import Container from '$lib/components/Container.svelte';
-	import ImageViewer from '$lib/components/ImageViewer.svelte';
-	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
-	import ButtonGlassBlack from '$lib/components/buttons/ButtonGlassBlack.svelte';
-	import BadgeGlass from '$lib/components/badges/BadgeGlass.svelte';
-	import BadgeGlassBlack from '$lib/components/badges/BadgeGlassBlack.svelte';
-	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
-	import Bokeh from '$lib/components/background/Bokeh.svelte';
-	import { fetchPosts } from '$lib/services/PostService';
-	import { twemojiParse } from '$lib/utils/twemoji';
-	import { onMount } from 'svelte';
-	import { writable, get } from 'svelte/store';
+import { page } from '$app/state';
+import { goto } from '$app/navigation';
+import Footer from '$lib/components/Footer.svelte';
+import SEO from '$lib/components/SEO.svelte';
+import Container from '$lib/components/Container.svelte';
+import ImageViewer from '$lib/components/ImageViewer.svelte';
+import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
+import ButtonGlassBlack from '$lib/components/buttons/ButtonGlassBlack.svelte';
+import BadgeGlass from '$lib/components/badges/BadgeGlass.svelte';
+import BadgeGlassBlack from '$lib/components/badges/BadgeGlassBlack.svelte';
+import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
+import Bokeh from '$lib/components/background/Bokeh.svelte';
+import { fetchPosts } from '$lib/services/PostService';
+import { twemojiParse } from '$lib/utils/twemoji';
+import { onMount } from 'svelte';
+import { writable } from 'svelte/store';
+import { HtmlType } from '$lib';
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	function mapMediaItems(jsonMedias: any[]): any[] {
-		return jsonMedias.map((m) => {
-			let type = m.type;
-			if (m.src) {
-				const extension = m.src.split('.').pop()?.toLowerCase();
-				if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'].includes(extension)) {
-					type = 'image';
-				}
-			}
-			return {
-				type: type,
-				imgSrc: m.src,
-				altText: m.alt,
-				embededUrl: m.embededUrl,
-				imgLazyLoad: m.lazy || true
-			};
-		});
-	}
+// helpers
+function safeDate(date?: string) {
+	return new Date(date ?? '1970-01-01');
+}
 
-	function getAllPostImages(post: Post): any[] {
-		let allMedia: any[] = [];
-		if (post.htmlItems) {
-			post.htmlItems.forEach((item) => {
-				if (item.type === 'media' && item.medias) {
-					allMedia = [...allMedia, ...mapMediaItems(item.medias)];
-				}
-			});
-		}
-		return allMedia;
-	}
-
-	function safeDate(date?: string) {
-		return new Date(date ?? '1970-01-01');
-	}
-
-	interface Post {
-		id: string;
-		title: string;
-		slug: string;
-		tags: string[];
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		htmlItems: any[];
-		// Optional, fallback if not present
-		date?: string;
-	}
-
-	interface MonthGroup {
-		monthName: string;
-		monthIndex: number;
-		posts: Post[];
-	}
-
-	interface YearGroup {
-		year: number;
-		months: MonthGroup[];
-	}
-
-
-	let sortedPosts = writable<Post[]>([]);
-
-	onMount(async () => {
-		try {
-			const posts = await fetchPosts();
-			// If posts do not have date, fallback to empty string
-			sortedPosts.set(posts.map(p => ({ ...p, date: p.date ?? '' })).sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime()));
-		} catch (error) {
-			console.error('Failed to fetch posts:', error);
-		}
-	});
-
-	let allGroupedPosts: YearGroup[] = $state([]);
-
-	$effect(() => {
-		const groups: YearGroup[] = [];
-		$sortedPosts.forEach((post: Post) => {
-			const date = safeDate(post.date);
-			const year = date.getFullYear();
-			const monthIndex = date.getMonth();
-			const monthName = date.toLocaleString('default', { month: 'long' });
-
-			let yearGroup = groups.find((g) => g.year === year);
-			if (!yearGroup) {
-				yearGroup = { year, months: [] };
-				groups.push(yearGroup);
-			}
-
-			let monthGroup = yearGroup.months.find((m) => m.monthIndex === monthIndex);
-			if (!monthGroup) {
-				monthGroup = { monthName, monthIndex, posts: [] };
-				yearGroup.months.push(monthGroup);
-			}
-
-			monthGroup.posts.push(post);
-		});
-
-		groups.sort((a, b) => b.year - a.year);
-		groups.forEach(yearGroup => {
-			yearGroup.months.sort((a, b) => b.monthIndex - a.monthIndex);
-			yearGroup.months.forEach(monthGroup => {
-				monthGroup.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
-			});
-		});
-
-		allGroupedPosts = groups;
-	});
-
-	let searchQuery = $state('');
-	let activeSearchQuery = $state('');
-	let selectedYear: number | null = $state(null);
-	let selectedMonthIndex: number | null = $state(null);
-	let singlePostId: string | null = $state(null);
-	let copiedPostId: string | null = $state(null);
-	let copyTimeout: NodeJS.Timeout;
-	let isInitialized = $state(false);
-
-	$effect(() => {
-		const s = page.url.searchParams.get('s');
-		singlePostId = s || null;
-		
-		if (singlePostId) {
-			searchQuery = '';
-			activeSearchQuery = '';
-			selectedYear = null;
-			selectedMonthIndex = null;
-		}
-		isInitialized = true;
-	});
-
-	let filteredPosts = $derived.by(() => {
-		if (!isInitialized) return [];
-		
-		let posts = $sortedPosts;
-
-		if (singlePostId) {
-			return posts.filter((p) => p.id === singlePostId);
-		}
-
-		if (activeSearchQuery) {
-			const q = activeSearchQuery.toLowerCase();
-			posts = posts.filter((p) => p.title.toLowerCase().includes(q));
-		} else if (selectedYear !== null) {
-			posts = posts.filter((p) => {
-				const d = safeDate(p.date);
-				if (d.getFullYear() !== selectedYear) return false;
-				if (selectedMonthIndex !== null && d.getMonth() !== selectedMonthIndex) return false;
-				return true;
-			});
-		}
-
-		return posts;
-	});
-
-	let groupedDisplayedPosts = $derived.by(() => {
-		const groups: YearGroup[] = [];
-		filteredPosts.forEach((post) => {
-			const date = safeDate(post.date);
-			const year = date.getFullYear();
-			const monthIndex = date.getMonth();
-			const monthName = date.toLocaleString('default', { month: 'long' });
-
-			let yearGroup = groups.find((g) => g.year === year);
-			if (!yearGroup) {
-				yearGroup = { year, months: [] };
-				groups.push(yearGroup);
-			}
-
-			let monthGroup = yearGroup.months.find((m) => m.monthIndex === monthIndex);
-			if (!monthGroup) {
-				monthGroup = { monthName, monthIndex, posts: [] };
-				yearGroup.months.push(monthGroup);
-			}
-
-			monthGroup.posts.push(post);
-		});
-		
-		groups.sort((a, b) => b.year - a.year);
-		groups.forEach(group => {
-			group.months.sort((a, b) => b.monthIndex - a.monthIndex);
-			group.months.forEach(m => {
-				m.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
-			});
-		});
-
-		return groups;
-	});
-
-	function clearFilters() {
-		searchQuery = '';
-		activeSearchQuery = '';
-		selectedYear = null;
-		selectedMonthIndex = null;
-		singlePostId = null;
-		goto('/posts', { replaceState: true });
-		window.scrollTo({ top: 0, behavior: 'smooth' });
-	}
-
-	function selectFilter(year: number, monthIndex: number | null = null) {
-		selectedYear = year;
-		selectedMonthIndex = monthIndex;
-		searchQuery = '';
-		activeSearchQuery = '';
-		if (singlePostId) {
-			singlePostId = null;
-			goto('/posts', { replaceState: true });
-		}
-	}
-
-	function performSearch() {
-		if (singlePostId) {
-			singlePostId = null;
-			goto('/posts', { replaceState: true });
-		}
-		selectedYear = null;
-		selectedMonthIndex = null;
-		activeSearchQuery = searchQuery;
-	}
-
-	function handleSearchKeydown(e: KeyboardEvent) {
-		if (e.key === 'Enter') {
-			performSearch();
-		}
-	}
-
-	function copyPostLink(postId: string) {
-		const url = new URL(window.location.href);
-		url.searchParams.set('s', postId);
-		navigator.clipboard.writeText(url.toString()).then(() => {
-			copiedPostId = postId;
-			if (copyTimeout) clearTimeout(copyTimeout);
-			copyTimeout = setTimeout(() => {
-				copiedPostId = null;
-			}, 2000);
-		}).catch(err => {
-			console.error('Failed to copy: ', err);
-		});
-	}
-
-	let seoProps = $derived.by(() => {
-		if (singlePostId) {
-			const post = $sortedPosts.find((p) => p.id === singlePostId);
-			if (post) {
-				const images = getAllPostImages(post).filter((m) => m.type === 'image');
-				const firstImage = images.length > 0 ? `${images[0].imgSrc}` : undefined;
-				
-				return {
-					title: post.title,
-					description: `Read "${post.title}" on Lucian Solutions.`,
-					image: firstImage
-				};
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function mapMediaItems(jsonMedias: any[]): any[] {
+	return jsonMedias.map((m) => {
+		let type = m.type;
+		if (m.src) {
+			const extension = m.src.split('.').pop()?.toLowerCase();
+			if (['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg'].includes(extension)) {
+				type = 'image';
 			}
 		}
 		return {
-			title: "Posts",
-			description: "Lucian's blog posts"
+			type: type,
+			imgSrc: m.src,
+			altText: m.alt,
+			embededUrl: m.embededUrl,
+			imgLazyLoad: m.lazy ?? true
 		};
 	});
+}
+
+function getAllPostImages(post: Post): any[] {
+	let allMedia: any[] = [];
+	if (post.htmlItems) {
+		post.htmlItems.forEach((item) => {
+			if (item.type === 'media' && item.medias) {
+				allMedia = [...allMedia, ...mapMediaItems(item.medias)];
+			}
+		});
+	}
+	return allMedia;
+}
+
+// types
+interface Post {
+	id: string;
+	title: string;
+	slug: string;
+	tags: string[];
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	htmlItems: any[];
+	date?: string;
+}
+
+interface MonthGroup {
+	monthName: string;
+	monthIndex: number;
+	posts: Post[];
+}
+
+interface YearGroup {
+	year: number;
+	months: MonthGroup[];
+}
+
+// data
+let sortedPosts = writable<Post[]>([]);
+
+let isLoading = $state(true);
+
+onMount(async () => {
+	isLoading = true;
+	try {
+		const posts = await fetchPosts();
+		sortedPosts.set(posts.map((p) => ({ ...p, date: p.date ?? '' })).sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime()));
+	} catch (err) {
+		console.error('Failed to fetch posts:', err);
+	} finally {
+		isLoading = false;
+	}
+});
+
+// archive sidebar grouping (keeps updated when sortedPosts changes)
+let allGroupedPosts: YearGroup[] = $state([]);
+$effect(() => {
+	const groups: YearGroup[] = [];
+	$sortedPosts.forEach((post: Post) => {
+		const date = safeDate(post.date);
+		const year = date.getFullYear();
+		const monthIndex = date.getMonth();
+		const monthName = date.toLocaleString('default', { month: 'long' });
+
+		let yearGroup = groups.find((g) => g.year === year);
+		if (!yearGroup) {
+			yearGroup = { year, months: [] };
+			groups.push(yearGroup);
+		}
+
+		let monthGroup = yearGroup.months.find((m) => m.monthIndex === monthIndex);
+		if (!monthGroup) {
+			monthGroup = { monthName, monthIndex, posts: [] };
+			yearGroup.months.push(monthGroup);
+		}
+
+		monthGroup.posts.push(post);
+	});
+
+	groups.sort((a, b) => b.year - a.year);
+	groups.forEach((yearGroup) => {
+		yearGroup.months.sort((a, b) => b.monthIndex - a.monthIndex);
+		yearGroup.months.forEach((monthGroup) => {
+			monthGroup.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
+		});
+	});
+
+	allGroupedPosts = groups;
+});
+
+// UI state
+let searchQuery = $state('');
+let activeSearchQuery = $state('');
+let selectedYear: number | null = $state(null);
+let selectedMonthIndex: number | null = $state(null);
+let singlePostId: string | null = $state(null);
+let copiedPostId: string | null = $state(null);
+let copyTimeout: NodeJS.Timeout;
+let isInitialized = $state(false);
+
+$effect(() => {
+	const s = page.url.searchParams.get('s');
+	singlePostId = s || null;
+	if (singlePostId) {
+		searchQuery = '';
+		activeSearchQuery = '';
+		selectedYear = null;
+		selectedMonthIndex = null;
+	}
+	isInitialized = true;
+});
+
+// filtered posts (based on search/filters)
+let filteredPosts = $derived.by(() => {
+	if (!isInitialized) return [];
+	let posts = $sortedPosts;
+	if (singlePostId) return posts.filter((p) => p.id === singlePostId);
+	if (activeSearchQuery) {
+		const q = activeSearchQuery.toLowerCase();
+		posts = posts.filter((p) => p.title.toLowerCase().includes(q));
+	} else if (selectedYear !== null) {
+		posts = posts.filter((p) => {
+			const d = safeDate(p.date);
+			if (d.getFullYear() !== selectedYear) return false;
+			if (selectedMonthIndex !== null && d.getMonth() !== selectedMonthIndex) return false;
+			return true;
+		});
+	}
+	return posts;
+});
+
+// grouped posts for display (all filtered)
+let groupedDisplayedPosts = $derived.by(() => {
+	const groups: YearGroup[] = [];
+	filteredPosts.forEach((post) => {
+		const date = safeDate(post.date);
+		const year = date.getFullYear();
+		const monthIndex = date.getMonth();
+		const monthName = date.toLocaleString('default', { month: 'long' });
+
+		let yearGroup = groups.find((g) => g.year === year);
+		if (!yearGroup) {
+			yearGroup = { year, months: [] };
+			groups.push(yearGroup);
+		}
+
+		let monthGroup = yearGroup.months.find((m) => m.monthIndex === monthIndex);
+		if (!monthGroup) {
+			monthGroup = { monthName, monthIndex, posts: [] };
+			yearGroup.months.push(monthGroup);
+		}
+
+		monthGroup.posts.push(post);
+	});
+
+	groups.sort((a, b) => b.year - a.year);
+	groups.forEach((group) => {
+		group.months.sort((a, b) => b.monthIndex - a.monthIndex);
+		group.months.forEach((m) => {
+			m.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
+		});
+	});
+	return groups;
+});
+
+// Control visible count and limited grouped display
+let visibleCount = $state(8);
+let groupedDisplayedPostsLimited = $derived.by(() => {
+	const groups: YearGroup[] = [];
+	const visible = filteredPosts.slice(0, visibleCount);
+	visible.forEach((post) => {
+		const date = safeDate(post.date);
+		const year = date.getFullYear();
+		const monthIndex = date.getMonth();
+		const monthName = date.toLocaleString('default', { month: 'long' });
+
+		let yearGroup = groups.find((g) => g.year === year);
+		if (!yearGroup) {
+			yearGroup = { year, months: [] };
+			groups.push(yearGroup);
+		}
+
+		let monthGroup = yearGroup.months.find((m) => m.monthIndex === monthIndex);
+		if (!monthGroup) {
+			monthGroup = { monthName, monthIndex, posts: [] };
+			yearGroup.months.push(monthGroup);
+		}
+
+		monthGroup.posts.push(post);
+	});
+
+	groups.sort((a, b) => b.year - a.year);
+	groups.forEach((group) => {
+		group.months.sort((a, b) => b.monthIndex - a.monthIndex);
+		group.months.forEach((m) => {
+			m.posts.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime());
+		});
+	});
+	return groups;
+});
+
+// UI helpers
+function clearFilters() {
+	searchQuery = '';
+	activeSearchQuery = '';
+	selectedYear = null;
+	selectedMonthIndex = null;
+	singlePostId = null;
+	goto('/posts', { replaceState: true });
+	window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function selectFilter(year: number, monthIndex: number | null = null) {
+	selectedYear = year;
+	selectedMonthIndex = monthIndex;
+	searchQuery = '';
+	activeSearchQuery = '';
+	if (singlePostId) {
+		singlePostId = null;
+		goto('/posts', { replaceState: true });
+	}
+}
+
+function performSearch() {
+	if (singlePostId) {
+		singlePostId = null;
+		goto('/posts', { replaceState: true });
+	}
+	selectedYear = null;
+	selectedMonthIndex = null;
+	activeSearchQuery = searchQuery;
+}
+
+function handleSearchKeydown(e: KeyboardEvent) {
+	if (e.key === 'Enter') performSearch();
+}
+
+function copyPostLink(postId: string) {
+	const url = new URL(window.location.href);
+	url.searchParams.set('s', postId);
+	navigator.clipboard.writeText(url.toString()).then(() => {
+		copiedPostId = postId;
+		if (copyTimeout) clearTimeout(copyTimeout);
+		copyTimeout = setTimeout(() => {
+			copiedPostId = null;
+		}, 2000);
+	}).catch((err) => console.error('Failed to copy: ', err));
+}
+
+let seoProps = $derived.by(() => {
+	if (singlePostId) {
+		const post = $sortedPosts.find((p) => p.id === singlePostId);
+		if (post) {
+			const images = getAllPostImages(post).filter((m) => m.type === 'image');
+			const firstImage = images.length > 0 ? `${images[0].imgSrc}` : undefined;
+			return {
+				title: post.title,
+				description: `Read "${post.title}" on Lucian Solutions.`,
+				image: firstImage
+			};
+		}
+	}
+	return { title: 'Posts', description: "Lucian's Blog Posts" };
+});
 </script>
 
 <SEO {...seoProps} />
@@ -344,7 +374,7 @@
 				<h2 class="text-3xl font-bold text-primary uppercase">
 					<i class="fa-solid fa-message"></i> Posts
 				</h2>
-				<p>Lucian's blog posts</p>
+				<p>Lucian's Blog Posts</p>
 			</div>
 
 			<div class="form-control w-full">
@@ -393,7 +423,7 @@
 
 		<div class="flex flex-col gap-8 lg:flex-row">
 			<div class="flex flex-1 flex-col gap-12">
-				{#if !isInitialized}
+				{#if isLoading}
 					<div class="flex justify-center items-center py-20">
 						<span class="loading loading-spinner loading-lg text-primary"></span>
 					</div>
@@ -414,7 +444,7 @@
 						</ContainerGlassBlack>
 					{/if}
 
-					{#each groupedDisplayedPosts as group}
+					{#each groupedDisplayedPostsLimited as group}
 					<div id={`year-${group.year}`} class="flex flex-col gap-8 scroll-mt-24">
 						<div class="flex items-center gap-4">
 							<h3 class="text-4xl font-bold">{group.year}</h3>
@@ -482,12 +512,15 @@
 												{#if post.htmlItems}
 													{@const allPostMedia = getAllPostImages(post)}
 													{#each post.htmlItems as item}
-														{#if item.type === 'media' && item.medias}
+														{#if item.type === HtmlType.Media && item.medias}
 															<ImageViewer media={mapMediaItems(item.medias)} allPostMedia={allPostMedia} />
-														{:else if item.type === 'paragraph'}
+														{:else if item.type === HtmlType.Paragraph}
 															<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 															<p class="leading-relaxed">{@html twemojiParse(item.htmlContent)}</p>
-														{:else if item.type === 'list'}
+														{:else if item.type === HtmlType.Header}
+															<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+															<h4 class="text-lg font-bold mt-4 mb-2 text-primary">{@html twemojiParse(item.htmlContent)}</h4>
+														{:else if item.type === HtmlType.List}
 															<ul
 																class="line-height-loose marker: flex list-outside list-none flex-col rounded-lg overflow-hidden"
 															>
@@ -498,7 +531,7 @@
 																	{/each}
 																{/if}
 															</ul>
-														{:else if item.type === 'button-row' && item.buttons}
+														{:else if item.type === HtmlType.ButtonRow && item.buttons}
 															<div class="flex flex-wrap gap-2">
 																{#each item.buttons as button}
 																	<ButtonGlass
@@ -517,8 +550,8 @@
 														{/if}
 													{/each}
 												{/if}
-											</div>
-										</ContainerGlassBlack>
+												</div>
+											</ContainerGlassBlack>
 									{/each}
 								</div>
 							</div>
@@ -526,6 +559,14 @@
 					</div>
 				{/each}
 			{/if}
+				{#if !singlePostId && filteredPosts.length > visibleCount}
+					<div class="flex justify-center">
+						<ButtonGlass class="w-48" onclick={() => visibleCount = Math.min(visibleCount + 8, filteredPosts.length)}>
+							Load more
+						</ButtonGlass>
+					</div>
+				{/if}
+
 			</div>
 
 			<div class="hidden flex-none lg:block lg:w-64">
