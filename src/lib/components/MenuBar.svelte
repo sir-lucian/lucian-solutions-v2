@@ -4,6 +4,7 @@
 	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
 	import menuItemsData from '$lib/assets/menu-items/menu-items.json';
 	import { page } from '$app/state';
+	import { pageLoading } from '$lib/stores/pageLoading';
 
 	let scrollY = $state(0);
 	let innerHeight = $state(0);
@@ -45,19 +46,20 @@
 		</div>
 		<div class="hidden flex-none md:block">
 			<div class="mx-6 flex h-full items-center justify-end gap-4">
-				{#each menuItemsData.menus as item}
-					{#if item.path === '/'}
-						<a href="/" class="hover:text-white">
+					{#each menuItemsData.menus as item}
+						{#if item.path === '/'}
+							<a href="/" class="hover:text-white" onclick={() => pageLoading.start()}>
 							<div class="h-full font-bold tracking-tight uppercase">
 								<i class={item.icon} aria-hidden="true"></i>
 								<span class="ml-1">{item.title}</span>
 							</div>
 						</a>
-					{:else}
-						<a
-							href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
-							class="hover:text-white"
-						>
+							{:else}
+								<a
+									href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
+									class="hover:text-white"
+									onclick={() => pageLoading.start()}
+								>
 							<div class="h-full font-bold tracking-tight uppercase">
 								<i class={item.icon} aria-hidden="true"></i>
 								<span class="ml-1">{item.title}</span>
@@ -88,7 +90,10 @@
 						{#if item.path === '/'}
 							<ButtonGlass
 								href="/"
-								onclick={closeDropdown}
+								onclick={() => {
+									closeDropdown();
+									pageLoading.start();
+								}}
 								class="h-auto w-full justify-start font-bold hover:text-white {dropdownOpen
 									? ''
 									: 'pointer-events-none'}"
@@ -101,7 +106,10 @@
 						{:else}
 							<ButtonGlass
 								href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
-								onclick={closeDropdown}
+								onclick={() => {
+									closeDropdown();
+									pageLoading.start();
+								}}
 								class="h-auto w-full justify-start font-bold hover:text-white {dropdownOpen
 									? ''
 									: 'pointer-events-none'}"

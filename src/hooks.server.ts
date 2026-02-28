@@ -2,20 +2,16 @@ import type { Handle } from '@sveltejs/kit';
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const response = await resolve(event);
-	response.headers.set('X-Content-Type-Options', 'nosniff');
-	response.headers.set('Referrer-Policy', 'no-referrer');
-	response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
 
-	// Basic Content Security Policy - adjust as needed for external resources used by the app
-	// Stricter Content Security Policy based on external resources used:
-	// - allow scripts only from self and YouTube domains (no 'unsafe-inline' or 'unsafe-eval')
-	// - allow styles from self and https (kept 'unsafe-inline' for legacy inline styles)
-	// - allow images from self, data URIs, and https
-	// - allow frames from YouTube domains for embeds
-	response.headers.set(
-		'Content-Security-Policy',
-		"default-src 'self'; img-src 'self' data: https:; script-src 'self' https://www.youtube.com https://www.youtube-nocookie.com; style-src 'self' 'unsafe-inline' https:; frame-src https://www.youtube.com https://www.youtube-nocookie.com; connect-src 'self' https:"
-	);
+	// Set security headers
+	response.headers.set('X-Content-Type-Options', 'nosniff');
+
+	// This header prevents the page from being framed, which can help protect against clickjacking attacks. However, it can interfere with embedding content like YouTube videos, so it's commented out for now.
+	// This breaks Youtube embeds, so we'll skip it for now. We can revisit this later if needed.
+	// response.headers.set('Referrer-Policy', 'no-referrer');
+
+	// This is a strong HSTS policy that tells browsers to only use HTTPS for the next year, including all subdomains
+	response.headers.set('Strict-Transport-Security', 'max-age=31536000; includeSubDomains');
 
 	// Remove common headers that disclose server/technology details
 	response.headers.delete('server');

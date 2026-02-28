@@ -11,6 +11,9 @@
 	import { MediaType } from '$lib';
 	import type { Art, Media as MediaTypeDef, FanartItem } from '$lib';
 
+	// Page data provided by +page.ts
+	export let data: { fanarts?: FanartItem[] };
+
 	// Runes states
 	import { writable } from 'svelte/store';
 
@@ -33,8 +36,11 @@
 	onMount(async () => {
 		isLoading.set(true);
 		try {
-			const data = await fetchFanarts();
-			fanarts.set(data || []);
+			let list = data?.fanarts ?? null;
+			if (!list) {
+				list = await fetchFanarts();
+			}
+			fanarts.set(list || []);
 		} catch (err) {
 			console.error('Failed to fetch fanarts:', err);
 		} finally {
@@ -170,11 +176,16 @@
 									>Select an artist from the sidebar to view their fanarts.</span
 								>
 							</div>
-							<div class="hidden lg:inline-flex animate-pulse items-center gap-2 text-sm text-primary">
+							<div
+								class="hidden animate-pulse items-center gap-2 text-sm text-primary lg:inline-flex"
+							>
 								<span>Click an artist</span>
 								<i class="fa-solid fa-arrow-right"></i>
 							</div>
-							<ButtonGlass class="lg:hidden mt-4 w-full gap-2" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+							<ButtonGlass
+								class="mt-4 w-full gap-2 lg:hidden"
+								onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+							>
 								<span>Click an artist</span>
 								<i class="fa-solid fa-arrow-up"></i>
 							</ButtonGlass>

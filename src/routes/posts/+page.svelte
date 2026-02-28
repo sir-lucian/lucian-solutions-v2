@@ -12,6 +12,9 @@
 	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
 	import Bokeh from '$lib/components/background/Bokeh.svelte';
 	import { fetchPosts } from '$lib/services/PostService';
+
+	// Page data provided by +page.ts
+	const { data } = $props<{ data: { posts?: any[]; post?: any } }>();
 	import { twemojiParse } from '$lib/utils/twemoji';
 	import { onMount, tick } from 'svelte';
 	import { writable } from 'svelte/store';
@@ -84,12 +87,20 @@
 	onMount(async () => {
 		isLoading = true;
 		try {
-			const posts = await fetchPosts();
+			let posts = data?.posts ?? null;
+			if (!posts) {
+				posts = await fetchPosts();
+			}
 			sortedPosts.set(
 				posts
-					.map((p) => ({ ...p, date: p.date ?? '' }))
-					.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime())
+					.map((p: Post) => ({ ...p, date: p.date ?? '' }))
+					.sort((a: { date: string | undefined; }, b: { date: string | undefined; }) => safeDate(b.date).getTime() - safeDate(a.date).getTime())
 			);
+
+			// If the server provided a single post, set the singlePostId so filtered view shows it
+			if (data?.post) {
+				singlePostId = data.post.id ?? data.post.slug ?? null;
+			}
 		} catch (err) {
 			console.error('Failed to fetch posts:', err);
 		} finally {
