@@ -6,6 +6,7 @@
 	let y = $state(0);
 	let isHovering = $state(false);
 	let rect = $state<DOMRect | undefined>();
+	let id: string = $state(`container-${Math.random().toString(36).substr(2, 9)}`);
 
 	function handleMouseMove(e: MouseEvent) {
 		if (!containerRef) return;
@@ -46,6 +47,7 @@
 </script>
 
 <div
+	id={id}
 	bind:this={containerRef}
 	class={`${commonClasses} ${className}`}
 	onmousemove={handleMouseMove}

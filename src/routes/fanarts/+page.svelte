@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import Container from '$lib/components/Container.svelte';
 	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
 	import ImageViewer from '$lib/components/ImageViewer.svelte';
@@ -13,10 +13,11 @@
 
 	// Runes states
 	import { writable } from 'svelte/store';
-	
+
 	let fanarts = writable<FanartItem[]>([]);
 	let artists = writable<{ name: string; slug?: string | null; items: Art[] }[]>([]); // { name, slug, items }
 	let selectedArtist = writable<string | null>(null);
+	let artistSectionEl: HTMLElement | null = null;
 	let isLoading = writable(true);
 
 	// Character sheet media for top of page
@@ -45,7 +46,9 @@
 		// Build artists list from fetched fanarts
 		const list: { name: string; slug?: string | null; items: Art[] }[] = [];
 		$fanarts.forEach((f: FanartItem) => {
-			const existing = list.find((a) => a.name === f.artist && (a.slug ?? null) === (f.slug ?? null));
+			const existing = list.find(
+				(a) => a.name === f.artist && (a.slug ?? null) === (f.slug ?? null)
+			);
 			if (existing) {
 				existing.items = [...existing.items, ...(f.art || [])];
 			} else {
@@ -71,10 +74,17 @@
 		return [transformArtToMedia(art, artistName)];
 	}
 
-	function selectArtist(name: string) {
-		selectedArtist.update(current => current === name ? null : name);
-		// scroll to top of list when selected
-		// window.scrollTo({ top: 0, behavior: 'smooth' });
+	async function selectArtist(name: string) {
+		selectedArtist.update((current) => (current === name ? null : name));
+		const artistName = $selectedArtist;
+		// wait for DOM update then scroll the artist posts into view
+		await tick();
+		if (artistName) {
+			const artistSectionEl = document.getElementById(`artist-section-${artistName}`);
+			if (artistSectionEl) {
+				artistSectionEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+		}
 	}
 </script>
 
@@ -84,17 +94,19 @@
 
 {#snippet sidebarLegend(isSticky = false)}
 	<ContainerGlassBlack
-		class={`menu w-full opacity-90 p-2 ${isSticky ? 'flex flex-col overflow-y-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-100  max-h-[calc(100vh-8rem)]' : ''}`}
+		class={`menu w-full p-2 opacity-90 ${isSticky ? 'scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-100 flex max-h-[calc(100vh-8rem)] flex-col  overflow-y-auto' : ''}`}
 	>
-		<div class="menu-title flex-none flex flex-row justify-between items-center px-2 py-2 border-b border-white/10 mb-2">
+		<div
+			class="mb-2 flex flex-none flex-row items-center justify-between border-b border-white/10 menu-title px-2 py-2"
+		>
 			<span class="text-primary uppercase"><i class="fa-solid fa-archive"></i> Artists</span>
 		</div>
 		<div class={`${isSticky ? 'flex-1  pr-1' : ''}`}>
-			<ul class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-2 w-full">
+			<ul class="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1">
 				{#each $artists as group}
 					<li>
 						<button
-							class={`btn btn-ghost w-full justify-between h-auto min-h-0 py-2 hover:bg-white/5 hover:border-white/10 hover:border ${$selectedArtist === group.name ? 'btn-active bg-white/10 border-white/10 border' : ''}`}
+							class={`btn h-auto min-h-0 w-full justify-between py-2 btn-ghost hover:border hover:border-white/10 hover:bg-white/5 ${$selectedArtist === group.name ? 'btn-active border border-white/10 bg-white/10' : ''}`}
 							onclick={() => selectArtist(group.name)}
 						>
 							<span class="font-bold">{artistLabel(group)}</span>
@@ -105,8 +117,8 @@
 			</ul>
 		</div>
 		{#if isSticky}
-			<div class="flex-none pt-2 border-t border-neutral-700 mt-2">
-				<ButtonGlass 
+			<div class="mt-2 flex-none border-t border-neutral-700 pt-2">
+				<ButtonGlass
 					class="w-full gap-2"
 					onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
 				>
@@ -129,47 +141,69 @@
 
 			<!-- Character sheet -->
 			<div class="w-full">
-				<ContainerGlassBlack class="p-4 mb-4">
-                <h3 class="text-2xl font-bold text-white mb-4"><i class="fa-solid fa-id-card"></i> Character Sheet</h3>
+				<ContainerGlassBlack class="mb-4 p-4">
+					<h3 class="mb-4 text-2xl font-bold text-white">
+						<i class="fa-solid fa-id-card"></i> Character Sheet
+					</h3>
 					<ImageViewer media={characterSheetMedia} allPostMedia={characterSheetMedia} />
 				</ContainerGlassBlack>
 			</div>
 
 			<!-- Small-screen sidebar legend under character sheet -->
-			<div class="lg:hidden w-full">
+			<div class="w-full lg:hidden">
 				{@render sidebarLegend()}
 			</div>
 		</div>
 
-		<div class="flex gap-8 lg:flex-row flex-col">
+		<div class="flex flex-col gap-8 lg:flex-row">
 			<!-- Main column -->
 			<div class="flex-1">
 				{#if $isLoading}
-					<div class="flex justify-center items-center py-20">
-						<span class="loading loading-spinner loading-lg text-primary"></span>
+					<div class="flex items-center justify-center py-20">
+						<span class="loading loading-lg loading-spinner text-primary"></span>
 					</div>
+				{:else if !$selectedArtist}
+					<ContainerGlassBlack class="p-4">
+						<div class="flex flex-wrap items-center justify-between gap-2">
+							<div class="inline-flex items-center gap-2">
+								<i class="fa-solid fa-info-circle"></i><span
+									>Select an artist from the sidebar to view their fanarts.</span
+								>
+							</div>
+							<div class="hidden lg:inline-flex animate-pulse items-center gap-2 text-sm text-primary">
+								<span>Click an artist</span>
+								<i class="fa-solid fa-arrow-right"></i>
+							</div>
+							<ButtonGlass class="lg:hidden mt-4 w-full gap-2" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+								<span>Click an artist</span>
+								<i class="fa-solid fa-arrow-up"></i>
+							</ButtonGlass>
+						</div>
+					</ContainerGlassBlack>
 				{:else}
-					{#if !$selectedArtist}
-						<ContainerGlassBlack class="p-4">Select an artist from the sidebar to view their fanarts.</ContainerGlassBlack>
-					{:else}
-						{#each $artists.filter(a => a.name === $selectedArtist) as artist}
-							<ContainerGlassBlack class="p-4 mb-4">
-								<header class="mb-4 flex items-center justify-between">
-									<h3 class="text-2xl font-bold text-white"><i class="fa-solid fa-palette"></i> {artistLabel(artist)}</h3>
-								</header>
-								<div class="flex flex-col gap-4">
-									{#each artist.items as art}
-										<ImageViewer media={artToMediaArray(art, artist.name)} allPostMedia={artToMediaArray(art, artist.name)} />
-									{/each}
-								</div>
-							</ContainerGlassBlack>
-						{/each}
-					{/if}
+					{#each $artists.filter((a) => a.name === $selectedArtist) as artist}
+						<ContainerGlassBlack class="mb-4 p-4" id={`artist-section-${artist.name}`}>
+							<header class="mb-4 flex items-center justify-between">
+								<h3 class="text-2xl font-bold text-white">
+									<i class="fa-solid fa-palette"></i>
+									{artistLabel(artist)}
+								</h3>
+							</header>
+							<div class="flex flex-col gap-4">
+								{#each artist.items as art}
+									<ImageViewer
+										media={artToMediaArray(art, artist.name)}
+										allPostMedia={artToMediaArray(art, artist.name)}
+									/>
+								{/each}
+							</div>
+						</ContainerGlassBlack>
+					{/each}
 				{/if}
 			</div>
 
 			<!-- Sidebar -->
-			<div class="hidden lg:block w-64">
+			<div class="hidden w-64 lg:block">
 				<div class="sticky top-24">
 					{@render sidebarLegend(true)}
 				</div>
@@ -179,5 +213,7 @@
 </section>
 
 <style scoped>
-	.content-section { padding: 1rem 0; }
+	.content-section {
+		padding: 1rem 0;
+	}
 </style>

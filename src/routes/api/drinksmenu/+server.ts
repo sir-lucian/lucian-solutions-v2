@@ -1,9 +1,10 @@
+import { PUBLIC_FILE_SERVER_URL } from '$env/static/public';
 import { Randomiser, type DrinksMenuData } from '$lib/services/Randomiser';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url, fetch }) => {
 	try {
-        const fetchUrl = 'https://api.lucian.solutions/json/drinksmenu.json';
+        const fetchUrl = `${PUBLIC_FILE_SERVER_URL}/files/etc/list_drinksmenu.json`;
 		const response = await fetch(fetchUrl);
 		if (!response.ok) {
 			throw new Error('Failed to fetch drinks menu data');
