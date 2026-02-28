@@ -75,7 +75,9 @@
 
 	function artToMediaArray(art: Art, artistName: string): MediaTypeDef[] {
 		if (art.children && Array.isArray(art.children) && art.children.length > 0) {
-			return art.children.map((c: Art) => transformArtToMedia(c, artistName));
+			const tempArray = art.children.map((c: Art) => transformArtToMedia(c, artistName));
+			const parentMedia = transformArtToMedia(art, artistName);
+			return [parentMedia, ...tempArray];
 		}
 		return [transformArtToMedia(art, artistName)];
 	}
@@ -201,11 +203,14 @@
 								</h3>
 							</header>
 							<div class="flex flex-col gap-4">
-								{#each artist.items as art}
+								{#each artist.items as art, index}
 									<ImageViewer
 										media={artToMediaArray(art, artist.name)}
 										allPostMedia={artToMediaArray(art, artist.name)}
 									/>
+									{#if index < artist.items.length - 1}
+										<div class="divider-base-content divider my-0">◆◆◆</div>
+									{/if}
 								{/each}
 							</div>
 						</ContainerGlassBlack>
