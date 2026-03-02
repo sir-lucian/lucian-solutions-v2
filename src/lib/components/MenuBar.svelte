@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { slide } from 'svelte/transition';
+	import { fade, slide } from 'svelte/transition';
 	import { onDestroy } from 'svelte';
 	import SiteLogo from './SiteLogo.svelte';
 	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
@@ -13,30 +13,17 @@
 	let showMenu = $derived(page.url.pathname !== '/' || scrollY > innerHeight * 0.85);
 	let dropdownOpen = $state(false);
 
-	let _lockedScrollTop = 0;
-
-	// Lock page scroll when dropdown is open (restore on close)
 	$effect(() => {
-		if (typeof document !== 'undefined') {
-			if (dropdownOpen) {
-				_lockedScrollTop = window.scrollY || 0;
-				document.body.style.position = 'fixed';
-				document.body.style.top = `-${_lockedScrollTop}px`;
-				document.body.style.width = '100%';
-			} else {
-				document.body.style.position = '';
-				document.body.style.top = '';
-				document.body.style.width = '';
-				if (typeof window !== 'undefined') window.scrollTo(0, _lockedScrollTop || 0);
-			}
+		if (dropdownOpen) {
+			document.body.style.overflow = 'hidden';
+		} else {
+			document.body.style.overflow = '';
 		}
 	});
 
 	onDestroy(() => {
 		if (typeof document !== 'undefined') {
-			document.body.style.position = '';
-			document.body.style.top = '';
-			document.body.style.width = '';
+			document.body.style.overflow = '';
 		}
 	});
 
@@ -56,11 +43,9 @@
 	const openDropdown = () => {
 		if (!dropdownOpen) dropdownOpen = true;
 	};
-
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />
-
 
 {#if showMenu}
 	{#if dropdownOpen}
@@ -80,20 +65,20 @@
 		</div>
 		<div class="hidden flex-none md:block">
 			<div class="mx-6 flex h-full items-center justify-end gap-4">
-					{#each menuItemsData.menus as item}
-						{#if item.path === '/'}
-							<a href="/" class="hover:text-white" onclick={() => pageLoading.start()}>
+				{#each menuItemsData.menus as item}
+					{#if item.path === '/'}
+						<a href="/" class="hover:text-white" onclick={() => pageLoading.start()}>
 							<div class="h-full font-bold tracking-tight uppercase">
 								<i class={item.icon} aria-hidden="true"></i>
 								<span class="ml-1">{item.title}</span>
 							</div>
 						</a>
-							{:else}
-								<a
-									href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
-									class="hover:text-white"
-									onclick={() => pageLoading.start()}
-								>
+					{:else}
+						<a
+							href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
+							class="hover:text-white"
+							onclick={() => pageLoading.start()}
+						>
 							<div class="h-full font-bold tracking-tight uppercase">
 								<i class={item.icon} aria-hidden="true"></i>
 								<span class="ml-1">{item.title}</span>
@@ -104,22 +89,23 @@
 			</div>
 		</div>
 		<div class="flex-none md:hidden">
-			<ButtonGlass
-				class="mx-4"
-				onclick={openDropdown}
-			>
+			<ButtonGlass class="mx-4" onclick={openDropdown}>
 				<i class="fa-solid fa-bars" aria-hidden="true"></i>
 			</ButtonGlass>
 		</div>
-	</header>
-	{#if dropdownOpen}
 		<div
-			transition:slide={{ axis: 'y', duration: 300 }}
-			class="fixed z-[51] right-0 left-0 z-50 flex flex-col h-full items-center gap-4 bg-black/50 p-6 backdrop-blur-lg"
+			class="dropdown fixed inset-0 z-50 flex h-screen w-full flex-col items-center justify-start gap-6 bg-black/80 p-6 backdrop-blur-lg transition-opacity duration-300"
+			class:opacity-100={dropdownOpen}
+			class:opacity-0={!dropdownOpen}
+			class:pointer-events-none={!dropdownOpen}
+			id="dropdown-menu"
+			role="dialog"
+			aria-modal="true"
+			tabindex="0"
 		>
 			<button
 				type="button"
-				class="self-end text-2xl text-white hover:text-gray-300"
+				class="self-end text-2xl text-white hover:text-gray-300 cursor-pointer"
 				onclick={closeDropdown}
 				aria-label="Close menu"
 			>
@@ -128,8 +114,17 @@
 
 			{#each menuItemsData.menus as item}
 				{#if item.path === '/'}
-					<a href="/" class="hover:text-white w-full" onclick={() => { pageLoading.start(); closeDropdown(); }}>
-						<ButtonGlass class="h-full w-full flex justify-between font-bold tracking-tight uppercase">
+					<a
+						href="/"
+						class="w-full hover:text-white"
+						onclick={() => {
+							pageLoading.start();
+							closeDropdown();
+						}}
+					>
+						<ButtonGlass
+							class="flex h-full w-full justify-between font-bold tracking-tight uppercase"
+						>
 							<i class={item.icon} aria-hidden="true"></i>
 							<span class="ml-1">{item.title}</span>
 						</ButtonGlass>
@@ -137,10 +132,15 @@
 				{:else}
 					<a
 						href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
-						class="hover:text-white w-full"
-						onclick={() => { pageLoading.start(); closeDropdown(); }}
+						class="w-full hover:text-white"
+						onclick={() => {
+							pageLoading.start();
+							closeDropdown();
+						}}
 					>
-						<ButtonGlass class="h-full w-full flex justify-between font-bold tracking-tight uppercase">
+						<ButtonGlass
+							class="flex h-full w-full justify-between font-bold tracking-tight uppercase"
+						>
 							<i class={item.icon} aria-hidden="true"></i>
 							<span class="ml-1">{item.title}</span>
 						</ButtonGlass>
@@ -148,5 +148,5 @@
 				{/if}
 			{/each}
 		</div>
-	{/if}
+	</header>
 {/if}
