@@ -6,11 +6,32 @@ export const GET: RequestHandler = async () => {
     try {
         const response = await fetch(`${url}/files/etc/list_fanarts.json`);
         if (!response.ok) {
-            return new Response(JSON.stringify({ error: 'Failed to fetch fanarts.' }), { status: response.status });
+            return new Response(JSON.stringify({ error: 'Failed to fetch fanarts.' }), {
+                status: response.status,
+                headers: {
+                    'Content-Type': 'application/json; charset=utf-8',
+                    'X-Content-Type-Options': 'nosniff',
+                    'Referrer-Policy': 'no-referrer'
+                }
+            });
         }
         const data = await response.json();
-        return new Response(JSON.stringify(data), { status: 200 });
+        return new Response(JSON.stringify(data), {
+            status: 200,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'X-Content-Type-Options': 'nosniff',
+                'Referrer-Policy': 'no-referrer'
+            }
+        });
     } catch (error) {
-        return new Response(JSON.stringify({ error: 'Server error', details: String(error) }), { status: 503 });
+        return new Response(JSON.stringify({ error: 'Server error', details: String(error) }), {
+            status: 503,
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'X-Content-Type-Options': 'nosniff',
+                'Referrer-Policy': 'no-referrer'
+            }
+        });
     }
 };

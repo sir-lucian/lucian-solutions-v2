@@ -11,8 +11,12 @@
 	import { MediaType } from '$lib';
 	import type { Art, Media as MediaTypeDef, FanartItem } from '$lib';
 
+	// Page data provided by +page.ts
+	export let data: { fanarts?: FanartItem[] };
+
 	// Runes states
 	import { writable } from 'svelte/store';
+	import Footer from '$lib/components/Footer.svelte';
 
 	let fanarts = writable<FanartItem[]>([]);
 	let artists = writable<{ name: string; slug?: string | null; items: Art[] }[]>([]); // { name, slug, items }
@@ -33,8 +37,11 @@
 	onMount(async () => {
 		isLoading.set(true);
 		try {
-			const data = await fetchFanarts();
-			fanarts.set(data || []);
+			let list = data?.fanarts ?? null;
+			if (!list) {
+				list = await fetchFanarts();
+			}
+			fanarts.set(list || []);
 		} catch (err) {
 			console.error('Failed to fetch fanarts:', err);
 		} finally {
@@ -69,7 +76,9 @@
 
 	function artToMediaArray(art: Art, artistName: string): MediaTypeDef[] {
 		if (art.children && Array.isArray(art.children) && art.children.length > 0) {
-			return art.children.map((c: Art) => transformArtToMedia(c, artistName));
+			const tempArray = art.children.map((c: Art) => transformArtToMedia(c, artistName));
+			const parentMedia = transformArtToMedia(art, artistName);
+			return [parentMedia, ...tempArray];
 		}
 		return [transformArtToMedia(art, artistName)];
 	}
@@ -170,11 +179,16 @@
 									>Select an artist from the sidebar to view their fanarts.</span
 								>
 							</div>
-							<div class="hidden lg:inline-flex animate-pulse items-center gap-2 text-sm text-primary">
+							<div
+								class="hidden animate-pulse items-center gap-2 text-sm text-primary lg:inline-flex"
+							>
 								<span>Click an artist</span>
 								<i class="fa-solid fa-arrow-right"></i>
 							</div>
-							<ButtonGlass class="lg:hidden mt-4 w-full gap-2" onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+							<ButtonGlass
+								class="mt-4 w-full gap-2 lg:hidden"
+								onclick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+							>
 								<span>Click an artist</span>
 								<i class="fa-solid fa-arrow-up"></i>
 							</ButtonGlass>
@@ -190,11 +204,14 @@
 								</h3>
 							</header>
 							<div class="flex flex-col gap-4">
-								{#each artist.items as art}
+								{#each artist.items as art, index}
 									<ImageViewer
 										media={artToMediaArray(art, artist.name)}
 										allPostMedia={artToMediaArray(art, artist.name)}
 									/>
+									{#if index < artist.items.length - 1}
+										<div class="divider-base-content divider my-0">◆◆◆</div>
+									{/if}
 								{/each}
 							</div>
 						</ContainerGlassBlack>
@@ -211,6 +228,11 @@
 		</div>
 	</Container>
 </section>
+
+<section id="footer" class="bg-black/60 shadow-md backdrop-blur-md">
+	<Footer />
+</section>
+
 
 <style scoped>
 	.content-section {

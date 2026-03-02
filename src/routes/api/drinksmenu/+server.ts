@@ -61,14 +61,20 @@ export const GET: RequestHandler = async ({ url, fetch }) => {
 
 		return new Response(`<html><body>${result}</body></html>`, {
 			headers: {
-				'Content-Type': 'text/html; charset=utf-8'
+				'Content-Type': 'text/html; charset=utf-8',
+				'X-Content-Type-Options': 'nosniff',
+				'Referrer-Policy': 'no-referrer'
 			}
 		});
 	} catch (error) {
 		console.error(error);
 		return new Response('เกิดข้อผิดพลาด', {
 			status: 500,
-			headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+			headers: {
+				'Content-Type': 'text/plain; charset=utf-8',
+				'X-Content-Type-Options': 'nosniff',
+				'Referrer-Policy': 'no-referrer'
+			}
 		});
 	}
 };

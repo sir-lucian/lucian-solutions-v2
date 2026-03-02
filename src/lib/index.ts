@@ -51,8 +51,8 @@ export interface Art {
 
 export interface PortfolioItem {
     title: string;
-    htmlParagraphs?: PortfolioItemType.HtmlParagraphs[];
-    media?: PortfolioItemType.Media[];
+    htmlParagraphs?: HtmlParagraph[];
+    media?: Media[];
 }
 
 // Enums
@@ -69,8 +69,5 @@ export enum MediaType {
     Image = 'image',
 }
 
-export enum PortfolioItemType {
-    Title = "title",
-    HtmlParagraphs = "htmlParagraphs",
-    Media = "media"
-}
+// Portfolio items use `HtmlParagraph` and `Media` types directly; removed unused enum
+export const DEFAULT_SEO_IMAGE = "/assets/ls-seo.jpg";

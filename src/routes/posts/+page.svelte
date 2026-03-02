@@ -12,10 +12,13 @@
 	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
 	import Bokeh from '$lib/components/background/Bokeh.svelte';
 	import { fetchPosts } from '$lib/services/PostService';
+
+	// Page data provided by +page.ts
+	const { data } = $props<{ data: { posts?: any[]; post?: any } }>();
 	import { twemojiParse } from '$lib/utils/twemoji';
 	import { onMount, tick } from 'svelte';
 	import { writable } from 'svelte/store';
-	import { HtmlType } from '$lib';
+	import { DEFAULT_SEO_IMAGE, HtmlType } from '$lib';
 
 	// helpers
 	function safeDate(date?: string) {
@@ -84,12 +87,23 @@
 	onMount(async () => {
 		isLoading = true;
 		try {
-			const posts = await fetchPosts();
+			let posts = data?.posts ?? null;
+			if (!posts) {
+				posts = await fetchPosts();
+			}
 			sortedPosts.set(
 				posts
-					.map((p) => ({ ...p, date: p.date ?? '' }))
-					.sort((a, b) => safeDate(b.date).getTime() - safeDate(a.date).getTime())
+					.map((p: Post) => ({ ...p, date: p.date ?? '' }))
+					.sort(
+						(a: { date: string | undefined }, b: { date: string | undefined }) =>
+							safeDate(b.date).getTime() - safeDate(a.date).getTime()
+					)
 			);
+
+			// If the server provided a single post, set the singlePostId so filtered view shows it
+			if (data?.post) {
+				singlePostId = data.post.id ?? data.post.slug ?? null;
+			}
 		} catch (err) {
 			console.error('Failed to fetch posts:', err);
 		} finally {
@@ -316,25 +330,47 @@
 			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		}
 	}
+	// Compute SEO props; initialize with defaults and let $effect update from `data` or client state
+	let currentSeo = $state({
+		title: 'Posts',
+		description: "Lucian's Blog Posts",
+		image: DEFAULT_SEO_IMAGE
+	});
 
-	let seoProps = $derived.by(() => {
+	$effect(() => {
+		if (data?.post) {
+			currentSeo = {
+				title: data.post.title,
+				description: `Read "${data.post.title}" on Lucian Solutions.`,
+				image: getAllPostImages(data.post).filter((m) => m.type === 'image')[0]?.imgSrc ?? DEFAULT_SEO_IMAGE
+			};
+			return;
+		}
+
 		if (singlePostId) {
 			const post = $sortedPosts.find((p) => p.id === singlePostId);
 			if (post) {
 				const images = getAllPostImages(post).filter((m) => m.type === 'image');
 				const firstImage = images.length > 0 ? `${images[0].imgSrc}` : undefined;
-				return {
+				currentSeo = {
 					title: post.title,
 					description: `Read "${post.title}" on Lucian Solutions.`,
-					image: firstImage
+					image: firstImage ?? DEFAULT_SEO_IMAGE
 				};
+				return;
 			}
 		}
-		return { title: 'Posts', description: "Lucian's Blog Posts" };
+
+		currentSeo = { title: 'Posts', description: "Lucian's Blog Posts", image: DEFAULT_SEO_IMAGE };
 	});
 </script>
 
-<SEO {...seoProps} />
+<SEO
+	title={currentSeo.title}
+	description={currentSeo.description}
+	image={currentSeo.image}
+	url={page.url.href}
+/>
 
 <Bokeh />
 

@@ -3,9 +3,17 @@
 	import MenuBar from '$lib/components/MenuBar.svelte';
 	import GoToTop from '$lib/components/GoToTop.svelte';
 	import { page } from '$app/state';
+	import { navigating } from '$app/stores';
+	import { afterNavigate } from '$app/navigation';
+	import { pageLoading } from '$lib/stores/pageLoading';
+	import LoadingBadge from '$lib/components/LoadingBadge.svelte';
 
 	let { children } = $props();
-</script>
+
+	afterNavigate(() => {
+		pageLoading.stop();
+	});
+	</script>
 
 {#if !page.error}
 	<MenuBar />
@@ -16,3 +24,4 @@
 </div>
 
 <GoToTop />
+<LoadingBadge isLoading={$navigating != null || $pageLoading} />
