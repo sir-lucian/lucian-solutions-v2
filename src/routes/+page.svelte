@@ -76,10 +76,10 @@
 			<Container>
 				<ContainerGlassBlack>
 					<div
-						class="relative flex flex-col items-center justify-center gap-6 py-12 px-3 text-center transition-opacity duration-1000 my-8"
+						class="relative my-8 flex flex-col items-center justify-center gap-6 px-3 py-12 text-center transition-opacity duration-1000"
 					>
 						<div
-							class={`relative w-full my-4 ${fontsLoaded ? 'opacity-100' : 'opacity-0'}`}
+							class={`relative my-4 w-full ${fontsLoaded ? 'opacity-100' : 'opacity-0'}`}
 							id="home-title-container"
 						>
 							<h1
@@ -108,12 +108,26 @@
 						<div class="flex w-full flex-wrap justify-center gap-4">
 							{#each menuItems.filter((item) => item.title !== 'Home') as item}
 								<ButtonGlass
-									class="gap-2 px-4 py-2 text-xs font-bold text-white uppercase shadow-2xl md:px-8 md:py-4 md:text-md"
+									class="md:text-md gap-2 px-4 py-2 text-xs font-bold text-white uppercase shadow-2xl md:px-8 md:py-4"
 									href={item.path}
 								>
 									<i class={`${item.icon} icon-fix`}></i>{item.title}
 								</ButtonGlass>
 							{/each}
+							<ButtonGlass
+								class="md:text-md gap-2 px-4 py-2 text-xs font-bold text-white uppercase shadow-2xl md:px-8 md:py-4"
+								title="วงแหวนเว็บ"
+								href="https://webring.wonderful.software#lucian.solutions"
+							>
+								<i>
+									<img
+										src="/assets/ls-webring.svg"
+										alt="วงแหวนเว็บ"
+										class="h-4 w-4"
+										loading="lazy"
+									/>
+								</i>Webring
+							</ButtonGlass>
 						</div>
 					</div>
 				</ContainerGlassBlack>
@@ -121,7 +135,7 @@
 		</section>
 	</section>
 	<section id="bottom">
-		<div class="text-center opacity-0 pointer-events-none select-none">
+		<div class="pointer-events-none text-center opacity-0 select-none">
 			<span class="italic">Plan the work, work the plan</span>
 		</div>
 	</section>
@@ -160,7 +174,7 @@
 						</p>
 						<div class="flex w-full items-center gap-2">
 							<ButtonGlass
-								class="gap-2 w-48 h-12 min-w-0 px-0 shrink-0"
+								class="h-12 w-48 min-w-0 shrink-0 gap-2 px-0"
 								onclick={() => (showEmail = !showEmail)}
 							>
 								{#if showEmail}
@@ -171,15 +185,15 @@
 							</ButtonGlass>
 
 							{#if showEmail}
-								<div
-									class="flex grow overflow-hidden"
-								>
+								<div class="flex grow overflow-hidden">
 									<ContainerGlassBlack
 										id="me"
 										aria-label="Email Address"
-										class="flex flex-col font-mono font-bold w-full h-12 items-center justify-center rounded-md px-3 text-sm tracking-wider"
+										class="flex h-12 w-full flex-col items-center justify-center rounded-md px-3 font-mono text-sm font-bold tracking-wider"
 									>
-										<div class="flex w-full h-full justify-center items-center select-all">{email}</div>
+										<div class="flex h-full w-full items-center justify-center select-all">
+											{email}
+										</div>
 									</ContainerGlassBlack>
 								</div>
 							{/if}

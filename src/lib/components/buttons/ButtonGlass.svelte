@@ -6,6 +6,7 @@
 		class: className = '',
 		href = undefined,
 		openNewWindow = false,
+		title = '',
 		...rest 
 	} = $props();
 
@@ -58,6 +59,7 @@
 	<a
 		bind:this={btnRef}
 		{href}
+		title={title}
 		target={openNewWindow ? '_blank' : undefined}
 		rel={openNewWindow ? 'noopener noreferrer' : undefined}
 		class={`${commonClasses} ${className}`}
@@ -83,6 +85,7 @@
 		style={boxStyle}
 		onmousemove={handleMouseMove}
 		onmouseleave={handleMouseLeave}
+		title={title}
 		{...rest}
 	>
 		<div
