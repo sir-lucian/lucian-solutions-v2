@@ -40,12 +40,12 @@
 			tabindex="-1"
 			class="fixed inset-0 z-40 bg-transparent"
 			aria-hidden="true"
-			onclick={(e) => e.stopPropagation()}
+			onclick={closeDropdown}
 		></div>
 	{/if}
 	<header
 		transition:slide={{ axis: 'y', duration: 300 }}
-		class="navbar fixed top-0 right-0 left-0 z-50 m-0 bg-black/60 p-0 shadow-md backdrop-blur-md"
+		class="navbar fixed top-0 right-0 left-0 z-[10000] m-0 bg-black/60 p-0 shadow-md backdrop-blur-md"
 	>
 		<div class="flex h-full grow">
 			<SiteLogo width="w-full justify-start" />
@@ -87,7 +87,7 @@
 				</button>
 				<div
 					tabindex="-1"
-					class="dropdown-content w-64 mt-6 mr-3 flex flex-col gap-2 rounded-box border border-white/10 bg-black/60 p-2 shadow-md backdrop-blur-md {dropdownOpen
+					class="dropdown-content z-[10001] w-64 mt-6 mr-3 flex flex-col gap-2 rounded-box border border-white/10 bg-black/60 p-2 shadow-md backdrop-blur-md {dropdownOpen
 						? ''
 						: 'pointer-events-none'}"
 					aria-hidden={!dropdownOpen}
