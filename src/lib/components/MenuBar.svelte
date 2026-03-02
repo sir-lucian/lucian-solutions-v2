@@ -6,6 +6,7 @@
 	import menuItemsData from '$lib/assets/menu-items/menu-items.json';
 	import { page } from '$app/state';
 	import { pageLoading } from '$lib/stores/pageLoading';
+	import { isTheSamePath } from '$lib';
 
 	let scrollY = $state(0);
 	let innerHeight = $state(0);
@@ -67,7 +68,12 @@
 			<div class="mx-6 flex h-full items-center justify-end gap-4">
 				{#each menuItemsData.menus as item}
 					{#if item.path === '/'}
-						<a href="/" class="hover:text-white" onclick={() => pageLoading.start()}>
+						<a href="/" class="hover:text-white" onclick={() => {
+							// check if path changes, if it does, start loading
+							if (!isTheSamePath(page.url.pathname, '/')) {
+								pageLoading.start();
+							}
+						}}>
 							<div class="h-full font-bold tracking-tight uppercase">
 								<i class={item.icon} aria-hidden="true"></i>
 								<span class="ml-1">{item.title}</span>
@@ -77,7 +83,13 @@
 						<a
 							href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
 							class="hover:text-white"
-							onclick={() => pageLoading.start()}
+							onclick={() => {
+								// check if path changes, if it does, start loading
+								const targetPath = item.path.startsWith('#') ? `./${item.path}` : `${item.path}`;
+								if (!isTheSamePath(page.url.pathname, targetPath)) {
+									pageLoading.start();
+								}
+							}}
 						>
 							<div class="h-full font-bold tracking-tight uppercase">
 								<i class={item.icon} aria-hidden="true"></i>

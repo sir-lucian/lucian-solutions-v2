@@ -9,7 +9,9 @@
 	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import PublicPortfolio from '$lib/components/PublicPortfolio.svelte';
-	import type { HtmlParagraph, Media, PortfolioItem } from '$lib/index';
+	import { isTheSamePath, type HtmlParagraph, type Media, type PortfolioItem } from '$lib/index';
+	import { page } from '$app/state';
+	import { pageLoading } from '$lib/stores/pageLoading';
 
 	const menuItems: { title: string; path: string; icon: string; href: string }[] =
 		MenuItems.menus.map((item) => ({
@@ -110,6 +112,12 @@
 								<ButtonGlass
 									class="md:text-md gap-2 px-4 py-2 text-xs font-bold text-white uppercase shadow-2xl md:px-8 md:py-4"
 									href={item.path}
+									onclick={() => {
+										// check if path changes, if it does, start loading
+										if (!isTheSamePath(page.url.pathname, item.path)) {
+											pageLoading.start();
+										}
+									}}
 								>
 									<i class={`${item.icon} icon-fix`}></i>{item.title}
 								</ButtonGlass>
@@ -117,6 +125,7 @@
 							<ButtonGlass
 								class="md:text-md gap-2 px-4 py-2 text-xs font-bold text-white uppercase shadow-2xl md:px-8 md:py-4"
 								title="วงแหวนเว็บ"
+								openNewWindow={true}
 								href="https://webring.wonderful.software#lucian.solutions"
 							>
 								<i>

@@ -13,6 +13,9 @@
 	afterNavigate(() => {
 		pageLoading.stop();
 	});
+
+	
+	
 	</script>
 
 {#if !page.error}
