@@ -1,34 +1,43 @@
-ARG NODE_VERSION
-
-# APP Builder
-ARG BUILDPLATFORM
-FROM --platform=${BUILDPLATFORM:-linux/amd64} node:${NODE_VERSION:-20}-alpine AS builder
+# Build stage
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-COPY package.json ./
+# Copy package files
+COPY package*.json ./
 
-RUN npm install
+# Install dependencies
+RUN npm ci
 
-# RUN npm audit fix --force
-
+# Copy source code
 COPY . .
 
+# Build the SvelteKit application
 RUN npm run build
 
-ARG NODE_VERSION
+# Production stage
+FROM node:20-alpine
 
-# App Runner
-ARG BUILDPLATFORM
-FROM --platform=${BUILDPLATFORM:-linux/amd64} node:${NODE_VERSION:-20}-alpine AS base
+WORKDIR /app
 
-WORKDIR /usr/src/app
+# Copy package files
+COPY package*.json ./
 
+# Install only production dependencies
+RUN npm ci --omit=dev
+
+# Copy built application from builder stage
 COPY --from=builder /app/build ./build
-COPY --from=builder /app/node_modules ./node_modules/
-COPY --from=builder /app/.env .
 
-COPY ./package.json .
-
+# Expose port (Google Cloud Run uses 8080 by default, but can be overridden)
 EXPOSE 3000
-CMD ["node", "-r", "dotenv/config", "build"]
+
+# Set environment for production
+ENV NODE_ENV=production
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
+  CMD node -e "require('http').get('http://localhost:3000', (r) => {if (r.statusCode !== 200) throw new Error(r.statusCode)})"
+
+# Start the application
+CMD ["node", "build"]
