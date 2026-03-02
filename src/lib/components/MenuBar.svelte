@@ -29,14 +29,20 @@
 		if (!dropdownOpen) dropdownOpen = true;
 	};
 
-	const toggleDropdown = () => {
-		dropdownOpen = !dropdownOpen;
-	};
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />
 
+
 {#if showMenu}
+	{#if dropdownOpen}
+		<div
+			tabindex="-1"
+			class="fixed inset-0 z-40 bg-transparent"
+			aria-hidden="true"
+			onclick={(e) => e.stopPropagation()}
+		></div>
+	{/if}
 	<header
 		transition:slide={{ axis: 'y', duration: 300 }}
 		class="navbar fixed top-0 right-0 left-0 z-50 m-0 bg-black/60 p-0 shadow-md backdrop-blur-md"
@@ -75,7 +81,7 @@
 					type="button"
 					class="text-xl mr-2 btn btn-ghost hover:text-white"
 					aria-label="Open menu"
-					onclick={toggleDropdown}
+					onclick={openDropdown}
 				>
 					<i class="fa-solid fa-bars" aria-hidden="true"></i>
 				</button>
@@ -94,7 +100,7 @@
 									closeDropdown();
 									pageLoading.start();
 								}}
-								class="h-auto w-full justify-start font-bold hover:text-white {dropdownOpen
+								class="h-auto z-50 w-full justify-start font-bold hover:text-white {dropdownOpen
 									? ''
 									: 'pointer-events-none'}"
 							>
@@ -110,7 +116,7 @@
 									closeDropdown();
 									pageLoading.start();
 								}}
-								class="h-auto w-full justify-start font-bold hover:text-white {dropdownOpen
+								class="h-auto z-50 w-full justify-start font-bold hover:text-white {dropdownOpen
 									? ''
 									: 'pointer-events-none'}"
 							>
@@ -125,13 +131,4 @@
 			</div>
 		</div>
 	</header>
-
-	{#if dropdownOpen}
-		<!-- Overlay that mutes clicks to the page when dropdown is open; clicking it closes the dropdown. -->
-		<div
-			class="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm transition-all"
-			onclick={closeDropdown}
-			aria-hidden="true"
-		></div>
-	{/if}
 {/if}
