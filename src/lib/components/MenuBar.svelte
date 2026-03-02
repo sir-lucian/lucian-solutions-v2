@@ -130,7 +130,10 @@
 						href="/"
 						class="w-full hover:text-white"
 						onclick={() => {
-							pageLoading.start();
+							const targetPath = '/';
+							if (!isTheSamePath(page.url.pathname, targetPath)) {
+								pageLoading.start();
+							}
 							closeDropdown();
 						}}
 					>
@@ -146,7 +149,10 @@
 						href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
 						class="w-full hover:text-white"
 						onclick={() => {
-							pageLoading.start();
+							const targetPath = item.path.startsWith('#') ? `./${item.path}` : `${item.path}`;
+							if (!isTheSamePath(page.url.pathname, targetPath)) {
+								pageLoading.start();
+							}
 							closeDropdown();
 						}}
 					>
