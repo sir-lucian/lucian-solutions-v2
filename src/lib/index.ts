@@ -104,5 +104,15 @@ export function isTheSamePath(path1: string, path2: string): boolean {
         path2 = path2.slice(1);
     }
 
+    // if path is empty, set to /
+    if (path1.length < 1) {
+        path1 = '/';
+    }
+    if (path2.length < 1) {
+        path2 = '/';
+    }
+
+    console.log(`Comparing paths: "${path1}" and "${path2}"`);
+
     return path1 === path2;
 }
