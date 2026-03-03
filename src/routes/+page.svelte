@@ -155,14 +155,22 @@
 		<Container id="about-me-section">
 			<ContainerGlassBlack class="p-8">
 				<div
-					class="flex w-full flex-row flex-wrap items-center justify-center gap-6 lg:flex-nowrap"
+					class="flex w-full flex-row flex-wrap items-center justify-center gap-6 lg:flex-nowrap py-4"
 				>
-					<img
-						src="/assets/ls-avatar.jpg"
-						alt="Karn Lucian Kamolnavin"
-						class="my-4 h-64 w-64 rounded-full shadow-lg md:h-80 md:w-80"
-						loading="lazy"
-					/>
+					<div class="flex-shrink-0 relative">
+						<img
+							src="/assets/ls-avatar.jpg"
+							alt="Karn Lucian Kamolnavin"
+							class="rounded-full shadow-lg h-64 w-64 md:h-80 md:w-80 object-cover transition-transform duration-300 hover:scale-105"
+							loading="lazy"
+						/>
+						<img
+							src="/assets/ls-lucian-hey.png"
+							alt="Lucian"
+							class="absolute -bottom-0 -right-0 h-24 w-24 md:h-32 md:w-32 shadow-lg object-cover transition-transform duration-300 hover:scale-110"
+							loading="lazy"
+						/>
+					</div>
 					<div class="mx-6 flex grow flex-col justify-center gap-4">
 						<h2 class="text-3xl font-bold text-primary uppercase">
 							<i class="fa-solid fa-user" aria-hidden="true"></i> About Me
@@ -181,9 +189,9 @@
 							In my free time, I enjoy contributing to open source projects, designing patterns for
 							rhythm games, making illustrations, and exploring new technologies in web development.
 						</p>
-						<div class="flex w-full items-center gap-2">
+						<div class="flex w-full flex-wrap md:flex-nowrap items-center gap-2">
 							<ButtonGlass
-								class="h-12 w-48 min-w-0 shrink-0 gap-2 px-0"
+								class="h-12 w-full md:max-w-48 min-w-0 shrink-0 gap-2 px-0"
 								onclick={() => (showEmail = !showEmail)}
 							>
 								{#if showEmail}
@@ -194,13 +202,13 @@
 							</ButtonGlass>
 
 							{#if showEmail}
-								<div class="flex grow overflow-hidden">
+								<div class="flex w-full md:w-auto md:grow overflow-hidden">
 									<ContainerGlassBlack
 										id="me"
 										aria-label="Email Address"
-										class="flex h-12 w-full flex-col items-center justify-center rounded-md px-3 font-mono text-sm font-bold tracking-wider"
+										class="flex h-12 w-full flex-col items-center justify-center rounded-md px-3 font-mono text-sm font-bold tracking-wider overflow-hidden text-ellipsis whitespace-nowrap"
 									>
-										<div class="flex h-full w-full items-center justify-center select-all">
+										<div class="flex h-full w-full items-center justify-center select-all overflow-hidden text-ellipsis whitespace-nowrap">
 											{email}
 										</div>
 									</ContainerGlassBlack>
