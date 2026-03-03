@@ -72,7 +72,8 @@ export enum MediaType {
 }
 
 // Portfolio items use `HtmlParagraph` and `Media` types directly; removed unused enum
-export const DEFAULT_SEO_IMAGE = "/assets/ls-seo.jpg";
+export const DEFAULT_SEO_IMAGE = "./assets/ls-seo.jpg";
+export const DEFAULT_FAVICON = "./assets/ls-logo.jpg";
 
 export function isTheSamePath(path1: string, path2: string): boolean {
 
@@ -111,8 +112,6 @@ export function isTheSamePath(path1: string, path2: string): boolean {
     if (path2.length < 1) {
         path2 = '/';
     }
-
-    console.log(`Comparing paths: "${path1}" and "${path2}"`);
 
     return path1 === path2;
 }

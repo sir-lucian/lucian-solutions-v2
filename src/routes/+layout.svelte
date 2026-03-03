@@ -7,6 +7,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { pageLoading } from '$lib/stores/pageLoading';
 	import LoadingBadge from '$lib/components/LoadingBadge.svelte';
+	import { assets } from '$app/paths';
 
 	let { children } = $props();
 
@@ -14,9 +15,15 @@
 		pageLoading.stop();
 	});
 
-	
-	
-	</script>
+</script>
+
+<svelte:head>
+	<link rel="icon" type="image/png" href="{assets}/assets/ls-logo.png" sizes="192x192 512x512" />
+	<link rel="shortcut icon" href="{assets}/assets/ls-logo.png" />
+	<link rel="apple-touch-icon" href="{assets}/assets/ls-logo.png" sizes="192x192" />
+	<link rel="manifest" href="{assets}/manifest.webmanifest" />
+	<meta name="theme-color" content="#f8f9fa" />
+</svelte:head>
 
 {#if !page.error}
 	<MenuBar />
