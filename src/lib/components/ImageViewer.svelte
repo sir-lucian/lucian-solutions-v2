@@ -17,6 +17,36 @@
 	// Map to track whether an image's `src` has been assigned (is visible or forced)
 	let visibleImages: Record<string, boolean> = {};
 
+	// Cache whether a given original src has a .webp preview available
+	let webpAvailable: Record<string, boolean | undefined> = {};
+
+	async function checkWebpFor(originalSrc: string) {
+		if (webpAvailable[originalSrc] !== undefined) return;
+
+		const webpUrl = `${originalSrc}.webp`;
+		try {
+			const res = await fetch(webpUrl, { method: 'HEAD' });
+			webpAvailable = { ...webpAvailable, [originalSrc]: res.ok };
+		} catch (err) {
+			webpAvailable = { ...webpAvailable, [originalSrc]: false };
+		}
+	}
+
+	// Cache whether a given original src has a .webm preview available (for gifs)
+	let webmAvailable: Record<string, boolean | undefined> = {};
+
+	async function checkWebmFor(originalSrc: string) {
+		if (webmAvailable[originalSrc] !== undefined) return;
+
+		const webmUrl = `${originalSrc}.webm`;
+		try {
+			const res = await fetch(webmUrl, { method: 'HEAD' });
+			webmAvailable = { ...webmAvailable, [originalSrc]: res.ok };
+		} catch (err) {
+			webmAvailable = { ...webmAvailable, [originalSrc]: false };
+		}
+	}
+
 	let observer: IntersectionObserver | null = null;
 	const observed = new Map<Element, string>();
 
@@ -29,6 +59,9 @@
 					if (!key) continue;
 					if (entry.isIntersecting) {
 						visibleImages = { ...visibleImages, [key]: true };
+						// start checking for available previews when the image becomes visible
+						checkWebpFor(key);
+						checkWebmFor(key);
 						// stop observing this element
 						observer?.unobserve(entry.target);
 						observed.delete(entry.target);
@@ -53,6 +86,9 @@
 
 		if (!shouldLazy) {
 			visibleImages = { ...visibleImages, [key]: true };
+			// if not lazy, also trigger preview availability checks
+			checkWebpFor(key);
+			checkWebmFor(key);
 			return;
 		}
 
@@ -143,8 +179,10 @@
 				></iframe>
 			</YouTubeEmbed>
 		{:else if media[0].type === MediaType.Image}
-			{@const src = `${env.PUBLIC_FILE_SERVER_URL}${media[0].imgSrc}`}
-			{@const assignedSrc = visibleImages[src] ? src : undefined}
+				{@const src = `${env.PUBLIC_FILE_SERVER_URL}${media[0].imgSrc}`}
+				{@const assignedSrc = visibleImages[src] ? src : undefined}
+				{@const previewAssignedSrc = assignedSrc && webpAvailable[src] ? `${src}.webp` : assignedSrc}
+				{@const previewVideoSrc = assignedSrc && webmAvailable[src] ? `${src}.webm` : undefined}
 			<div class="relative w-full overflow-hidden rounded-lg shadow-lg">
 				{#if !loadedImages[src]}
 					{#if !assignedSrc}
@@ -169,16 +207,34 @@
 				{/if}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-				<img
-					src={assignedSrc}
-					alt={media[0].altText || 'Image'}
-					loading={media[0].imgLazyLoad ? 'lazy' : 'eager'}
-					decoding="async"
-					use:deferLoad={{ key: src, lazy: media[0].imgLazyLoad !== false }}
-					class={`h-auto w-full max-w-full cursor-zoom-in transition duration-300 hover:brightness-90 ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
-					on:click={() => openLightbox(media[0])}
-					on:load={() => handleImageLoad(src)}
-				/>
+				{#if previewVideoSrc}
+					<!-- svelte-ignore a11y-click-events-have-key-events -->
+					<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
+					<video
+						src={previewVideoSrc}
+						muted
+						playsinline
+						autoplay
+						loop
+						preload="metadata"
+						class={`h-auto w-full max-w-full cursor-zoom-in transition duration-300 hover:brightness-90 ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
+						on:click={() => openLightbox(media[0])}
+						on:loadeddata={() => handleImageLoad(src)}
+					>
+						<span class="text-xs text-neutral-400 text-center px-3 overflow-protection"><i class="fa-solid fa-circle-exclamation"></i> Your browser does not support the video tag</span>
+					</video>
+				{:else}
+					<img
+						src={previewAssignedSrc}
+						alt={media[0].altText || 'Image'}
+						loading={media[0].imgLazyLoad ? 'lazy' : 'eager'}
+						decoding="async"
+						use:deferLoad={{ key: src, lazy: media[0].imgLazyLoad !== false }}
+						class={`h-auto w-full max-w-full cursor-zoom-in transition duration-300 hover:brightness-90 ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
+						on:click={() => openLightbox(media[0])}
+						on:load={() => handleImageLoad(src)}
+					/>
+				{/if}
 			</div>
 		{/if}
 	</div>
@@ -207,6 +263,8 @@
 				{:else if item.type === MediaType.Image}
 					{@const src = `${env.PUBLIC_FILE_SERVER_URL}${item.imgSrc}`}
 					{@const assignedSrc = visibleImages[src] ? src : undefined}
+					{@const previewAssignedSrc = assignedSrc && webpAvailable[src] ? `${src}.webp` : assignedSrc}
+					{@const previewVideoSrc = assignedSrc && webmAvailable[src] ? `${src}.webm` : undefined}
 					<div class="relative h-full w-full bg-neutral-800">
 						{#if !loadedImages[src]}
 							{#if !assignedSrc}
@@ -231,16 +289,32 @@
 						{/if}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
-						<img
-							src={assignedSrc}
-							alt={item.altText || 'Image'}
-							loading={item.imgLazyLoad ? 'lazy' : 'eager'}
-							decoding="async"
-							use:deferLoad={{ key: src, lazy: item.imgLazyLoad !== false }}
-							class={`h-full w-full cursor-zoom-in object-cover transition duration-300 hover:brightness-90 ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
-							on:click={() => openLightbox(item)}
-							on:load={() => handleImageLoad(src)}
-						/>
+						{#if previewVideoSrc}
+							<video
+								src={previewVideoSrc}
+								muted
+								playsinline
+								autoplay
+								loop
+								preload="metadata"
+								class={`h-full w-full cursor-zoom-in object-cover transition duration-300 hover:brightness-90 ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
+								on:click={() => openLightbox(item)}
+								on:loadeddata={() => handleImageLoad(src)}
+							>
+								<span class="text-xs text-neutral-400 text-center px-3 overflow-protection"><i class="fa-solid fa-circle-exclamation"></i> Your browser does not support the video tag</span>
+							</video>
+						{:else}
+							<img
+								src={previewAssignedSrc}
+								alt={item.altText || 'Image'}
+								loading={item.imgLazyLoad ? 'lazy' : 'eager'}
+								decoding="async"
+								use:deferLoad={{ key: src, lazy: item.imgLazyLoad !== false }}
+								class={`h-full w-full cursor-zoom-in object-cover transition duration-300 hover:brightness-90 ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
+								on:click={() => openLightbox(item)}
+								on:load={() => handleImageLoad(src)}
+							/>
+						{/if}
 					</div>
 				{/if}
 			</div>
