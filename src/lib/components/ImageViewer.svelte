@@ -60,8 +60,14 @@
 					if (entry.isIntersecting) {
 						visibleImages = { ...visibleImages, [key]: true };
 						// start checking for available previews when the image becomes visible
-						checkWebpFor(key);
-						checkWebmFor(key);
+						// if ext is png, jpg, ort jpeg, check for webp. If ext is gif, check for webm
+						if (key.match(/\.(png|jpe?g)$/i)) {
+							checkWebpFor(key);
+						}
+						// Only check for webm if it's a gif, to avoid unnecessary requests for non-gif images
+						if (key.match(/\.(gif)$/i)) {
+							checkWebmFor(key);
+						}
 						// stop observing this element
 						observer?.unobserve(entry.target);
 						observed.delete(entry.target);
