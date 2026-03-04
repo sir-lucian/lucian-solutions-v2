@@ -152,7 +152,7 @@
 						<div class="absolute inset-0 flex items-center justify-center bg-neutral-800">
 							<div class="flex flex-col items-center justify-center gap-1">
 								<i class="fa-solid fa-file-circle-xmark"></i>
-								<div class="text-xs text-neutral-400">Image not found</div>
+								<div class="text-xs text-neutral-400 text-center px-3 overflow-protection">Image not found</div>
 							</div>
 						</div>
 					{:else}
@@ -160,7 +160,7 @@
 						<div class="absolute inset-0 flex items-center justify-center bg-neutral-800">
 							<div class="flex flex-col items-center justify-center gap-1">
 								<span class="loading loading-lg loading-spinner text-primary"></span>
-								<div class="text-xs text-neutral-400">
+								<div class="text-xs text-neutral-400 px-3 text-center overflow-protection">
 									Loading Image{assignedSrc ? `: ${assignedSrc}` : '...'}
 								</div>
 							</div>
@@ -214,7 +214,7 @@
 								<div class="absolute inset-0 flex items-center justify-center">
 									<div class="flex flex-col items-center justify-center gap-1">
 										<i class="fa-solid fa-file-circle-xmark text-2xl text-neutral-400"></i>
-										<div class="text-xs text-neutral-400">Image not found</div>
+										<div class="text-xs text-neutral-400 text-center px-3 overflow-protection">Image not found</div>
 									</div>
 								</div>
 							{:else}
@@ -222,7 +222,7 @@
 								<div class="absolute inset-0 flex items-center justify-center">
 									<div class="flex flex-col items-center justify-center gap-1">
 										<span class="loading loading-md loading-spinner text-primary"></span>
-										<div class="text-xs text-neutral-400">
+										<div class="text-xs text-neutral-400 text-center px-3 overflow-protection">
 											Loading Image{assignedSrc ? `: ${assignedSrc}` : '...'}
 										</div>
 									</div>
@@ -252,5 +252,13 @@
 	/* Optional: Add custom styles for the image grid or lightbox here */
 	img {
 		transition: 0.3s ease-in-out;
+	}
+
+	.overflow-protection {
+		/* This is a utility class to prevent overflow issues with the grid items */
+		overflow-x: hidden;
+		word-break: break-all;
+		text-overflow: ellipsis;
+		overflow-wrap: break-word;
 	}
 </style>
