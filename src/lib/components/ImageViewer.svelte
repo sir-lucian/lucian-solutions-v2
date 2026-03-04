@@ -327,12 +327,4 @@
 	img {
 		transition: 0.3s ease-in-out;
 	}
-
-	.overflow-protection {
-		/* This is a utility class to prevent overflow issues with the grid items */
-		overflow-x: hidden;
-		word-break: break-all;
-		text-overflow: ellipsis;
-		overflow-wrap: break-word;
-	}
 </style>

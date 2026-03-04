@@ -63,3 +63,11 @@ img.emoji {
 	vertical-align: -0.1em;
     display: inline-block;
 }
+
+.overflow-protection {
+	/* This is a utility class to prevent overflow issues with the grid items */
+	overflow-x: hidden;
+	word-break: break-all;
+	text-overflow: ellipsis;
+	overflow-wrap: break-word;
+}

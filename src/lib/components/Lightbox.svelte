@@ -158,8 +158,11 @@
 				on:load={() => isLoading = false}
 			/>
 			{#if isLoading}
-				<div class="absolute inset-0 flex items-center justify-center z-40 pointer-events-none">
+				<div class="absolute inset-0 flex items-center justify-center z-40 pointer-events-none flex-col gap-2">
 					<span class="loading loading-spinner loading-lg text-primary"></span>
+					<div class="text-xs text-neutral-400 text-center px-3 overflow-protection">
+						Loading Image: {env.PUBLIC_FILE_SERVER_URL + (currentImage.imgSrc ?? '')}
+					</div>
 				</div>
 			{/if}
 		{/key}
