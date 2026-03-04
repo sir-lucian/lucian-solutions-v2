@@ -59,7 +59,7 @@ export const GET: RequestHandler = async ({ url, fetch }) => {
 
 		const result = Randomiser.getDrinksMenu(data, category);
 
-		return new Response(`<html><body>${result}</body></html>`, {
+		return new Response(`${result}`, {
 			headers: {
 				'Content-Type': 'text/html; charset=utf-8',
 				'X-Content-Type-Options': 'nosniff',
