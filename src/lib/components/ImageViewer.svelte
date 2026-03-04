@@ -10,7 +10,7 @@
 
 	let isLightboxOpen = false;
 	let lightboxIndex = 0;
-	
+
 	// Map to track loaded state of images
 	let loadedImages: Record<string, boolean> = {};
 
@@ -22,18 +22,21 @@
 
 	function ensureObserver() {
 		if (observer) return;
-		observer = new IntersectionObserver((entries) => {
-			for (const entry of entries) {
-				const key = observed.get(entry.target);
-				if (!key) continue;
-				if (entry.isIntersecting) {
-					visibleImages = { ...visibleImages, [key]: true };
-					// stop observing this element
-					observer?.unobserve(entry.target);
-					observed.delete(entry.target);
+		observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					const key = observed.get(entry.target);
+					if (!key) continue;
+					if (entry.isIntersecting) {
+						visibleImages = { ...visibleImages, [key]: true };
+						// stop observing this element
+						observer?.unobserve(entry.target);
+						observed.delete(entry.target);
+					}
 				}
-			}
-		}, { root: null, rootMargin: '200px', threshold: 0.05 });
+			},
+			{ root: null, rootMargin: '200px', threshold: 0.05 }
+		);
 	}
 
 	function observeImage(el: Element | null, key: string, shouldLazy = true) {
@@ -49,7 +52,7 @@
 		}
 
 		if (!shouldLazy) {
-				visibleImages = { ...visibleImages, [key]: true };
+			visibleImages = { ...visibleImages, [key]: true };
 			return;
 		}
 
@@ -57,7 +60,6 @@
 		observed.set(el, key);
 		observer?.observe(el);
 	}
-
 
 	// Svelte action to attach lazy/deferred loading to an element
 	function deferLoad(node: HTMLElement, params: { key: string; lazy?: boolean }) {
@@ -96,7 +98,9 @@
 	}
 
 	// Filter only image media for the lightbox from the complete set if available
-	$: lightboxImages = (allPostMedia.length > 0 ? allPostMedia : media).filter((m) => m.type === 'image');
+	$: lightboxImages = (allPostMedia.length > 0 ? allPostMedia : media).filter(
+		(m) => m.type === 'image'
+	);
 
 	function openLightbox(item: Media) {
 		const index = lightboxImages.findIndex((img) => img.imgSrc === item.imgSrc);
@@ -111,7 +115,7 @@
 	}
 
 	$: hasYoutube = media.some((m) => m.type === MediaType.YouTube);
-	
+
 	// Determine if we need the special layout for odd number of items > 1
 	// If odd > 1, the last 3 items will share a row (3 columns), others will be in pairs (2 columns)
 	// To achieve this with a single grid, we use a 6-column grid:
@@ -121,11 +125,7 @@
 </script>
 
 {#if isLightboxOpen}
-	<Lightbox
-		images={lightboxImages}
-		startIndex={lightboxIndex}
-		onClose={closeLightbox}
-	/>
+	<Lightbox images={lightboxImages} startIndex={lightboxIndex} onClose={closeLightbox} />
 {/if}
 
 {#if media.length === 1}
@@ -147,9 +147,25 @@
 			{@const assignedSrc = visibleImages[src] ? src : undefined}
 			<div class="relative w-full overflow-hidden rounded-lg shadow-lg">
 				{#if !loadedImages[src]}
-					<div class="absolute inset-0 flex items-center justify-center bg-neutral-800">
-						<span class="loading loading-spinner loading-lg text-primary"></span>
-					</div>
+					{#if !assignedSrc}
+						<!-- Show placeholder only if the image is not yet assigned (not visible) -->
+						<div class="absolute inset-0 flex items-center justify-center bg-neutral-800">
+							<div class="flex flex-col items-center justify-center gap-1">
+								<i class="fa-solid fa-file-circle-xmark"></i>
+								<div class="text-xs text-neutral-400">Image not found</div>
+							</div>
+						</div>
+					{:else}
+						<!-- Show loading spinner if the image is assigned but not yet loaded -->
+						<div class="absolute inset-0 flex items-center justify-center bg-neutral-800">
+							<div class="flex flex-col items-center justify-center gap-1">
+								<span class="loading loading-lg loading-spinner text-primary"></span>
+								<div class="text-xs text-neutral-400">
+									Loading Image{assignedSrc ? `: ${assignedSrc}` : '...'}
+								</div>
+							</div>
+						</div>
+					{/if}
 				{/if}
 				<!-- svelte-ignore a11y-click-events-have-key-events -->
 				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -159,7 +175,7 @@
 					loading={media[0].imgLazyLoad ? 'lazy' : 'eager'}
 					decoding="async"
 					use:deferLoad={{ key: src, lazy: media[0].imgLazyLoad !== false }}
-					class={`h-auto max-w-full cursor-zoom-in hover:brightness-90 transition duration-300 w-full ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
+					class={`h-auto w-full max-w-full cursor-zoom-in transition duration-300 hover:brightness-90 ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
 					on:click={() => openLightbox(media[0])}
 					on:load={() => handleImageLoad(src)}
 				/>
@@ -167,16 +183,12 @@
 		{/if}
 	</div>
 {:else if media.length > 1}
-	<div 
-		class={`grid grid-cols-1 gap-4 ${isOddLayout ? 'md:grid-cols-6' : 'md:grid-cols-2'}`}
-	>
+	<div class={`grid grid-cols-1 gap-4 ${isOddLayout ? 'md:grid-cols-6' : 'md:grid-cols-2'}`}>
 		{#each media as item, index}
 			{@const isLastThree = isOddLayout && index >= media.length - 3}
 			<div
 				class={`w-full overflow-hidden rounded-lg shadow-lg ${hasYoutube ? 'aspect-video' : 'aspect-square'}
-				${isOddLayout 
-					? (isLastThree ? 'md:col-span-2' : 'md:col-span-3') 
-					: ''}
+				${isOddLayout ? (isLastThree ? 'md:col-span-2' : 'md:col-span-3') : ''}
 				`}
 			>
 				{#if item.type === MediaType.YouTube}
@@ -195,11 +207,27 @@
 				{:else if item.type === MediaType.Image}
 					{@const src = `${env.PUBLIC_FILE_SERVER_URL}${item.imgSrc}`}
 					{@const assignedSrc = visibleImages[src] ? src : undefined}
-					<div class="relative w-full h-full bg-neutral-800">
+					<div class="relative h-full w-full bg-neutral-800">
 						{#if !loadedImages[src]}
-							<div class="absolute inset-0 flex items-center justify-center">
-								<span class="loading loading-spinner loading-md text-primary"></span>
-							</div>
+							{#if !assignedSrc}
+								<!-- Show placeholder only if the image is not yet assigned (not visible) -->
+								<div class="absolute inset-0 flex items-center justify-center">
+									<div class="flex flex-col items-center justify-center gap-1">
+										<i class="fa-solid fa-file-circle-xmark text-2xl text-neutral-400"></i>
+										<div class="text-xs text-neutral-400">Image not found</div>
+									</div>
+								</div>
+							{:else}
+								<!-- Show loading spinner if the image is assigned but not yet loaded -->
+								<div class="absolute inset-0 flex items-center justify-center">
+									<div class="flex flex-col items-center justify-center gap-1">
+										<span class="loading loading-md loading-spinner text-primary"></span>
+										<div class="text-xs text-neutral-400">
+											Loading Image{assignedSrc ? `: ${assignedSrc}` : '...'}
+										</div>
+									</div>
+								</div>
+							{/if}
 						{/if}
 						<!-- svelte-ignore a11y-click-events-have-key-events -->
 						<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
@@ -209,7 +237,7 @@
 							loading={item.imgLazyLoad ? 'lazy' : 'eager'}
 							decoding="async"
 							use:deferLoad={{ key: src, lazy: item.imgLazyLoad !== false }}
-							class={`h-full w-full object-cover cursor-zoom-in hover:brightness-90 transition duration-300 ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
+							class={`h-full w-full cursor-zoom-in object-cover transition duration-300 hover:brightness-90 ${!loadedImages[src] ? 'opacity-0' : 'opacity-100'}`}
 							on:click={() => openLightbox(item)}
 							on:load={() => handleImageLoad(src)}
 						/>
@@ -221,9 +249,8 @@
 {/if}
 
 <style scoped>
-    /* Optional: Add custom styles for the image grid or lightbox here */
-    img {
-        transition: 0.3s ease-in-out;
-    }
-
+	/* Optional: Add custom styles for the image grid or lightbox here */
+	img {
+		transition: 0.3s ease-in-out;
+	}
 </style>
