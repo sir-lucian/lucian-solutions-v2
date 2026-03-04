@@ -157,7 +157,7 @@
 				<div
 					class="flex w-full flex-row flex-wrap items-center justify-center gap-6 lg:flex-nowrap py-4"
 				>
-					<div class="flex-shrink-0 relative">
+					<div class="shrink-0 relative">
 						<img
 							src="/assets/ls-avatar.jpg"
 							alt="Karn Lucian Kamolnavin"
@@ -167,7 +167,7 @@
 						<img
 							src="/assets/ls-lucian-hey.png"
 							alt="Lucian"
-							class="absolute -bottom-0 -right-0 h-24 w-24 md:h-32 md:w-32 shadow-lg object-cover transition-transform duration-300 hover:scale-110"
+							class="absolute bottom-0 right-0 h-24 w-24 md:h-32 md:w-32 shadow-lg object-cover transition-transform duration-300 hover:scale-110"
 							loading="lazy"
 						/>
 					</div>

@@ -224,7 +224,7 @@
 	});
 
 	// Control visible count and limited grouped display
-	let visibleCount = $state(8);
+	let visibleCount = $state(5);
 	let groupedDisplayedPostsLimited = $derived.by(() => {
 		const groups: YearGroup[] = [];
 		const visible = filteredPosts.slice(0, visibleCount);
@@ -651,7 +651,7 @@
 					<div class="flex justify-center">
 						<ButtonGlass
 							class="w-48"
-							onclick={() => (visibleCount = Math.min(visibleCount + 8, filteredPosts.length))}
+							onclick={() => (visibleCount = Math.min(visibleCount + 5, filteredPosts.length))}
 						>
 							Load more
 						</ButtonGlass>
