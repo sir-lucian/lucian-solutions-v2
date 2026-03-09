@@ -503,9 +503,11 @@
 			{/if}
 		</div>
 
-		<div class="w-full lg:hidden">
-			{@render sidebarLegend()}
-		</div>
+		{#if !singlePostId}
+			<div class="w-full lg:hidden">
+				{@render sidebarLegend()}
+			</div>
+		{/if}
 
 		<div class="flex flex-col gap-8 lg:flex-row" id="main-content">
 			<div class="flex flex-1 flex-col gap-12">
@@ -668,11 +670,13 @@
 				{/if}
 			</div>
 
-			<div class="hidden flex-none lg:block lg:w-64">
-				<div class="sticky top-24">
-					{@render sidebarLegend(true)}
+			{#if !singlePostId}
+				<div class="hidden flex-none lg:block lg:w-64">
+					<div class="sticky top-24">
+						{@render sidebarLegend(true)}
+					</div>
 				</div>
-			</div>
+			{/if}
 		</div>
 		{#if singlePostId && groupedDisplayedPosts.length !== 0}
 			<div class="flex w-full justify-start lg:w-[calc(100%-18rem)]">
