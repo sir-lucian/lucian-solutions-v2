@@ -678,8 +678,8 @@
 				</div>
 			{/if}
 		</div>
-		{#if singlePostId && groupedDisplayedPosts.length !== 0}
-			<div class="flex w-full justify-start lg:w-[calc(100%-18rem)]">
+		{#if singlePostId && groupedDisplayedPosts.length > 0}
+			<div class="flex w-full justify-start">
 				<ButtonGlass class="w-full gap-2 text-lg" onclick={clearFilters}>
 					<i class="fa-solid fa-arrow-left"></i> See All Posts
 				</ButtonGlass>
