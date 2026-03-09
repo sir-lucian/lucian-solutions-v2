@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ContainerGlassBlack from "./containers/ContainerGlassBlack.svelte";
     import type { Art } from '$lib';
+	import BadgeGlass from "./badges/BadgeGlass.svelte";
 
     export let artists: { name: string; slug?: string | null; items: Art[] }[] = [];
     export let selectedArtist: string | null = null;
@@ -14,7 +15,9 @@
 </script>
 <ContainerGlassBlack class="p-4">
     <h2 class="text-2xl font-bold text-primary mb-4 inline-flex items-center gap-1">
-        <i class="fa fa-paintbrush"></i> Contributors
+        <i class="fa fa-paintbrush"></i>
+        <span>Contributors</span>
+        <BadgeGlass class="ml-2" size="xs">{artists.length}</BadgeGlass>
     </h2>
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2">
         {#each artists as artist (artist.name)}

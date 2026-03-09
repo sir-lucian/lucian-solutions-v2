@@ -16,6 +16,10 @@
 	let startX = 0;
 	let scrollLeft = 0;
 
+	// If the pointer moves more than this many pixels while down, treat it as a drag
+	const DRAG_THRESHOLD = 8;
+	let wasDragged = $state(false);
+
 	let isLightboxOpen = $state(false);
 	let lightboxIndex = $state(0);
 	let activeIndex = $state(0);
@@ -61,6 +65,7 @@
 	function handleMouseDown(e: MouseEvent) {
 		if (!scrollContainer) return;
 		isDown = true;
+		wasDragged = false;
 		startX = e.pageX - scrollContainer.offsetLeft;
 		scrollLeft = scrollContainer.scrollLeft;
 	}
@@ -77,6 +82,9 @@
 		if (!isDown || !scrollContainer) return;
 		e.preventDefault();
 		const x = e.pageX - scrollContainer.offsetLeft;
+		if (!wasDragged && Math.abs(x - startX) > DRAG_THRESHOLD) {
+			wasDragged = true;
+		}
 		const walk = (x - startX) * 2;
 		scrollContainer.scrollLeft = scrollLeft - walk;
 	}
@@ -195,7 +203,7 @@
 		{#each displayImages as item, i}
 			<!-- svelte-ignore a11y_click_events_have_key_events -->
 			<!-- svelte-ignore a11y_no_static_element_interactions -->
-			<div class="gallery-item select-none" onclick={() => !isDown && openLightbox(i)}>
+			<div class="gallery-item select-none" onclick={() => !wasDragged && openLightbox(i)}>
 				<div class="gallery-image-container shadow-2xl" id={"gallery-item-" + selfUniqueId + "-" + i}>
 					{#if webmAvailable[item.imgSrc]}
 						<video
@@ -254,7 +262,7 @@
 	}
 
 	.gallery-row {
-		height: 30rem;
+		height: auto;
 		display: flex;
 		align-items: center;
 		justify-content: flex-start; /* Align left for scrolling */
@@ -285,10 +293,10 @@
 	}
 
 	.gallery-item {
-		min-width: 30rem;
+		width: calc(100% - 1rem); /* Full width minus margin for overlap */
 		max-width: 30rem;
-		height: 100%;
-		margin: 0 1rem; /* Negative margin for overlap */
+		height: auto;
+		margin: 0 0.5rem; /* Horizontal margin for spacing */
 		flex-shrink: 0;
 		/* scroll-snap-align: center; removed */
 	}
@@ -305,7 +313,7 @@
 	}
 
 	.gallery-image-container {
-		height: 100%;
+		height: auto;
 		width: auto;
 		overflow: hidden;
 		border-radius: 0.5rem;
