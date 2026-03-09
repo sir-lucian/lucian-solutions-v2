@@ -23,6 +23,14 @@ export interface Media {
     imgLazyLoad?: boolean;
 }
 
+export interface MediaItem {
+    type: string;
+    imgSrc?: string;
+    altText?: string;
+    embededUrl?: string;
+    imgLazyLoad: boolean;
+}
+
 export interface HtmlItem {
     type: HtmlType;
     htmlContent: string;

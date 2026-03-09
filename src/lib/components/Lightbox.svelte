@@ -6,7 +6,7 @@
 
 	export let images: Media[];
 	export let startIndex: number = 0;
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
+	 
 	export let onClose: () => void;
 
 	let index = startIndex;

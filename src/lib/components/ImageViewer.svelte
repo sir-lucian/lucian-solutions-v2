@@ -1,12 +1,16 @@
 <script lang="ts">
+	/* eslint-disable svelte/require-each-key */
+	/* eslint-disable svelte/prefer-svelte-reactivity */
+	/* eslint-disable @typescript-eslint/no-unused-vars */
 	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
 	import { MediaType, type Media } from '$lib/index';
 	import Lightbox from './Lightbox.svelte';
 	import { env } from '$env/dynamic/public';
 	import { onDestroy } from 'svelte';
+	import { type MediaItem } from '$lib/index';
 
-	export let media: Media[] = [];
-	export let allPostMedia: Media[] = [];
+	export let media: Media[] | MediaItem[] = [];
+	export let allPostMedia: Media[] | MediaItem[] = [];
 
 	let isLightboxOpen = false;
 	let lightboxIndex = 0;
@@ -140,11 +144,11 @@
 	}
 
 	// Filter only image media for the lightbox from the complete set if available
-	$: lightboxImages = (allPostMedia.length > 0 ? allPostMedia : media).filter(
+	$: lightboxImages = ((allPostMedia.length > 0 ? allPostMedia : media).filter(
 		(m) => m.type === 'image'
-	);
+	)) as Media[];
 
-	function openLightbox(item: Media) {
+	function openLightbox(item: Media | MediaItem) {
 		const index = lightboxImages.findIndex((img) => img.imgSrc === item.imgSrc);
 		if (index !== -1) {
 			lightboxIndex = index;
@@ -211,11 +215,7 @@
 						</div>
 					{/if}
 				{/if}
-				<!-- svelte-ignore a11y-click-events-have-key-events -->
-				<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 				{#if previewVideoSrc}
-					<!-- svelte-ignore a11y-click-events-have-key-events -->
-					<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 					<video
 						src={previewVideoSrc}
 						muted
@@ -230,6 +230,8 @@
 						<span class="text-xs text-neutral-400 text-center px-3 overflow-protection"><i class="fa-solid fa-circle-exclamation"></i> Your browser does not support the video tag</span>
 					</video>
 				{:else}
+					<!-- svelte-ignore a11y_click_events_have_key_events -->
+					<!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
 					<img
 						src={previewAssignedSrc}
 						alt={media[0].altText || 'Image'}
@@ -246,6 +248,7 @@
 	</div>
 {:else if media.length > 1}
 	<div class={`grid grid-cols-1 gap-4 ${isOddLayout ? 'md:grid-cols-6' : 'md:grid-cols-2'}`}>
+		
 		{#each media as item, index}
 			{@const isLastThree = isOddLayout && index >= media.length - 3}
 			<div

@@ -1,6 +1,8 @@
 <script lang="ts">
+	/* eslint-disable svelte/require-each-key */
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import Footer from '$lib/components/Footer.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import Container from '$lib/components/Container.svelte';
@@ -14,11 +16,11 @@
 	import { fetchPosts } from '$lib/services/PostService';
 
 	// Page data provided by +page.ts
-	const { data } = $props<{ data: { posts?: any[]; post?: any } }>();
+	const { data } = $props<{ data: { posts?: Post[]; post?: Post } }>();
 	import { twemojiParse } from '$lib/utils/twemoji';
 	import { onMount, tick } from 'svelte';
 	import { writable } from 'svelte/store';
-	import { DEFAULT_SEO_IMAGE, HtmlType } from '$lib';
+	import { DEFAULT_SEO_IMAGE, HtmlType, type MediaItem } from '$lib';
 
 	// helpers
 	function safeDate(date?: string) {
@@ -45,8 +47,8 @@
 		});
 	}
 
-	function getAllPostImages(post: Post): any[] {
-		let allMedia: any[] = [];
+	function getAllPostImages(post: Post): MediaItem[] {
+		let allMedia: MediaItem[] = [];
 		if (post.htmlItems) {
 			post.htmlItems.forEach((item) => {
 				if (item.type === 'media' && item.medias) {
@@ -58,13 +60,20 @@
 	}
 
 	// types
+	interface HtmlItem {
+		type: string;
+		medias?: unknown[];
+		htmlContent?: string;
+		htmlContents?: string[];
+		buttons?: { url: string; openNewTab?: boolean; faIcon?: string; htmlContent: string }[];
+	}
+
 	interface Post {
 		id: string;
 		title: string;
 		slug: string;
 		tags: string[];
-		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		htmlItems: any[];
+		htmlItems: HtmlItem[];
 		date?: string;
 	}
 
@@ -260,13 +269,13 @@
 	});
 
 	// UI helpers
-	function clearFilters() {
+	async function clearFilters() {
 		searchQuery = '';
 		activeSearchQuery = '';
 		selectedYear = null;
 		selectedMonthIndex = null;
 		singlePostId = null;
-		goto('/posts', { replaceState: true });
+		await goto(resolve('/posts'), { replaceState: true });
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 		holdFirstYearClick = false;
 	}
@@ -282,7 +291,7 @@
 		activeSearchQuery = '';
 		if (singlePostId) {
 			singlePostId = null;
-			goto('/posts', { replaceState: true });
+			await goto(resolve('/posts'), { replaceState: true });
 		} else {
 			await tick();
 			if (year && !monthIndex && !holdFirstYearClick) {
@@ -294,10 +303,10 @@
 		}
 	}
 
-	function performSearch() {
+	async function performSearch() {
 		if (singlePostId) {
 			singlePostId = null;
-			goto('/posts', { replaceState: true });
+			await goto(resolve('/posts'), { replaceState: true });
 		}
 		selectedYear = null;
 		selectedMonthIndex = null;
@@ -390,6 +399,7 @@
 		</div>
 		<div class={`${isSticky ? 'flex-1  pr-1' : ''}`}>
 			<ul class="w-full">
+			
 				{#each allGroupedPosts as group}
 					<li>
 						<button
@@ -546,9 +556,8 @@
 												<header class="mb-4">
 													<div class="flex items-start justify-between gap-4">
 														<h3 class="text-2xl font-bold text-primary">
-															<!-- eslint-disable-next-line svelte/no-at-html-tags -->{@html twemojiParse(
-																post.title
-															)}
+															<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+															{@html twemojiParse(post.title)}
 														</h3>
 														<ButtonGlass
 															class="h-8 shrink-0 gap-2 px-3 text-xs"
@@ -578,10 +587,9 @@
 															<div class="flex gap-2">
 																{#each post.tags as tag}
 																	<BadgeGlass
-																		><!-- eslint-disable-next-line svelte/no-at-html-tags -->{@html twemojiParse(
-																			tag
-																		)}</BadgeGlass
-																	>
+																		><!-- eslint-disable-next-line svelte/no-at-html-tags -->
+																		{@html twemojiParse(tag)}
+																	</BadgeGlass>
 																{/each}
 															</div>
 														{/if}
@@ -595,25 +603,26 @@
 															{#if item.type === HtmlType.Media && item.medias}
 																<ImageViewer media={mapMediaItems(item.medias)} {allPostMedia} />
 															{:else if item.type === HtmlType.Paragraph}
-																<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 																<p class="leading-relaxed">
-																	{@html twemojiParse(item.htmlContent)}
+																	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+																	{@html twemojiParse(item.htmlContent ?? '')}
 																</p>
 															{:else if item.type === HtmlType.Header}
-																<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 																<h4 class="mt-4 mb-2 text-lg font-bold text-primary">
-																	{@html twemojiParse(item.htmlContent)}
+																	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+																	{@html twemojiParse(item.htmlContent ?? '')}
 																</h4>
 															{:else if item.type === HtmlType.List}
 																<ul
 																	class="line-height-loose marker: flex list-outside list-none flex-col overflow-hidden rounded-lg"
 																>
 																	{#if item.htmlContents}
-																		{#each item.htmlContents as listItem, index}
+																		{#each item.htmlContents as listItem}
 																			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 																			<li
 																				class="overflow-auto bg-secondary/75 px-4 py-3 text-secondary-content hover:bg-secondary"
 																			>
+																				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 																				{@html twemojiParse(listItem)}
 																			</li>
 																		{/each}
