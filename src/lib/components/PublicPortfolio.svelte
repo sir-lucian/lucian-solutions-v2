@@ -46,7 +46,7 @@
 	<div
 		class={`flex w-full flex-col justify-center gap-2 lg:w-1/2 ${reverse ? 'items-start text-start lg:items-end lg:text-end' : 'items-start text-start'}`}
 	>
-		<div class="mx-4 flex w-full flex-col gap-2">
+		<div class="lg:px-6 flex w-full flex-col gap-2">
 			<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 			<h3 class="text-xl font-bold text-primary">{@html twemojiParse(title)}</h3>
 
@@ -89,7 +89,7 @@
 					<div class="flex w-full flex-col gap-2">
 						<ContainerGlassBlack class="w-full px-4 py-2 text-sm">
 							<div class="flex flex-row items-center justify-between">
-								<div class="font-mono font-bold">
+								<div class="font-mono font-bold overflow-protection pe-2">
 									{paragraph.htmlContent?.trim() as string}
 								</div>
 								<div>

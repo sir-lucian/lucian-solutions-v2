@@ -174,7 +174,7 @@
 							loading="lazy"
 						/>
 					</div>
-					<div class="mx-6 flex grow flex-col justify-center gap-4">
+					<div class="flex grow flex-col justify-center gap-4">
 						<h2 class="text-3xl font-bold text-primary uppercase">
 							<i class="fa-solid fa-user" aria-hidden="true"></i> About Me
 						</h2>
