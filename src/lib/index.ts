@@ -10,6 +10,7 @@ export interface Button {
 
 export interface HtmlParagraph {
     type: HtmlType;
+    language?: string;
     htmlContent?: string;
     htmlContents?: string[];
     buttons?: Button[];
@@ -60,6 +61,7 @@ export interface Art {
 }
 
 export interface PortfolioItem {
+    id: string;
     title: string;
     htmlParagraphs?: HtmlParagraph[];
     media?: Media[];
@@ -72,6 +74,7 @@ export enum HtmlType {
     List = 'list',
     Media = 'media',
     ButtonRow = 'button-row',
+    CopyableCodeBlock = 'copyable-code-block',
 }
 
 export enum MediaType {

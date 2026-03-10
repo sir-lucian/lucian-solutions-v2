@@ -15,8 +15,8 @@
 				{
 					"type": "list",
 					"htmlContents": [
-						"<i class=\"fa-solid fa-trophy\" aria-hidden=\"true\"></i>DPC (DJMax Pattern-Design Contest) - 2022 (6th), 2023 (1st)",
-						"<i class=\"fa-solid fa-user\" aria-hidden=\"true\"></i>Guest pattern designer"
+						"<div class=\"inline-flex justify-start items-center w-[1.75rem]\"><i class=\"fa-solid fa-trophy\" aria-hidden=\"true\"></i></div>DPC (DJMax Pattern-Design Contest) <span class=\"text-sm italic text-primary/50\">2022 (6th), 2023 (1st)</span>",
+						"<div class=\"inline-flex justify-start items-center w-[1.75rem]\"><i class=\"fa-solid fa-user\" aria-hidden=\"true\"></i></div>Guest pattern designer"
 					]
 				},
                 {
@@ -44,7 +44,7 @@
 			"htmlParagraphs": [
 				{
 					"type": "paragraph",
-					"htmlContent": "Contributed VTuber overlay layouts for KurosawaSP"
+					"htmlContent": "Contributed VTuber overlay layouts for KurosawaSP."
 				},
                 {
                     "type": "button-row",
@@ -68,6 +68,36 @@
 				{
 					"type": "youtube",
 					"embededUrl": "https://www.youtube.com/embed/PLwBY5Zr_1o?si=6wYtsrhkFFdMmMbz"
+				}
+			]
+		},
+		{
+            "id": "lucian-solutions-api",
+			"title": "Lucia's API Service",
+			"htmlParagraphs": [
+				{
+					"type": "paragraph",
+					"htmlContent": "Provides simple API endpoints for fetching fun little things like Thai food and drinks menus."
+				},
+				{
+					"type": "paragraph",
+					"htmlContent": "Perfect for streamers' chat commands."
+				},
+                {
+                    "type": "copyable-code-block",
+                    "htmlContent": "https://lucian.solutions/api/foodmenu"
+                },
+				{
+					"type": "copyable-code-block",
+					"htmlContent": "https://lucian.solutions/api/drinksmenu"
+				}
+			],
+			"media": [
+				{
+					"type": "image",
+					"imgSrc": "https://files.lucian.solutions/files/posts/2024/2024-02-18-01-1.png.webp",
+					"altText": "Lucia's API Service'",
+					"imgLazyLoad": true
 				}
 			]
 		}

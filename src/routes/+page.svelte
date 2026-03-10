@@ -43,6 +43,9 @@
 	});
 
 	const email = 'karnk' + '@' + 'lucian.solutions';
+	$: if (isHovering) {
+		// Placeholder
+	}
 </script>
 
 <SEO title="" description="Plan the work, work the plan" />
@@ -108,7 +111,7 @@
 						</div>
 
 						<div class="flex w-full flex-wrap justify-center gap-4">
-							{#each menuItems.filter((item) => item.title !== 'Home') as item}
+							{#each menuItems.filter((item) => item.title !== 'Home') as item (item.path)}
 								<ButtonGlass
 									class="md:text-md gap-2 px-4 py-2 text-xs font-bold text-white uppercase shadow-2xl md:px-8 md:py-4"
 									href={item.path}
@@ -155,11 +158,11 @@
 		<Container id="about-me-section">
 			<ContainerGlassBlack class="p-8">
 				<div
-					class="flex w-full flex-row flex-wrap items-center justify-center gap-6 lg:flex-nowrap py-4"
+					class="flex w-full flex-row flex-wrap items-center justify-center gap-6 lg:flex-nowrap py-8"
 				>
 					<div class="shrink-0 relative">
 						<img
-							src="/assets/ls-avatar.jpg"
+							src="/assets/ls-avatar.png"
 							alt="Karn Lucian Kamolnavin"
 							class="rounded-full shadow-lg h-64 w-64 md:h-80 md:w-80 object-cover transition-transform duration-300 hover:scale-105"
 							loading="lazy"
@@ -228,7 +231,7 @@
 			</h2>
 
 			<div class="flex flex-col gap-8">
-				{#each pagePortfolioItems as item, index}
+				{#each pagePortfolioItems as item, index (item.id)}
 					<ContainerGlassBlack class="p-8">
 						<PublicPortfolio
 							title={item.title}
