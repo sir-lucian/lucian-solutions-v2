@@ -248,11 +248,13 @@
 			</div>
 		</Container>
 	</section>
+
+	<section id="footer">
+		<Footer />
+	</section>
 </div>
 
-<section id="footer" class="bg-black/60 p-4 shadow-md backdrop-blur-md">
-	<Footer />
-</section>
+
 
 <style scoped>
 	section#video-background {

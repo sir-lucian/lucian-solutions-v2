@@ -1,10 +1,11 @@
 <script lang="ts">
-	import { fade, slide } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 	import { onDestroy } from 'svelte';
 	import SiteLogo from './SiteLogo.svelte';
 	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
 	import menuItemsData from '$lib/assets/menu-items/menu-items.json';
 	import { page } from '$app/state';
+	import { resolve } from '$app/paths';
 	import { pageLoading } from '$lib/stores/pageLoading';
 	import { isTheSamePath } from '$lib';
 
@@ -44,6 +45,7 @@
 	const openDropdown = () => {
 		if (!dropdownOpen) dropdownOpen = true;
 	};
+
 </script>
 
 <svelte:window bind:scrollY bind:innerHeight />
@@ -66,9 +68,9 @@
 		</div>
 		<div class="hidden flex-none md:block">
 			<div class="mx-6 flex h-full items-center justify-end gap-4">
-				{#each menuItemsData.menus as item}
+				{#each menuItemsData.menus as item (item.title)}
 					{#if item.path === '/'}
-						<a href="/" class="hover:text-white" onclick={() => {
+						<a href={resolve('/')} class="hover:text-white" onclick={() => {
 							// check if path changes, if it does, start loading
 							if (!isTheSamePath(page.url.pathname, '/')) {
 								pageLoading.start();
@@ -80,22 +82,44 @@
 							</div>
 						</a>
 					{:else}
-						<a
-							href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
-							class="hover:text-white"
-							onclick={() => {
-								// check if path changes, if it does, start loading
-								const targetPath = item.path.startsWith('#') ? `./${item.path}` : `${item.path}`;
-								if (!isTheSamePath(page.url.pathname, targetPath)) {
-									pageLoading.start();
-								}
-							}}
-						>
-							<div class="h-full font-bold tracking-tight uppercase">
-								<i class={item.icon} aria-hidden="true"></i>
-								<span class="ml-1">{item.title}</span>
-							</div>
-						</a>
+						{#if item.path.startsWith('#')}
+							<a
+								href={resolve('/')}
+								class="hover:text-white"
+								onclick={(event) => {
+									// check if path changes, if it does, start loading
+									const targetPath = `./${item.path}`;
+									if (!isTheSamePath(page.url.pathname, targetPath)) {
+										pageLoading.start();
+										return;
+									}
+									event.preventDefault();
+									window.location.hash = item.path.slice(1);
+								}}
+							>
+								<div class="h-full font-bold tracking-tight uppercase">
+									<i class={item.icon} aria-hidden="true"></i>
+									<span class="ml-1">{item.title}</span>
+								</div>
+							</a>
+						{:else}
+							<a
+								href={resolve(item.path as '/posts' | '/fanarts')}
+								class="hover:text-white"
+								onclick={() => {
+									// check if path changes, if it does, start loading
+									const targetPath = `${item.path}`;
+									if (!isTheSamePath(page.url.pathname, targetPath)) {
+										pageLoading.start();
+									}
+								}}
+							>
+								<div class="h-full font-bold tracking-tight uppercase">
+									<i class={item.icon} aria-hidden="true"></i>
+									<span class="ml-1">{item.title}</span>
+								</div>
+							</a>
+						{/if}
 					{/if}
 				{/each}
 			</div>
@@ -124,10 +148,10 @@
 				<i class="fa-solid fa-xmark" aria-hidden="true"></i>
 			</button>
 
-			{#each menuItemsData.menus as item}
+			{#each menuItemsData.menus as item (item.title)}
 				{#if item.path === '/'}
 					<a
-						href="/"
+						href={resolve('/')}
 						class="w-full hover:text-white"
 						onclick={() => {
 							const targetPath = '/';
@@ -145,24 +169,48 @@
 						</ButtonGlass>
 					</a>
 				{:else}
-					<a
-						href={item.path.startsWith('#') ? `./${item.path}` : `${item.path}`}
-						class="w-full hover:text-white"
-						onclick={() => {
-							const targetPath = item.path.startsWith('#') ? `./${item.path}` : `${item.path}`;
-							if (!isTheSamePath(page.url.pathname, targetPath)) {
-								pageLoading.start();
-							}
-							closeDropdown();
-						}}
-					>
-						<ButtonGlass
-							class="flex h-full w-full justify-between font-bold tracking-tight uppercase"
+					{#if item.path.startsWith('#')}
+						<a
+							href={resolve('/')}
+							class="w-full hover:text-white"
+							onclick={(event) => {
+								const targetPath = `./${item.path}`;
+								if (!isTheSamePath(page.url.pathname, targetPath)) {
+									pageLoading.start();
+								} else {
+									event.preventDefault();
+									window.location.hash = item.path.slice(1);
+								}
+								closeDropdown();
+							}}
 						>
-							<i class={item.icon} aria-hidden="true"></i>
-							<span class="ml-1">{item.title}</span>
-						</ButtonGlass>
-					</a>
+							<ButtonGlass
+								class="flex h-full w-full justify-between font-bold tracking-tight uppercase"
+							>
+								<i class={item.icon} aria-hidden="true"></i>
+								<span class="ml-1">{item.title}</span>
+							</ButtonGlass>
+						</a>
+					{:else}
+						<a
+							href={resolve(item.path as '/posts' | '/fanarts')}
+							class="w-full hover:text-white"
+							onclick={() => {
+								const targetPath = `${item.path}`;
+								if (!isTheSamePath(page.url.pathname, targetPath)) {
+									pageLoading.start();
+								}
+								closeDropdown();
+							}}
+						>
+							<ButtonGlass
+								class="flex h-full w-full justify-between font-bold tracking-tight uppercase"
+							>
+								<i class={item.icon} aria-hidden="true"></i>
+								<span class="ml-1">{item.title}</span>
+							</ButtonGlass>
+						</a>
+					{/if}
 				{/if}
 			{/each}
 		</div>
