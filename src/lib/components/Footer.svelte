@@ -4,8 +4,8 @@
     const yearNow = dateNow.getFullYear();
 </script>   
 
-<div class="w-full py-2 px-4 inline-flex gap-2 justify-center items-center text-sm text-center text-white">
-    <span class="font-medium">&copy; {startYear === yearNow ? yearNow : `${startYear} - ${yearNow}`}</span>
-    <span class="font-black uppercase">Lucian Solutions</span>
-    <span class="font-light text-xs">(Karn Lucian Kamolnavin)</span>
+<div class="w-full py-2 px-4 flex flex-wrap gap-2 justify-center items-center text-sm text-center text-white">
+    <div class="font-medium text-nowrap">&copy; {startYear === yearNow ? yearNow : `${startYear} - ${yearNow}`}</div>
+    <div class="font-black uppercase text-nowrap">Lucian Solutions</div>
+    <div class="font-light text-xs text-nowrap">(Karn Lucian Kamolnavin)</div>
 </div>
