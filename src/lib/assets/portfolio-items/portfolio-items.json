@@ -39,39 +39,6 @@
 			]
 		},
 		{
-            "id": "vtuber-layouts",
-			"title": "VTuber Layouts",
-			"htmlParagraphs": [
-				{
-					"type": "paragraph",
-					"htmlContent": "Contributed VTuber overlay layouts for KurosawaSP."
-				},
-                {
-                    "type": "button-row",
-                    "buttons": [
-                        {
-                            "htmlContent": "YouTube",
-                            "faIcon": "fa-brands fa-youtube",
-                            "url": "https://www.youtube.com/@KurosawaSP",
-                            "openNewTab": true
-                        },
-                        {
-                            "htmlContent": "Twitch",
-                            "faIcon": "fa-brands fa-twitch",
-                            "url": "https://www.twitch.tv/kurosawasp",
-                            "openNewTab": true
-                        }
-                    ]
-                }
-			],
-			"media": [
-				{
-					"type": "youtube",
-					"embededUrl": "https://www.youtube.com/embed/PLwBY5Zr_1o?si=6wYtsrhkFFdMmMbz"
-				}
-			]
-		},
-		{
             "id": "lucian-solutions-api",
 			"title": "Lucia's API Service",
 			"htmlParagraphs": [
