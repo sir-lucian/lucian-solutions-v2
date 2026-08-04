@@ -191,7 +191,7 @@
 	</Container>
 </section>
 
-<section id="footer" class="bg-black/60 shadow-md backdrop-blur-md">
+<section id="footer">
 	<Footer />
 </section>
 
