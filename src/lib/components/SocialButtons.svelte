@@ -10,7 +10,7 @@
     const socials: SocialLink[] = [
         {
             title: 'Twitter',
-            path: 'https://x.com/sir_lucian_',
+            path: 'https://x.com/sirlucian_',
             icon: 'fa-brands fa-x-twitter'
         },
         {

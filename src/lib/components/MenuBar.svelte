@@ -83,7 +83,7 @@
 						</a>
 					{:else}
 						{#if item.path.startsWith('#')}
-							<a
+							<!--a
 								href={resolve('/')}
 								class="hover:text-white"
 								onclick={(event) => {
@@ -101,7 +101,7 @@
 									<i class={item.icon} aria-hidden="true"></i>
 									<span class="ml-1">{item.title}</span>
 								</div>
-							</a>
+							</a-->
 						{:else}
 							<a
 								href={resolve(item.path as '/posts' | '/fanarts')}
