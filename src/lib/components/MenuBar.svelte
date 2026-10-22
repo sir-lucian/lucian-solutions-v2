@@ -83,25 +83,7 @@
 						</a>
 					{:else}
 						{#if item.path.startsWith('#')}
-							<!--a
-								href={resolve('/')}
-								class="hover:text-white"
-								onclick={(event) => {
-									// check if path changes, if it does, start loading
-									const targetPath = `./${item.path}`;
-									if (!isTheSamePath(page.url.pathname, targetPath)) {
-										pageLoading.start();
-										return;
-									}
-									event.preventDefault();
-									window.location.hash = item.path.slice(1);
-								}}
-							>
-								<div class="h-full font-bold tracking-tight uppercase">
-									<i class={item.icon} aria-hidden="true"></i>
-									<span class="ml-1">{item.title}</span>
-								</div>
-							</a-->
+							<!-- No # in menu bar -->
 						{:else}
 							<a
 								href={resolve(item.path as '/posts' | '/fanarts')}
@@ -170,27 +152,7 @@
 					</a>
 				{:else}
 					{#if item.path.startsWith('#')}
-						<a
-							href={resolve('/')}
-							class="w-full hover:text-white"
-							onclick={(event) => {
-								const targetPath = `./${item.path}`;
-								if (!isTheSamePath(page.url.pathname, targetPath)) {
-									pageLoading.start();
-								} else {
-									event.preventDefault();
-									window.location.hash = item.path.slice(1);
-								}
-								closeDropdown();
-							}}
-						>
-							<ButtonGlass
-								class="flex h-full w-full justify-between font-bold tracking-tight uppercase"
-							>
-								<i class={item.icon} aria-hidden="true"></i>
-								<span class="ml-1">{item.title}</span>
-							</ButtonGlass>
-						</a>
+						<!-- No # in menu bar -->
 					{:else}
 						<a
 							href={resolve(item.path as '/posts' | '/fanarts')}
