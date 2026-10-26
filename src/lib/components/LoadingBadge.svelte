@@ -1,8 +1,5 @@
 <script lang="ts">
-	// This is a simple loading badge component that can be used to indicate loading states in the UI.
-	// It uses Tailwind CSS for styling and Font Awesome for the spinner icon.
-	// No props or state are needed for this component, as it's purely presentational.
-	export let isLoading: boolean = false; // You can control the visibility of the badge with this prop if needed
+	export let isLoading: boolean = false;
 </script>
 
 <div class="fixed inset-0 z-50 flex flex-col justify-end bg-black/50 transition-opacity duration-300 {isLoading ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}" id="loading-badge-container">
@@ -11,7 +8,7 @@
 			<img
 				src="/assets/ls-lucia-lurk.png"
 				alt="Loading..."
-				class="h-auto w-[4rem] md:w-[6rem]"
+				class="h-auto w-16 md:w-24"
 				id="loading-badge-image"
 			/>
 			<div
