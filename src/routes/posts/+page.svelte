@@ -12,11 +12,11 @@
 	import BadgeGlass from '$lib/components/badges/BadgeGlass.svelte';
 	import BadgeGlassBlack from '$lib/components/badges/BadgeGlassBlack.svelte';
 	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
-	import Bokeh from '$lib/components/background/Bokeh.svelte';
+	// import Bokeh from '$lib/components/background/Bokeh.svelte';
 	import { fetchPosts } from '$lib/services/PostService';
 
 	// Page data provided by +page.ts
-	const { data } = $props<{ data: { posts?: Post[]; post?: Post } }>();
+	const { data }: { data: { posts?: Post[]; post?: Post } } = $props();
 	import { twemojiParse } from '$lib/utils/twemoji';
 	import { onMount, tick } from 'svelte';
 	import { writable } from 'svelte/store';
@@ -381,7 +381,7 @@
 	url={page.url.href}
 />
 
-<Bokeh />
+<!--<Bokeh />-->
 
 {#snippet sidebarLegend(isSticky = false)}
 	<ContainerGlassBlack
