@@ -6,8 +6,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 	// Set security headers
 	response.headers.set('X-Content-Type-Options', 'nosniff');
 
-	// This header prevents the page from being framed, which can help protect against clickjacking attacks. However, it can interfere with embedding content like YouTube videos, so it's commented out for now.
-	// This breaks Youtube embeds, so we'll skip it for now. We can revisit this later if needed.
+	// Keep referrers private by default; YouTube iframes explicitly opt in to origin referrers.
 	response.headers.set('Referrer-Policy', 'no-referrer');
 
 	// This is a strong HSTS policy that tells browsers to only use HTTPS for the next year, including all subdomains
@@ -22,4 +21,3 @@ export const handle: Handle = async ({ event, resolve }) => {
 	response.headers.delete('via');
 	return response;
 };
-
