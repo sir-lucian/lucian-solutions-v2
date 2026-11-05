@@ -13,7 +13,8 @@ const config = {
 		csp: {
 			mode: 'auto',
 			directives: {
-				'default-src': ['self'],
+				'default-src': ['self', 'data:', 'https:'],
+				'frame-src': ['self', 'data:', 'https:'],
 				'script-src': ['self'],
 				'style-src': ['self', 'unsafe-inline'],
 				'img-src': ['self', 'data:', 'https:'],
