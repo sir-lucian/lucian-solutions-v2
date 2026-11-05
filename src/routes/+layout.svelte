@@ -7,7 +7,6 @@
 	import { afterNavigate } from '$app/navigation';
 	import { pageLoading } from '$lib/stores/pageLoading';
 	import LoadingBadge from '$lib/components/LoadingBadge.svelte';
-	import { assets } from '$app/paths';
 
 	let { children } = $props();
 
@@ -18,10 +17,10 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" type="image/png" href="{assets}/assets/ls-logo.jpg" sizes="192x192 512x512" />
-	<link rel="shortcut icon" href="{assets}/assets/ls-logo.jpg" />
-	<link rel="apple-touch-icon" href="{assets}/assets/ls-logo.jpg" sizes="192x192" />
-	<link rel="manifest" href="{assets}/manifest.webmanifest" />
+	<link rel="icon" type="image/png" href="/assets/ls-logo.jpg" sizes="192x192 512x512" />
+	<link rel="shortcut icon" href="/assets/ls-logo.jpg" />
+	<link rel="apple-touch-icon" href="/assets/ls-logo.jpg" sizes="192x192" />
+	<link rel="manifest" href="/manifest.webmanifest" />
 	<meta name="theme-color" content="#f8f9fa" />
 </svelte:head>
 

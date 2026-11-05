@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import Container from '$lib/components/Container.svelte';
 	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
-	import Bokeh from '$lib/components/background/Bokeh.svelte';
+	// import Bokeh from '$lib/components/background/Bokeh.svelte';
 	import SEO from '$lib/components/SEO.svelte';
 	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
 	import { fetchFanarts, transformArtToMedia } from '$lib/services/FanartService';
@@ -86,7 +86,7 @@
 
 <SEO title="Fanarts" description="Community's Contribution" />
 
-<Bokeh />
+<!-- <Bokeh /> -->
 
 <section class="content-section">
 	<Container>
