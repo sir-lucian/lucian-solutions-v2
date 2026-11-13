@@ -142,7 +142,7 @@
 							</ButtonGlass>
 							<ButtonGlass
 								class="md:text-md gap-2 px-4 py-2 text-xs font-bold text-white uppercase shadow-2xl md:px-8 md:py-4"
-								title="Ko-Fi"
+								title="Ko-fi"
 								openNewWindow={true}
 								href="https://ko-fi.com/sirlucian"
 							>
