@@ -170,7 +170,7 @@
 				>
 					<div class="shrink-0 relative">
 						<img
-							src="/assets/ls-avatar.png"
+							src="/assets/ls-avatar2.png"
 							alt="Karn Lucian Kamolnavin"
 							class="rounded-full shadow-lg h-64 w-64 md:h-80 md:w-80 object-cover transition-transform duration-300 hover:scale-105"
 							loading="lazy"
