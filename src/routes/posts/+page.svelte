@@ -3,24 +3,24 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import Footer from '$lib/components/Footer.svelte';
-	import SEO from '$lib/components/SEO.svelte';
-	import Container from '$lib/components/Container.svelte';
-	import ImageViewer from '$lib/components/ImageViewer.svelte';
-	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
-	import ButtonGlassBlack from '$lib/components/buttons/ButtonGlassBlack.svelte';
-	import BadgeGlass from '$lib/components/badges/BadgeGlass.svelte';
-	import BadgeGlassBlack from '$lib/components/badges/BadgeGlassBlack.svelte';
-	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
-	// import Bokeh from '$lib/components/background/Bokeh.svelte';
-	import { fetchPosts } from '$lib/services/PostService';
+	import Footer from '#lib/components/Footer.svelte';
+	import SEO from '#lib/components/SEO.svelte';
+	import Container from '#lib/components/Container.svelte';
+	import ImageViewer from '#lib/components/ImageViewer.svelte';
+	import ButtonGlass from '#lib/components/buttons/ButtonGlass.svelte';
+	import ButtonGlassBlack from '#lib/components/buttons/ButtonGlassBlack.svelte';
+	import BadgeGlass from '#lib/components/badges/BadgeGlass.svelte';
+	import BadgeGlassBlack from '#lib/components/badges/BadgeGlassBlack.svelte';
+	import ContainerGlassBlack from '#lib/components/containers/ContainerGlassBlack.svelte';
+	// import Bokeh from '#lib/components/background/Bokeh.svelte';
+	import { fetchPosts } from '#lib/services/PostService.ts';
 
 	// Page data provided by +page.ts
 	const { data }: { data: { posts?: Post[]; post?: Post } } = $props();
-	import { twemojiParse } from '$lib/utils/twemoji';
+	import { twemojiParse } from '#lib/utils/twemoji.ts';
 	import { onMount, tick } from 'svelte';
 	import { writable } from 'svelte/store';
-	import { DEFAULT_SEO_IMAGE, HtmlType, type MediaItem } from '$lib';
+	import { DEFAULT_SEO_IMAGE, HtmlType, type MediaItem } from '#lib';
 
 	// helpers
 	function safeDate(date?: string) {
@@ -275,7 +275,7 @@
 		selectedYear = null;
 		selectedMonthIndex = null;
 		singlePostId = null;
-		await goto(resolve('/posts'), { replaceState: true });
+		await goto(resolve('/posts'), { replace: true });
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 		holdFirstYearClick = false;
 	}
@@ -291,7 +291,7 @@
 		activeSearchQuery = '';
 		if (singlePostId) {
 			singlePostId = null;
-			await goto(resolve('/posts'), { replaceState: true });
+			await goto(resolve('/posts'), { replace: true });
 		} else {
 			await tick();
 			if (year && !monthIndex && !holdFirstYearClick) {
@@ -306,7 +306,7 @@
 	async function performSearch() {
 		if (singlePostId) {
 			singlePostId = null;
-			await goto(resolve('/posts'), { replaceState: true });
+			await goto(resolve('/posts'), { replace: true });
 		}
 		selectedYear = null;
 		selectedMonthIndex = null;

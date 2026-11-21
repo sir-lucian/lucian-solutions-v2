@@ -3,9 +3,33 @@ import { playwright } from '@vitest/browser-playwright';
 import devtoolsJson from 'vite-plugin-devtools-json';
 import tailwindcss from '@tailwindcss/vite';
 import { sveltekit } from '@sveltejs/kit/vite';
+import adapter from '@sveltejs/adapter-node';
 
 export default defineConfig({
-	plugins: [tailwindcss(), sveltekit(), devtoolsJson()],
+	plugins: [
+		tailwindcss(),
+		sveltekit({
+			adapter: adapter(),
+			version: { pollInterval: 0 },
+			csp: {
+				mode: 'auto',
+				directives: {
+					'default-src': ['self'],
+					'connect-src': ['self', 'data:', 'https:'],
+					'frame-src': ['self', 'data:', 'https:'],
+					'media-src': ['self', 'data:', 'https:'],
+					'script-src': ['self'],
+					'style-src': ['self', 'unsafe-inline'],
+					'img-src': ['self', 'data:', 'https:'],
+					'object-src': ['none'],
+					'base-uri': ['self'],
+					'form-action': ['self'],
+					'frame-ancestors': ['none']
+				}
+			}
+		}),
+		devtoolsJson()
+	],
 	test: {
 		expect: { requireAssertions: true },
 		projects: [

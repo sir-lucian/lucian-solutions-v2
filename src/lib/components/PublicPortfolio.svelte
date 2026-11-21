@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { HtmlType, type HtmlParagraph, type Media } from '$lib';
-	import { twemojiParse } from '$lib/utils/twemoji';
+	import { HtmlType, type HtmlParagraph, type Media } from '#lib';
+	import { twemojiParse } from '#lib/utils/twemoji.ts';
 	import YouTubeEmbed from './YouTubeEmbed.svelte';
 	import ButtonGlass from './buttons/ButtonGlass.svelte';
 	import ContainerGlassBlack from './containers/ContainerGlassBlack.svelte';

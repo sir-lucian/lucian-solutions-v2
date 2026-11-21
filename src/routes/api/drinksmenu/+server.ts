@@ -1,5 +1,5 @@
-import { PUBLIC_FILE_SERVER_URL } from '$env/static/public';
-import { Randomiser, type DrinksMenuData } from '$lib/services/Randomiser';
+import { PUBLIC_FILE_SERVER_URL } from '$app/env/public';
+import { Randomiser, type DrinksMenuData } from '#lib/services/Randomiser.ts';
 import type { RequestHandler } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url, fetch }) => {

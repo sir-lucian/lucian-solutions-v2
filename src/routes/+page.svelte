@@ -1,17 +1,17 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
-	import MenuItems from '$lib/assets/menu-items/menu-items.json';
-	import PortfolioItems from '$lib/assets/portfolio-items/portfolio-items.json';
-	import Footer from '$lib/components/Footer.svelte';
-	import SocialButtons from '$lib/components/SocialButtons.svelte';
-	import SEO from '$lib/components/SEO.svelte';
-	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
-	import Container from '$lib/components/Container.svelte';
-	import PublicPortfolio from '$lib/components/PublicPortfolio.svelte';
-	import { isTheSamePath, type HtmlParagraph, type Media, type PortfolioItem, type MenuItem } from '$lib/index';
+	import ButtonGlass from '#lib/components/buttons/ButtonGlass.svelte';
+	import MenuItems from '#lib/assets/menu-items/menu-items.json';
+	import PortfolioItems from '#lib/assets/portfolio-items/portfolio-items.json';
+	import Footer from '#lib/components/Footer.svelte';
+	import SocialButtons from '#lib/components/SocialButtons.svelte';
+	import SEO from '#lib/components/SEO.svelte';
+	import ContainerGlassBlack from '#lib/components/containers/ContainerGlassBlack.svelte';
+	import Container from '#lib/components/Container.svelte';
+	import PublicPortfolio from '#lib/components/PublicPortfolio.svelte';
+	import { isTheSamePath, type HtmlParagraph, type Media, type PortfolioItem, type MenuItem } from '#lib/index.ts';
 	import { page } from '$app/state';
-	import { pageLoading } from '$lib/stores/pageLoading';
+	import { pageLoading } from '#lib/stores/pageLoading.ts';
 
 	const menuItems: MenuItem[] =
 		MenuItems.menus.map((item) => ({

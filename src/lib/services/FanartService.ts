@@ -1,4 +1,4 @@
-import { MediaType, type Art, type FanartItem, type Media } from "$lib";
+import { MediaType, type Art, type FanartItem, type Media } from "#lib";
 
 export async function fetchFanarts() {
     const listPostsJSON = "/api/fanarts/list.json";

@@ -1,4 +1,4 @@
-import type { PostItem } from "$lib";
+import type { PostItem } from "#lib";
 
 export async function fetchPosts() {
     const listPostsJSON = "/api/posts/list.json";
