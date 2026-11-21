@@ -85,7 +85,7 @@ export class Randomiser {
     }
 
     public static getFoodMenu(data: FoodMenuData, category: number, halal: boolean = false): string {
-        let reply = '';
+        let reply: string;
 
         // If category is 0 or out of range, we might want to randomize category first?
         // The PHP function takes a category as input.
