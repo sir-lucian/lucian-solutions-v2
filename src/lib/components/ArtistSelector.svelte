@@ -1,6 +1,6 @@
 <script lang="ts">
 	import ContainerGlassBlack from "./containers/ContainerGlassBlack.svelte";
-    import type { Art } from '$lib';
+    import type { Art } from '#lib';
 	import BadgeGlass from "./badges/BadgeGlass.svelte";
 
     export let artists: { name: string; slug?: string | null; items: Art[] }[] = [];

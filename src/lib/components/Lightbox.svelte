@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import { type Media } from '$lib/index';
+	import { type Media } from '#lib/index.ts';
 	import { onMount } from 'svelte';
-	import { env } from '$env/dynamic/public';
+	import { PUBLIC_FILE_SERVER_URL } from '$app/env/public';
 
 	export let images: Media[];
 	export let startIndex: number = 0;
@@ -150,7 +150,7 @@
 			<!-- svelte-ignore a11y-click-events-have-key-events -->
 			<!-- svelte-ignore a11y-no-noninteractive-element-interactions -->
 			<img
-				src={env.PUBLIC_FILE_SERVER_URL + (currentImage.imgSrc ?? '')}
+				src={PUBLIC_FILE_SERVER_URL + (currentImage.imgSrc ?? '')}
 				alt={currentImage.altText || 'Lightbox Image'}
 				class={`absolute max-h-[calc(100%-2rem)] max-w-[calc(100%-2rem)] object-contain shadow-2xl rounded-lg transition-opacity duration-500 ease-in-out ${isLoading ? 'opacity-0' : 'opacity-100'}`}
 				draggable="false"
@@ -161,7 +161,7 @@
 				<div class="absolute inset-0 flex items-center justify-center z-40 pointer-events-none flex-col gap-2">
 					<span class="loading loading-spinner loading-lg text-primary"></span>
 					<div class="text-xs text-neutral-400 text-center px-3 overflow-protection">
-						Loading Image: {env.PUBLIC_FILE_SERVER_URL + (currentImage.imgSrc ?? '')}
+						Loading Image: {PUBLIC_FILE_SERVER_URL + (currentImage.imgSrc ?? '')}
 					</div>
 				</div>
 			{/if}

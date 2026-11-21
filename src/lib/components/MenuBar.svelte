@@ -2,12 +2,12 @@
 	import { slide } from 'svelte/transition';
 	import { onDestroy } from 'svelte';
 	import SiteLogo from './SiteLogo.svelte';
-	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
-	import menuItemsData from '$lib/assets/menu-items/menu-items.json';
+	import ButtonGlass from '#lib/components/buttons/ButtonGlass.svelte';
+	import menuItemsData from '#lib/assets/menu-items/menu-items.json';
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
-	import { pageLoading } from '$lib/stores/pageLoading';
-	import { isTheSamePath } from '$lib';
+	import { pageLoading } from '#lib/stores/pageLoading.ts';
+	import { isTheSamePath } from '#lib';
 
 	let scrollY = $state(0);
 	let innerHeight = $state(0);

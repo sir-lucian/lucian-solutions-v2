@@ -1,23 +1,23 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import Container from '$lib/components/Container.svelte';
-	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
-	// import Bokeh from '$lib/components/background/Bokeh.svelte';
-	import SEO from '$lib/components/SEO.svelte';
-	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
-	import { fetchFanarts, transformArtToMedia } from '$lib/services/FanartService';
-	import { MediaType } from '$lib';
-	import type { Art, Media as MediaTypeDef, FanartItem } from '$lib';
+	import Container from '#lib/components/Container.svelte';
+	import ContainerGlassBlack from '#lib/components/containers/ContainerGlassBlack.svelte';
+	// import Bokeh from '#lib/components/background/Bokeh.svelte';
+	import SEO from '#lib/components/SEO.svelte';
+	import ButtonGlass from '#lib/components/buttons/ButtonGlass.svelte';
+	import { fetchFanarts, transformArtToMedia } from '#lib/services/FanartService.ts';
+	import { MediaType } from '#lib';
+	import type { Art, Media as MediaTypeDef, FanartItem } from '#lib';
 
 	// Page data provided by +page.ts
 	export let data: { fanarts?: FanartItem[] };
 
 	// Runes states
 	import { writable } from 'svelte/store';
-	import Footer from '$lib/components/Footer.svelte';
-	import ImageViewer2 from '$lib/components/ImageViewer2.svelte';
-	import ImageViewer from '$lib/components/ImageViewer.svelte';
-	import ArtistSelector from '$lib/components/ArtistSelector.svelte';
+	import Footer from '#lib/components/Footer.svelte';
+	import ImageViewer2 from '#lib/components/ImageViewer2.svelte';
+	import ImageViewer from '#lib/components/ImageViewer.svelte';
+	import ArtistSelector from '#lib/components/ArtistSelector.svelte';
 
 	let fanarts = writable<FanartItem[]>([]);
 	let artists = writable<{ name: string; slug?: string | null; items: Art[] }[]>([]); // { name, slug, items }

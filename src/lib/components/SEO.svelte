@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { DEFAULT_SEO_IMAGE } from "$lib";
+	import { DEFAULT_SEO_IMAGE } from "#lib";
 
 	interface Props {
 		title: string;

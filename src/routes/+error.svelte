@@ -1,6 +1,6 @@
 <script lang="ts">
     import { page } from '$app/state';
-    import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
+    import ButtonGlass from '#lib/components/buttons/ButtonGlass.svelte';
 </script>
 <div class="w-full h-screen overflow-hidden flex flex-col justify-center items-center">
     <div class="flex flex-col sm:flex-row gap-4 sm:gap-1 items-start sm:items-center">

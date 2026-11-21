@@ -3,7 +3,7 @@
 	/* eslint-disable @typescript-eslint/no-unused-vars */
 	import { onMount, tick } from 'svelte';
 	import Lightbox from './Lightbox.svelte';
-	import { env } from '$env/dynamic/public';
+	import { PUBLIC_FILE_SERVER_URL } from '$app/env/public';
 	import ButtonGlassBlack from './buttons/ButtonGlassBlack.svelte';
 
 	let { className = '', media = [], allPostMedia = [] } = $props();
@@ -30,7 +30,7 @@
 		if (!imgSrc.toLowerCase().endsWith('.gif')) return;
 		if (webmAvailable[imgSrc] !== undefined) return;
 
-		const webmUrl = `${env.PUBLIC_FILE_SERVER_URL}${imgSrc}.webm`;
+		const webmUrl = `${PUBLIC_FILE_SERVER_URL}${imgSrc}.webm`;
 		try {
 			const res = await fetch(webmUrl, { method: 'HEAD' });
 			webmAvailable[imgSrc] = res.ok;
@@ -207,7 +207,7 @@
 				<div class="gallery-image-container shadow-2xl" id={"gallery-item-" + selfUniqueId + "-" + i}>
 					{#if webmAvailable[item.imgSrc]}
 						<video
-							src={`${env.PUBLIC_FILE_SERVER_URL}${item.imgSrc}.webm`}
+							src={`${PUBLIC_FILE_SERVER_URL}${item.imgSrc}.webm`}
 							class="gallery-image"
 							muted
 							playsinline
@@ -221,7 +221,7 @@
 					{:else}
 						<img
 							id={"gallery-img-" + selfUniqueId + "-" + i}
-							src={`${env.PUBLIC_FILE_SERVER_URL}${item.imgSrc}`}
+							src={`${PUBLIC_FILE_SERVER_URL}${item.imgSrc}`}
 							class="gallery-image"
 							alt={item.alt || ''}
 							draggable="false"

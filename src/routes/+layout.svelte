@@ -1,12 +1,11 @@
 <script lang="ts">
 	import './layout.css';
-	import MenuBar from '$lib/components/MenuBar.svelte';
-	import GoToTop from '$lib/components/GoToTop.svelte';
-	import { page } from '$app/state';
-	import { navigating } from '$app/stores';
+	import MenuBar from '#lib/components/MenuBar.svelte';
+	import GoToTop from '#lib/components/GoToTop.svelte';
+	import { navigating, page } from '$app/state';
 	import { afterNavigate } from '$app/navigation';
-	import { pageLoading } from '$lib/stores/pageLoading';
-	import LoadingBadge from '$lib/components/LoadingBadge.svelte';
+	import { pageLoading } from '#lib/stores/pageLoading.ts';
+	import LoadingBadge from '#lib/components/LoadingBadge.svelte';
 
 	let { children } = $props();
 
@@ -33,4 +32,4 @@
 </div>
 
 <GoToTop />
-<LoadingBadge isLoading={$navigating != null || $pageLoading} />
+<LoadingBadge isLoading={navigating.to !== null || $pageLoading} />

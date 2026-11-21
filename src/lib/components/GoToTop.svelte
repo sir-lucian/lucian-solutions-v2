@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fade } from 'svelte/transition';
-	import ButtonGlass from '$lib/components/buttons/ButtonGlass.svelte';
+	import ButtonGlass from '#lib/components/buttons/ButtonGlass.svelte';
 
 	let y = $state(0);
 	let height = $state(0);

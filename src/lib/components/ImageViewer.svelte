@@ -2,12 +2,12 @@
 	/* eslint-disable svelte/require-each-key */
 	/* eslint-disable svelte/prefer-svelte-reactivity */
 	/* eslint-disable @typescript-eslint/no-unused-vars */
-	import YouTubeEmbed from '$lib/components/YouTubeEmbed.svelte';
-	import { MediaType, type Media } from '$lib/index';
+	import YouTubeEmbed from '#lib/components/YouTubeEmbed.svelte';
+	import { MediaType, type Media } from '#lib/index.ts';
 	import Lightbox from './Lightbox.svelte';
-	import { env } from '$env/dynamic/public';
+	import { PUBLIC_FILE_SERVER_URL } from '$app/env/public';
 	import { onDestroy } from 'svelte';
-	import { type MediaItem } from '$lib/index';
+	import { type MediaItem } from '#lib/index.ts';
 
 	export let media: Media[] | MediaItem[] = [];
 	export let allPostMedia: Media[] | MediaItem[] = [];
@@ -190,7 +190,7 @@
 				></iframe>
 			</YouTubeEmbed>
 		{:else if media[0].type === MediaType.Image}
-				{@const src = `${env.PUBLIC_FILE_SERVER_URL}${media[0].imgSrc}`}
+				{@const src = `${PUBLIC_FILE_SERVER_URL}${media[0].imgSrc}`}
 				{@const assignedSrc = visibleImages[src] ? src : undefined}
 				{@const previewAssignedSrc = assignedSrc && webpAvailable[src] ? `${src}.webp` : assignedSrc}
 				{@const previewVideoSrc = assignedSrc && webmAvailable[src] ? `${src}.webm` : undefined}
@@ -272,7 +272,7 @@
 						></iframe>
 					</YouTubeEmbed>
 				{:else if item.type === MediaType.Image}
-					{@const src = `${env.PUBLIC_FILE_SERVER_URL}${item.imgSrc}`}
+					{@const src = `${PUBLIC_FILE_SERVER_URL}${item.imgSrc}`}
 					{@const assignedSrc = visibleImages[src] ? src : undefined}
 					{@const previewAssignedSrc = assignedSrc && webpAvailable[src] ? `${src}.webp` : assignedSrc}
 					{@const previewVideoSrc = assignedSrc && webmAvailable[src] ? `${src}.webm` : undefined}
