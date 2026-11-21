@@ -9,11 +9,11 @@
 	import ContainerGlassBlack from '$lib/components/containers/ContainerGlassBlack.svelte';
 	import Container from '$lib/components/Container.svelte';
 	import PublicPortfolio from '$lib/components/PublicPortfolio.svelte';
-	import { isTheSamePath, type HtmlParagraph, type Media, type PortfolioItem } from '$lib/index';
+	import { isTheSamePath, type HtmlParagraph, type Media, type PortfolioItem, type MenuItem } from '$lib/index';
 	import { page } from '$app/state';
 	import { pageLoading } from '$lib/stores/pageLoading';
 
-	const menuItems: { title: string; path: string; icon: string; href: string }[] =
+	const menuItems: MenuItem[] =
 		MenuItems.menus.map((item) => ({
 			...item,
 			href: item.path === '/' ? '/' : `/${item.path}`

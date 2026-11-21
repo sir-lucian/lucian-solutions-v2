@@ -16,6 +16,13 @@ export interface HtmlParagraph {
     buttons?: Button[];
 }
 
+export interface MenuItem {
+    title: string;
+    path: string;
+    icon: string;
+    href: string;
+}
+
 export interface Media {
     type: MediaType;
     embededUrl?: string;
@@ -125,4 +132,8 @@ export function isTheSamePath(path1: string, path2: string): boolean {
     }
 
     return path1 === path2;
+}
+
+export function isObjectAndHasKeyInObject(obj: unknown, key: string): boolean {
+    return typeof obj === 'object' && obj !== null && key in obj;
 }
