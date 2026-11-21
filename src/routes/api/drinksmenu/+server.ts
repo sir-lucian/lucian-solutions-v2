@@ -53,7 +53,7 @@ export const GET: RequestHandler = async ({ url, fetch }) => {
 		processArg(args2);
 
 		if (category === 0) {
-			const max = partyMode === 1 ? 5 : 4;
+			const max = partyMode === 1 ? 5 : 5; // Finally add alcohol category to the default random selection
 			category = Math.floor(Math.random() * max) + 1;
 		}
 
