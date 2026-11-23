@@ -3,6 +3,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { PUBLIC_FILE_SERVER_URL } from '$app/env/public';
 	import Footer from '#lib/components/Footer.svelte';
 	import SEO from '#lib/components/SEO.svelte';
 	import Container from '#lib/components/Container.svelte';
@@ -339,38 +340,20 @@
 			el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 		}
 	}
-	// Compute SEO props; initialize with defaults and let $effect update from `data` or client state
-	let currentSeo = $state({
-		title: 'Posts',
-		description: "Lucian's Blog Posts",
-		image: DEFAULT_SEO_IMAGE
-	});
-
-	$effect(() => {
-		if (data?.post) {
-			currentSeo = {
-				title: data.post.title,
-				description: `Read "${data.post.title}" on Lucian Solutions.`,
-				image: getAllPostImages(data.post).filter((m) => m.type === 'image')[0]?.imgSrc ?? DEFAULT_SEO_IMAGE
+	let currentSeo = $derived.by(() => {
+		const postId = page.url.searchParams.get('s');
+		const post = postId
+			? (data?.post?.id === postId ? data.post : $sortedPosts.find((p) => p.id === postId))
+			: undefined;
+		if (post) {
+			const image = getAllPostImages(post).find((m) => m.type === 'image' && m.imgSrc)?.imgSrc;
+			return {
+				title: post.title,
+				description: `Read "${post.title}" on Lucian Solutions.`,
+				image: image ? `${PUBLIC_FILE_SERVER_URL}${image}` : DEFAULT_SEO_IMAGE
 			};
-			return;
 		}
-
-		if (singlePostId) {
-			const post = $sortedPosts.find((p) => p.id === singlePostId);
-			if (post) {
-				const images = getAllPostImages(post).filter((m) => m.type === 'image');
-				const firstImage = images.length > 0 ? `${images[0].imgSrc}` : undefined;
-				currentSeo = {
-					title: post.title,
-					description: `Read "${post.title}" on Lucian Solutions.`,
-					image: firstImage ?? DEFAULT_SEO_IMAGE
-				};
-				return;
-			}
-		}
-
-		currentSeo = { title: 'Posts', description: "Lucian's Blog Posts", image: DEFAULT_SEO_IMAGE };
+		return { title: 'Posts', description: "Lucian's Blog Posts", image: DEFAULT_SEO_IMAGE };
 	});
 </script>
 

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/state';
 	import { DEFAULT_SEO_IMAGE } from "#lib";
 
 	interface Props {
@@ -23,11 +24,7 @@
 		twitterCard = "summary_large_image"
 	}: Props = $props();
 
-    /* 
-       Note: usage of $page.url.href would require importing page from $app/stores
-       or passing it in. For simplicity, we make 'url' optional in props or handle it via store if preferred.
-       But explicit props are better for "modifiable at each page".
-    */
+	let imageUrl = $derived(new URL(image, page.url.origin).href);
 </script>
 
 <svelte:head>
@@ -42,7 +39,7 @@
 	{/if}
 	<meta property="og:title" content={title} />
 	<meta property="og:description" content={description} />
-	<meta property="og:image" content={image} />
+	<meta property="og:image" content={imageUrl} />
 	<meta property="og:site_name" content={siteName} />
 
 	<!-- Twitter -->
@@ -52,5 +49,5 @@
 	{/if}
 	<meta property="twitter:title" content={title} />
 	<meta property="twitter:description" content={description} />
-	<meta property="twitter:image" content={image} />
+	<meta property="twitter:image" content={imageUrl} />
 </svelte:head>

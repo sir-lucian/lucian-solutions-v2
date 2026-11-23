@@ -90,8 +90,8 @@ export enum MediaType {
 }
 
 // Portfolio items use `HtmlParagraph` and `Media` types directly; removed unused enum
-export const DEFAULT_SEO_IMAGE = "./assets/ls-seo.jpg";
-export const DEFAULT_FAVICON = "./assets/ls-logo.jpg";
+export const DEFAULT_SEO_IMAGE = "/assets/ls-seo.jpg";
+export const DEFAULT_FAVICON = "/assets/ls-logo.jpg";
 
 export function isTheSamePath(path1: string, path2: string): boolean {
 
