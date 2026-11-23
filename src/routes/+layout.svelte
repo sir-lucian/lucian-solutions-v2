@@ -16,9 +16,6 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" type="image/png" href="/assets/ls-logo.jpg" sizes="192x192 512x512" />
-	<link rel="shortcut icon" href="/assets/ls-logo.jpg" />
-	<link rel="apple-touch-icon" href="/assets/ls-logo.jpg" sizes="192x192" />
 	<link rel="manifest" href="/manifest.webmanifest" />
 	<meta name="theme-color" content="#f8f9fa" />
 </svelte:head>
