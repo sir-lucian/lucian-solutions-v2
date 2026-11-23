@@ -8,6 +8,8 @@ vi.mock('$app/env/public', () => ({ PUBLIC_FILE_SERVER_URL: 'https://files.lucia
 
 import Posts from './posts/+page.svelte';
 import Fanarts from './fanarts/+page.svelte';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import Donate from './donate/+page.svelte';
 
 const post = {
 	id: 'example',
